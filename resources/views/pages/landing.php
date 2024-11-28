@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <h1>Ini adalah landing page</h1>
+    <h1>Landing Page Garapan Saya</h1>
 </body>
 
 </html>
