@@ -10,6 +10,8 @@ $app->get('/', function ($request, $response) {
 $app->group('/auth', function ($auth) {
     $auth->get('/login', function ($request, $response) {
         include __DIR__ . '/../resources/views/pages/auth/login.php'; // Path absolut
+        $authcontroller = new AuthController();
+        $authcontroller->login($request->getParam('username'), $request->getParam('password'));
         return $response;
     });
     $auth->get('/logout', function ($request, $response) {
