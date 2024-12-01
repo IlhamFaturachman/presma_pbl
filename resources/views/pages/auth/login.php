@@ -1,3 +1,9 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../../css/auth/login.css">
+    <link rel="stylesheet" href="/presma_pbl/public/assets/css/login.css">
 </head>
 
 <body>
@@ -18,13 +24,13 @@
         <div class="col-lg-6 d-flex align-items-center justify-content-center">
             <div class="login-section">
                 <h2>SILAHKAN LOGIN</h2>
-                <form action="login_proses.php" method="post">
+                <form action="/auth/login" method="post">
                     <div class="mb-4">
-                        <input type="text" class="form-control form-control-lg" placeholder="Masukkan Username"
-                            required>
+                        <input type="text" id="username" name="username" class="form-control form-control-lg"
+                            placeholder="Masukkan Username" required>
                     </div>
                     <div class="mb-4 position-relative">
-                        <input type="password" id="password" class="form-control form-control-lg"
+                        <input type="password" id="password" name="password" class="form-control form-control-lg"
                             placeholder="Masukkan Password" required>
                         <i id="togglePassword" class="bi bi-eye toggle-password"></i>
                     </div>
@@ -52,19 +58,20 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/presma_pbl/public/assets/js/validateLogin.js"></script>
     <script>
-        // Toggle Password Visibility
-        const togglePassword = document.getElementById('togglePassword');
-        const passwordField = document.getElementById('password');
+    // Toggle Password Visibility
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordField = document.getElementById('password');
 
-        togglePassword.addEventListener('click', function() {
-            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordField.setAttribute('type', type);
+    togglePassword.addEventListener('click', function() {
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
 
-            // Ganti ikon
-            this.classList.toggle('bi-eye');
-            this.classList.toggle('bi-eye-slash');
-        });
+        // Ganti ikon
+        this.classList.toggle('bi-eye');
+        this.classList.toggle('bi-eye-slash');
+    });
     </script>
 </body>
 
