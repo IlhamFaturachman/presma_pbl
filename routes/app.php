@@ -11,6 +11,9 @@ $app = AppFactory::create();
 // Mengatur base path sesuai dengan folder public
 $app->setBasePath('/presma_pbl/public');
 
+// Menambahkan middleware untuk parsing body
+$app->addBodyParsingMiddleware();
+
 // Memasukkan semua rute (routes) yang diperlukan
 require_once __DIR__ . '/web.php'; // Mengimpor routing web
 
