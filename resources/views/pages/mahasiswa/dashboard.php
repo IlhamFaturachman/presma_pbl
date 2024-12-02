@@ -107,10 +107,10 @@ $userRole = $_SESSION['user']['role'];
 </head>
 
 <body>
-    <?php include $_SERVER['DOCUMENT_ROOT'] . '/presma_pbl/resources/views/layouts/admin/header.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/presma_pbl/resources/views/layouts/mahasiswa/header.php'; ?>
 
     <div class="content-wrapper">
-        <?php include $_SERVER['DOCUMENT_ROOT'] . '/presma_pbl/resources/views/layouts/admin/sidebar.php'; ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . '/presma_pbl/resources/views/layouts/mahasiswa/sidebar.php'; ?>
 
         <div class="container mt-4">
             <div class="row">
