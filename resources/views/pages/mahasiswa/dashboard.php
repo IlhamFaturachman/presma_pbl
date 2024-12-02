@@ -20,38 +20,7 @@ $userRole = $_SESSION['user']['role'];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/header.css">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/sidebar.css">
-    <style>
-        .info-card {
-            background-color: #002b5b;
-            color: white;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .info-card h5 {
-            font-weight: bold;
-        }
-
-        .btn-primary {
-            background-color: #003b6f;
-        }
-
-        .btn-danger {
-            background-color: #d9534f;
-        }
-
-        .table-section h3 {
-            color: #003b6f;
-            font-weight: bold;
-        }
-
-        .table th,
-        .table td {
-            text-align: center;
-            vertical-align: middle;
-        }
-    </style>
+    <link rel="stylesheet" href="/presma_pbl/public/assets/css/mahasiswaCSS/dashboard.css">
 </head>
 
 <body>
@@ -64,86 +33,97 @@ $userRole = $_SESSION['user']['role'];
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/presma_pbl/resources/views/layouts/sidebar.php'; ?>
 
         <!-- Main Content -->
-        <div id="content" class="p-4 w-100">
-            <div class="card shadow">
-                <div class="card-body">
-                    <!-- Profil Pengguna -->
-                    <div class="row mb-4">
-                        <div class="col-md-4">
-                            <div class="info-card">
-                                <img src="/presma_pbl/public/assets/img/biodata.png" alt="Foto"
-                                    class="img-fluid rounded-circle mb-2" width="100">
-                                <h5><?= htmlspecialchars($userName) ?></h5>
-                                <p class="mb-0">244107023001 / TI 2A</p>
-                            </div>
+        <div class="container my-5">
+            <div class="row mb-4">
+                <!-- Profil Mahasiswa -->
+                <div class="col-md-6">
+                    <div class="profile-container">
+                        <div class="profile-image">
+                            <img src="../../public/assets/img/Resume-rafiki.png" alt="Foto Profil">
                         </div>
-                        <div class="col-md-8">
-                            <div class="d-flex gap-3 flex-wrap">
-                                <a href="#" class="btn btn-primary flex-grow-1" id="btnTambah"
-                                    data-modal-url="/presma_pbl/resources/views/layouts/mahasiswa/modalTambahPrestasi.php">
-                                    <i class="bi bi-plus-circle"></i> Tambah Prestasi
-                                </a>
-                                <a href="#" class="btn btn-primary flex-grow-1">
-                                    <i class="bi bi-award"></i> Prestasi
-                                </a>
-                                <a href="#" class="btn btn-primary flex-grow-1">
-                                    <i class="bi bi-list-check"></i> Prestasi Ditambahkan
-                                </a>
-                                <a href="/logout" class="btn btn-danger flex-grow-1">
-                                    <i class="bi bi-box-arrow-right"></i> Keluar
-                                </a>
-                            </div>
+                        <div class="profile-info">
+                            <h4>Ilham Faturachman</h4>
+                            <p>244107023001 / TI 2A</p>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Tabel Peringkat -->
-                    <div class="table-section">
-                        <h3>Peringkat Prestasi</h3>
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead class="table-primary">
-                                    <tr>
-                                        <th>Peringkat</th>
-                                        <th>Nama Mahasiswa</th>
-                                        <th>Program Studi</th>
-                                        <th>Jumlah Prestasi</th>
-                                        <th>Poin Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>🥇</td>
-                                        <td>Gilang Purnomo</td>
-                                        <td>Teknik Informatika</td>
-                                        <td>20</td>
-                                        <td>750</td>
-                                    </tr>
-                                    <tr>
-                                        <td>🥈</td>
-                                        <td>Gwido Putra Wijaya</td>
-                                        <td>Sistem Informasi Bisnis</td>
-                                        <td>17</td>
-                                        <td>520</td>
-                                    </tr>
-                                    <tr>
-                                        <td>🥉</td>
-                                        <td>Ilham Faturachman</td>
-                                        <td>Sistem Informasi Bisnis</td>
-                                        <td>15</td>
-                                        <td>505</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                <!-- Menu dan Statistik -->
+                <div class="col-md-6">
+                    <div class="menu-stat-section">
+                        <div class="menu-grid">
+                            <a href="#" class="menu-item menu-item-blue" id="btnTambah">
+                                <div class="menu-icon">
+                                    <img src="../../public/assets/img/tmb_presMhs.png" alt="Tambah">
+                                </div>
+                                <div class="menu-text">Tambah</div>
+                            </a>
+
+                            <a href="#" class="menu-item menu-item-blue">
+                                <div class="menu-icon">
+                                    <img src="../../public/assets/img/pres.png" alt="Prestasi">
+                                </div>
+                                <div class="menu-text">Prestasi</div>
+                            </a>
+
+                            <div class="menu-item menu-item-blue">
+                                <div class="menu-icon">
+                                    <h2>10</h2>
+                                </div>
+                                <div class="menu-text">Prestasi Ditambahkan</div>
+                            </div>
+
+                            <a href="#" class="menu-item menu-item-red">
+                                <div class="menu-icon">
+                                    <img src="../../public/assets/img/exit-run.png" alt="Keluar">
+                                </div>
+                                <div class="menu-text">Keluar</div>
+                            </a>
                         </div>
                     </div>
-
-                    <!-- Placeholder untuk modal -->
-                    <div id="modalContainer"></div>
                 </div>
             </div>
-        </div>
-    </div>
 
+            <!-- Tabel Peringkat Prestasi -->
+            <div class="ranking-table">
+                <h4 class="mb-3">Peringkat Prestasi</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-center-align">Peringkat</th>
+                            <th class="text-center-align">Nama Mahasiswa</th>
+                            <th class="text-center-align">Program Studi</th>
+                            <th class="text-center-align">Jumlah Prestasi</th>
+                            <th class="text-center-align">Poin Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center-align">🥇</td>
+                            <td class="text-center-align">Gilang Purnomo</td>
+                            <td class="text-center-align">Teknik Informatika</td>
+                            <td class="text-center-align">20</td>
+                            <td class="text-center-align">750</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center-align">🥈</td>
+                            <td class="text-center-align">Gwido Putra Wijaya</td>
+                            <td class="text-center-align">Sistem Informasi Bisnis</td>
+                            <td class="text-center-align">17</td>
+                            <td class="text-center-align">520</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center-align">🥉</td>
+                            <td class="text-center-align">Ilham Faturachman</td>
+                            <td class="text-center-align">Sistem Informasi Bisnis</td>
+                            <td class="text-center-align">15</td>
+                            <td class="text-center-align">505</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
