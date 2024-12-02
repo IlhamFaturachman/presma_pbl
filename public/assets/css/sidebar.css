@@ -1,0 +1,37 @@
+#sidebar {
+    min-height: calc(100vh - 56px);
+    width: 250px;
+    background-color: #15367E;
+    color: white;
+    transition: all 0.3s;
+    overflow-x: hidden;
+}
+
+#sidebar .menu-text {
+    margin-left: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+#sidebar a {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+#sidebar a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+        position: fixed;
+        z-index: 1000;
+    }
+}
