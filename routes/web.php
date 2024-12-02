@@ -55,7 +55,8 @@ $app->group('/admin', function ($admin) {
     $admin->get('/dashboard', function (Request $request, Response $response) {
         return renderView($response, 'pages/admin/dashboard.php');
     });
-})->add(new AuthMiddleware(3));
+});
+// ->add(new AuthMiddleware(3));
 
 // Dashboard untuk dosen pembimbing
 $app->group('/dosbim', function ($dosbim) {
