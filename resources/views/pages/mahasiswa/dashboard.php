@@ -56,28 +56,28 @@ $userRole = $_SESSION['user']['role'];
                                 <div class="menu-icon">
                                     <img src="../../public/assets/img/tmb_presMhs.png" alt="Tambah">
                                 </div>
-                                <div class="menu-text">Tambah</div>
+                                <div class="menu-text-mhs">Tambah</div>
                             </a>
 
                             <a href="#" class="menu-item menu-item-blue">
                                 <div class="menu-icon">
                                     <img src="../../public/assets/img/pres.png" alt="Prestasi">
                                 </div>
-                                <div class="menu-text">Prestasi</div>
+                                <div class="menu-text-mhs">Prestasi</div>
                             </a>
 
                             <div class="menu-item menu-item-blue">
                                 <div class="menu-icon">
                                     <h2>10</h2>
                                 </div>
-                                <div class="menu-text">Prestasi Ditambahkan</div>
+                                <div class="menu-text-mhs">Prestasi Ditambahkan</div>
                             </div>
 
                             <a href="#" class="menu-item menu-item-red">
                                 <div class="menu-icon">
                                     <img src="../../public/assets/img/exit-run.png" alt="Keluar">
                                 </div>
-                                <div class="menu-text">Keluar</div>
+                                <div class="menu-text-mhs">Keluar</div>
                             </a>
                         </div>
                     </div>
@@ -123,7 +123,7 @@ $userRole = $_SESSION['user']['role'];
                 </table>
             </div>
         </div>
-        
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
