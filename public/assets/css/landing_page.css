@@ -1,0 +1,545 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+    background-color: #00278B;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 60px;
+    background: linear-gradient(135deg, #15367E, #00278B);
+    color: white;
+    position: relative;
+    z-index: 1;
+} 
+
+.logo img {
+    height: 50px;
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+    background-color: white;
+    padding: 5px 20px;
+    border-radius: 25px;
+}
+
+nav a {
+    color: #003366;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 20px;
+}
+
+nav a:hover {
+    background-color: #0047ab;
+    color: white;
+}
+
+.button-masuk {
+    background-color: transparent;
+    color: white;
+    padding: 10px 30px;
+    border: 2px solid white;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.button-masuk:hover {
+    background-color: white;
+    color: #003366;
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, #15367E, #00278B);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 60px 100px;
+    height: 80vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    max-width: 50%;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    margin-bottom: 30px;
+    line-height: 1.8;
+    font-size: 1.2rem;
+}
+
+.hero button {
+    background-color: white;
+    color: #15367E;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.hero button:hover {
+    background-color: #e6e6e6;
+}
+
+.hero img {
+    max-width: 40%;
+    height: auto;
+    transform: translateY(-20px);
+    z-index: 2;
+}
+
+.circle-pattern {
+    position: absolute;
+    bottom: 75px;
+    left: 55%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 700px;
+    opacity: 0.3;
+    z-index: 1;
+    clip-path: inset(35px 0 0 0);
+}
+
+.oval-text {
+background-color: #15367E;
+color: white;
+padding: 15px 30px;
+border-radius: 50px;
+display: inline-block;
+text-align: center;
+margin-bottom: 5px;
+box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.oval-text2 {
+background-color: #FFFFFF;
+color: #15367E;
+padding: 15px 30px;
+border-radius: 50px;
+display: inline-block;
+text-align: center;
+margin-bottom: 5px;
+box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Tentang Kami Section */
+.tentang-kami {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 80px 100px;
+background-color: #f5f8ff;
+position: relative;
+overflow: hidden;
+height: 85vh;
+}
+
+.tentang-kami-title {
+margin-bottom: 50px;
+}
+
+.tentang-kami-content {
+max-width: 50%;
+}
+
+.tentang-kami h2 {
+font-size: 2.2rem;
+color: #15367E;
+margin-bottom: 10px;
+margin-top: 30px;
+font-weight: bold;
+}
+
+.tentang-kami p {
+line-height: 1.8;
+font-size: 1.1rem;
+color: #4a4a4a;
+margin-top: 10px;
+margin-bottom: 10px;
+}
+
+.tentang-kami-image {
+max-width: 45%;
+height: auto;
+object-fit: contain;
+}
+
+/* Bagian Alur */
+.alur-section {
+background-color: #15367E;
+padding: 60px 20px;
+text-align: center;
+color: white;
+}
+
+.alur-header h2 {
+font-size: 20px;
+font-weight: bold;
+margin-bottom: 40px;
+color: #15367E;
+}
+
+/* Kontainer Kartu */
+.alur-cards {
+display: flex;
+justify-content: flex-start;
+gap: 50px;
+overflow-x: auto;
+padding: 20px 0;
+scroll-snap-type: x mandatory;
+scrollbar-width: none;
+}
+
+.alur-cards::-webkit-scrollbar {
+display: none;
+}
+
+/* Kartu Alur */
+.alur-card {
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+align-items: center;
+background-color: #ffffff;
+border-radius: 10px;
+box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+padding: 20px;
+text-align: center;
+flex: 0 0 auto;
+width: 250px;
+scroll-snap-align: start;
+color: #333333;
+position: relative;
+overflow: hidden;
+}
+
+.alur-card h3 {
+font-size: 18px;
+margin-top: 15px;
+margin-bottom: 20px;
+color: #15367E;
+}
+
+.alur-card p {
+display: flex;
+justify-content: center;
+align-items: center;
+flex-grow: 0;
+flex-shrink: 0;
+text-align: justify;
+font-size: 14px;
+line-height: 1.6;
+color: #FFFFFF;
+padding: 10px;
+border-radius: 10px;
+margin-top: auto;
+width: 100%;
+}
+
+/* Warna per kartu */
+.alur-card:nth-child(1) p {
+background: #15367E;
+}
+
+.alur-card:nth-child(2) p {
+background: #376EE6;
+}
+
+.alur-card:nth-child(3) p {
+background: #15367E;
+}
+
+.alur-card:nth-child(4) p {
+background: #376EE6;
+}
+
+.alur-card img.alur-icon {
+width: 60px;
+height: 60px;
+}
+
+/* Rangking Section */
+.ranking-section {
+background-color: #ffffff;
+color: white;
+text-align: center;
+padding: 40px 20px;
+}
+
+.ranking-section h2 {
+font-size: 20px;
+margin-bottom: 80px;
+}
+
+/* Kontainer untuk Ranking */
+.ranking-container {
+display: flex;
+justify-content: space-evenly;
+align-items: flex-end;
+margin-top: 70px;
+}
+
+/* Card Ranking */
+.ranking-card {
+background-color: #15367E;
+border-radius: 15px;
+text-align: center;
+padding: 20px 15px;
+box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+width: 300px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: flex-start;
+}
+
+/* Juara 1 */
+.ranking-card.first {
+transform: scale(1.15);
+z-index: 2;
+}
+
+/* Juara 2 */
+.ranking-card.second {
+transform: scale(1.05);
+}
+
+/* Juara 3 */
+.ranking-card.third {
+transform: scale(0.95);
+}
+
+/* Ikon Medali */
+.medal-icon {
+width: 150px;
+height: auto;
+margin-bottom: 20px;
+margin-top: 10px;
+}
+
+/* Pembungkus Skor */
+.score-wrapper {
+background-color: white;
+color: #15367E;
+font-size: 1.5rem;
+font-weight: bold;
+text-align: center;
+border-radius: 50px;
+padding: 10px 20px;
+width: fit-content;
+margin: 10px 0;
+display: flex;
+align-items: center;
+justify-content: center;
+box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Pembungkus Nama */
+.name-wrapper {
+background-color: white;
+color: #15367E;
+font-size: 1rem;
+font-weight: bold;
+text-align: center;
+border-radius: 50px;
+padding: 10px 20px;
+width: fit-content;
+display: flex;
+align-items: center;
+justify-content: center;
+box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Reset Padding dan Margin Bawaan */
+.ranking-container,
+.ranking-card {
+margin: 0;
+padding: 0;
+}
+
+/* Contact Section */
+.contact-section {
+background-color: #15367E;
+height: 90vh;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.container {
+display: flex;
+justify-content: space-between;
+align-items: center;
+max-width: 90%;
+padding: 20px;
+gap: 50px;
+color: white;
+}
+
+.logo-contact img {
+width: 150px;
+height: auto;
+margin-right: 50px;
+}
+
+.contact-info, .quick-links {
+max-width: 600px;
+text-align: justify;
+}
+
+.contact-info h3, .quick-links h3 {
+margin: 10px 0;
+font-size: 24px;
+margin-bottom: 15px;
+}
+
+.contact-info p {
+margin: 10px 0;
+font-size: 16px;
+line-height: 1.8;
+display: flex;
+align-items: center;
+margin-right: 100px;
+}
+
+.contact-info p span {
+margin-right: 10px;
+}
+
+.quick-links ul {
+list-style: none;
+padding: 0;
+}
+
+.quick-links ul li {
+margin: 8px 0;
+}
+
+.quick-links ul li a {
+color: white;
+text-decoration: none;
+font-size: 17px;
+}
+
+.quick-links ul li a:hover {
+text-decoration: underline;
+}
+
+/* Media Queries untuk layar di bawah 1024px */
+@media (max-width: 1024px) {
+.hero {
+flex-direction: column;
+align-items: center;
+text-align: center;
+padding: 30px;
+height: auto;
+}
+.hero img {
+max-width: 60%;
+}
+.hero-content {
+max-width: 100%;
+}
+
+.tentang-kami {
+flex-direction: column;
+padding: 40px 20px;
+text-align: center;
+}
+.tentang-kami-content {
+max-width: 100%;
+}
+.tentang-kami-image {
+max-width: 80%;
+margin-top: 20px;
+}
+
+.alur-cards {
+flex-direction: column;
+gap: 20px;
+align-items: center;
+}
+}
+
+/* Media Queries untuk layar di bawah 768px */
+@media (max-width: 768px) {
+header {
+flex-direction: column;
+padding: 20px;
+text-align: center;
+}
+nav {
+flex-direction: column;
+gap: 10px;
+padding: 10px;
+}
+.button-masuk {
+margin-top: 10px;
+width: 100%;
+}
+
+.alur-card {
+width: 90%;
+}
+
+.ranking-container {
+flex-direction: column;
+gap: 30px;
+align-items: center;
+}
+
+.contact-section .container {
+flex-direction: column;
+text-align: center;
+}
+.logo-contact {
+margin-bottom: 20px;
+}
+}
+
+/* Media Queries untuk layar di bawah 480px */
+@media (max-width: 480px) {
+.hero h1 {
+font-size: 1.8rem;
+}
+.hero p {
+font-size: 1rem;
+}
+.hero button {
+padding: 10px 20px;
+font-size: 16px;
+}
+
+.alur-card img.alur-icon {
+width: 50px;
+height: 50px;
+}
+.alur-card h3 {
+font-size: 16px;
+}
+.alur-card p {
+font-size: 12px;
+}
+
+.ranking-card {
+width: 80%;
+}
+}
