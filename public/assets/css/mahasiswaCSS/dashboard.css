@@ -1,81 +1,124 @@
 body {
-    font-family: Poppins, sans-serif;
-    background-color: #f9f9f9;
+    background-color: #FFFFFF;
 }
 
-.photo-frame {
-    width: 100%;
-    height: 280px;
-    border: 2px dashed #ccc;
+.profile-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 8px;
-    color: #aaa;
-    font-size: 16px;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-.info-card {
-    background-color: #f4f4f9;
-    border-radius: 8px;
-    padding: 20px;
-    margin-top: 15px;
-    text-align: center;
-}
-
-.btn-card {
-    width: 270px;
-    height: 115px;
+.profile-image {
+    background-color: #F4F6F9;
+    padding: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    background-color: #aaa;
+}
+
+.profile-image img {
+    max-width: 200px;
+}
+
+.profile-info {
+    background-color: #0d47a1;
     color: white;
-    border-radius: 8px;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: bold;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
 }
 
-.btn-card:hover {
-    background-color: #0056b3;
+.profile-info h4 {
+    margin: 0;
+    font-size: 24px;
 }
 
-.btn-card.red {
-    background-color: #d9534f;
+.profile-info p {
+    margin: 0;
 }
 
-.btn-card.red:hover {
-    background-color: #c9302c;
+.menu-stat-section {
+    border-radius: 10px;
+    padding: 10px;
 }
 
-.btn-layout {
+.menu-grid {
     display: grid;
-    grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 1fr;
-    height: 100%;
-    margin-left: auto;
-    /* Menggeser ke kanan agar sejajar dengan tabel */
+    gap: 60px;
 }
 
-
-.table-section {
-    margin-top: 30px;
+.menu-item {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 110px;
+    color: white;
 }
 
-.table-section h5 {
+.menu-item:hover {
+    background-color: #135495;
+    transform: scale(1.05);
+}
+
+.menu-item-red:hover {
+    background-color: #A76360;
+    transform: scale(1.05);
+}
+
+.menu-icon {
+    width: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-text {
+    font-size: 20px;
+    width: 75%;
+    padding: 50px 10px;
     font-weight: bold;
+    background-color: #F4F6F9;
+    color: #333;
+    text-align: center;
 }
 
-.table {
-    margin-top: 20px;
+.menu-item-blue {
+    background-color: #0d47a1;
 }
 
-.table tbody tr {
-    background-color: #f8f9fa;
+.menu-item-red {
+    background-color: #983935;
 }
 
-.btn-layout .btn-card {
-    height: 115px;
+.menu-icon img {
+    width: 30px;
+    height: 30px;
+}
+
+.ranking-table {
+    background-color: #F4F6F9;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 40px;
+}
+
+.ranking-table table {
+    background-color: white;
+    border-radius: 20px;
+    width: 100%;
+}
+
+.ranking-table thead {
+    background-color: #0d47a1;
+    color: white;
+}
+
+.text-center-align {
+    text-align: center;
+    vertical-align: middle;
 }
