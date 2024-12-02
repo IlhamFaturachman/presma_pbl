@@ -19,7 +19,7 @@ $userRole = $_SESSION['user']['role'];
 </head>
 
 <body>
-    <h1>Ini adalah Dashboard Mahasiswa</h1>
+    <h1>Ini adalah Dashboard Mahasiswa puny gwido</h1>
     <p>Selamat datang, <?php echo htmlspecialchars($userName); ?>!</p>
     <p>Role Anda: Mahasiswa</p>
 </body>
