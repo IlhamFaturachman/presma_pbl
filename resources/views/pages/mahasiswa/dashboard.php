@@ -1,4 +1,4 @@
-<!-- <?php
+<?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -7,7 +7,7 @@ if (session_status() === PHP_SESSION_NONE) {
 $userId = $_SESSION['user']['id'];
 $userName = $_SESSION['user']['name'];
 $userRole = $_SESSION['user']['role'];
-?> -->
+?>
 
 
 <!DOCTYPE html>

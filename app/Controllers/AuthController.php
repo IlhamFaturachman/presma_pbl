@@ -102,7 +102,7 @@ class AuthController
             case 2:
                 return '/presma_pbl/public/dashboard/dosbim';
             case 3:
-                return '/presma_pbl/public/dashboard/admin';
+                return '/presma_pbl/public/admin/dashboard';
             default:
                 return '/presma_pbl/public/dashboard/unknown';
         }
