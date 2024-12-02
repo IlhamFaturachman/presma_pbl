@@ -20,7 +20,7 @@ $userRole = $_SESSION['user']['role'];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="/presma_pbl/public/assets/css/adminCSS/dashboard.css">
+    <link rel="stylesheet" href="/presma_pbl/public/assets/css/mahasiswaCSS/dashboard.css">
     <style>
         body {
             font-family: Poppins, sans-serif;
@@ -129,7 +129,36 @@ $userRole = $_SESSION['user']['role'];
                 <div class="col-md-8">
                     <div class="btn-layout">
                         <!-- Top Left -->
-                        <a href="#" class="btn-card">Tambah</a>
+                        <!-- Tombol Tambah -->
+                        <!-- Modal Tambah Prestasi -->
+                        <a href="#" class="btn btn-primary" id="btnTambah" data-modal-url="/presma_pbl/resources/views/layouts/mahasiswa/modalTambahPrestasi.php">Tambah</a>
+            </div>
+        </div>
+
+        <!-- Placeholder untuk memuat modal -->
+        <div id="modalContainer"></div>
+    </div>
+
+    <!-- Bootstrap dan jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Memuat modal dari file eksternal
+        $(document).on('click', '#btnTambah', function (e) {
+            e.preventDefault();
+
+            // URL file eksternal yang berisi modal
+            const modalUrl = $(this).data('modal-url');
+
+            // Memuat konten modal ke dalam #modalContainer
+            $('#modalContainer').load(modalUrl, function () {
+                // Menampilkan modal setelah konten berhasil dimuat
+                const modal = new bootstrap.Modal(document.getElementById('addPrestasiModal'));
+                modal.show();
+            });
+        });
+    </script>
+</body>
 
                         <!-- Top Right -->
                         <a href="#" class="btn-card">Prestasi</a>
