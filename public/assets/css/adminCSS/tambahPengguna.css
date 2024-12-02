@@ -1,0 +1,55 @@
+body {
+    background-color: #f8f9fa;
+    /* Warna latar abu-abu terang */
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.card {
+    background-color: #fff;
+    /* Warna putih untuk card */
+    border: none;
+    border-radius: 12px;
+    /* Sudut membulat */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Efek bayangan */
+}
+
+.card-title {
+    color: #333;
+}
+
+.table th {
+    text-transform: uppercase;
+    font-size: 14px;
+    text-align: center;
+}
+
+.table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.badge {
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 5px;
+}
+
+.btn {
+    font-size: 14px;
+}
+
+.pagination .page-link {
+    color: #007bff;
+}
+
+.pagination .page-link:hover {
+    background-color: #e9ecef;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: white;
+}

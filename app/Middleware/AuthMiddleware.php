@@ -32,7 +32,7 @@ class AuthMiddleware
 
         // Periksa apakah role pengguna sesuai
         $userRole = (int)$_SESSION['user']['role'];
-        if ($userRole < $this->requiredRole) {
+        if ($userRole !== $this->requiredRole) {
             error_log("ACCESS DENIED: Role mismatch. User role: {$userRole}, Required role: {$this->requiredRole}");
             return $this->denyAccess();
         }

@@ -55,8 +55,62 @@ $app->group('/admin', function ($admin) {
     $admin->get('/dashboard', function (Request $request, Response $response) {
         return renderView($response, 'pages/admin/dashboard.php');
     });
-});
-// ->add(new AuthMiddleware(3));
+
+    // Tambah Pengguna
+    $admin->map(['GET', 'POST'], '/tambah-pengguna', function (Request $request, Response $response) {
+        if ($request->getMethod() === 'POST') {
+            // Proses tambah pengguna
+            // Ambil data dari form
+            $data = $request->getParsedBody();
+            // Logika untuk menyimpan data pengguna (misalnya ke database)
+            return $response->withHeader('Location', '/admin/dashboard')->withStatus(302);
+        }
+        return renderView($response, 'pages/admin/tambahPengguna.php');
+    });
+
+    // Tambah Mahasiswa
+    $admin->map(['GET', 'POST'], '/tambah-mahasiswa', function (Request $request, Response $response) {
+        if ($request->getMethod() === 'POST') {
+            // Proses tambah mahasiswa
+            $data = $request->getParsedBody();
+            return $response->withHeader('Location', '/admin/dashboard')->withStatus(302);
+        }
+        return renderView($response, 'pages/admin/tambah_mahasiswa.php');
+    });
+
+    // Tambah Dosen
+    $admin->map(['GET', 'POST'], '/tambah-dosen', function (Request $request, Response $response) {
+        if ($request->getMethod() === 'POST') {
+            // Proses tambah dosen
+            $data = $request->getParsedBody();
+            return $response->withHeader('Location', '/admin/dashboard')->withStatus(302);
+        }
+        return renderView($response, 'pages/admin/tambah_dosen.php');
+    });
+
+    // Validasi Prestasi
+    $admin->get('/validasi-prestasi', function (Request $request, Response $response) {
+        return renderView($response, 'pages/admin/validasi_prestasi.php');
+    });
+
+    // Lihat Ranking Mahasiswa
+    $admin->get('/lihat-ranking', function (Request $request, Response $response) {
+        return renderView($response, 'pages/admin/lihat_ranking.php');
+    });
+
+    // Lihat Semua Prestasi dan Export
+    $admin->get('/lihat-prestasi', function (Request $request, Response $response) {
+        return renderView($response, 'pages/admin/lihat_semua_prestasi.php');
+    });
+
+    $admin->post('/export-prestasi', function (Request $request, Response $response) {
+        // Proses export data
+        // Logika untuk meng-export data prestasi mahasiswa ke file (Excel/CSV)
+        return $response->withHeader('Content-Type', 'application/octet-stream')
+            ->withHeader('Content-Disposition', 'attachment; filename="prestasi_mahasiswa.csv"');
+    });
+})->add(new AuthMiddleware(3)); // Role admin
+
 
 // Dashboard untuk dosen pembimbing
 $app->group('/dosbim', function ($dosbim) {
@@ -70,8 +124,7 @@ $app->group('/mahasiswa', function ($mahasiswa) {
     $mahasiswa->get('/dashboard', function (Request $request, Response $response) {
         return renderView($response, 'pages/mahasiswa/dashboard.php');
     });
-});
-// ->add(new AuthMiddleware(1));
+})->add(new AuthMiddleware(1));
 
 // Dashboard untuk Ketua Jurusan (Kajur)
 $app->group('/kajur', function ($kajur) {

@@ -1,3 +1,14 @@
+<!-- <?php
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Ambil informasi pengguna dari sesi
+        $userId = $_SESSION['user']['id'];
+        $userName = $_SESSION['user']['name'];
+        $userRole = $_SESSION['user']['role'];
+        ?> -->
+
 <header class="navbar navbar-light bg-light shadow-sm">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <!-- Logo Section -->
@@ -5,7 +16,7 @@
 
         <!-- User Actions -->
         <div class="d-flex align-items-center">
-            <span class="navbar-brand mb-0">Hallo, Admin</span>
+            <span class="navbar-brand mb-0">Hallo, <?php echo $userName; ?></span>
 
             <!-- Notification Button -->
             <button class="btn btn-light me-2">
