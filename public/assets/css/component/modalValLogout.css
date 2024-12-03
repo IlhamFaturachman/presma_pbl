@@ -1,0 +1,53 @@
+/* Styling Modal */
+.modal-content {
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+.modal-header {
+    border-bottom: none;
+    text-align: center;
+}
+.modal-header h5 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+.modal-body {
+    font-size: 18px;
+    color: #555;
+}
+.modal-footer {
+    border-top: none;
+}
+.modal-footer .btn {
+    width: 120px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+    border-radius: 30px;
+}
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+.btn-danger {
+    background-color: #e63946;
+    color: white;
+    border-radius: 30px;
+}
+.btn-danger:hover {
+    background-color: #d62839;
+}
+/* Animasi Masuk Modal */
+.modal.fade .modal-dialog {
+    transform: translateY(-50px);
+    transition: transform 0.3s ease-out;
+}
+.modal.show .modal-dialog {
+    transform: translateY(0);
+}

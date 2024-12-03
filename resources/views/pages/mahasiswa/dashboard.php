@@ -20,7 +20,7 @@ $userRole = $_SESSION['user']['role'];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/header.css">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/sidebar.css">
-    <link rel="stylesheet" href="/presma_pbl/public/assets/css/mahasiswaCSS/dashboard.css">
+    <link rel="stylesheet" href="/presma_pbl/public/assets/css/mahasiswa/dashboard.css">
 </head>
 
 <body>
@@ -73,7 +73,7 @@ $userRole = $_SESSION['user']['role'];
                                 <div class="menu-text-mhs">Prestasi Ditambahkan</div>
                             </div>
 
-                            <a href="#" class="menu-item menu-item-red">
+                            <a href="#" class="menu-item menu-item-red" id="btnLogout">
                                 <div class="menu-icon">
                                     <img src="../../public/assets/img/exit-run.png" alt="Keluar">
                                 </div>
@@ -124,6 +124,8 @@ $userRole = $_SESSION['user']['role'];
             </div>
         </div>
 
+        <div id="modalContainer"></div>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -134,6 +136,15 @@ $userRole = $_SESSION['user']['role'];
             $('#modalContainer').load(modalUrl, function() {
                 const modal = new bootstrap.Modal(document.getElementById('addPrestasiModal'));
                 modal.show();
+            });
+        });
+
+        // js modal Logout
+        $(document).on('click', '#btnLogout', function (e) {
+            e.preventDefault();
+            // Memuat modal dari file terpisah
+            $('#modalContainer').load('/presma_pbl/resources/views/component/modalValLogout.php', function () {
+                $('#logoutModal').modal('show');
             });
         });
     </script>
