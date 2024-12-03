@@ -1,15 +1,17 @@
 <?php
 
 use App\Controllers\AuthController;
+use App\Controllers\UserController;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 use App\Middleware\AuthMiddleware;
 
 // Fungsi utilitas untuk render view
-function renderView(Response $response, string $viewPath): Response
+function renderView(Response $response, string $viewPath, array $data = []): Response
 {
     $filePath = __DIR__ . '/../resources/views/' . $viewPath;
     if (file_exists($filePath)) {
+        extract($data); // Mengekstrak array menjadi variabel
         ob_start(); // Mulai output buffering
         require $filePath; // Sertakan file view
         $output = ob_get_clean(); // Ambil hasil buffer dan bersihkan buffer
@@ -20,6 +22,7 @@ function renderView(Response $response, string $viewPath): Response
         return $response->withHeader('Content-Type', 'text/plain')->withStatus(404);
     }
 }
+
 
 // Landing Page
 $app->get('/', function (Request $request, Response $response) {
@@ -58,53 +61,71 @@ $app->group('/admin', function ($admin) {
 
     // Tambah Pengguna
     $admin->map(['GET', 'POST'], '/tambah-pengguna', function (Request $request, Response $response) {
+        $userController = new UserController();
+
         if ($request->getMethod() === 'POST') {
-            // Proses tambah pengguna
-            // Ambil data dari form
-            $data = $request->getParsedBody();
-            // Logika untuk menyimpan data pengguna (misalnya ke database)
-            return $response->withHeader('Location', '/admin/dashboard')->withStatus(302);
+            // Proses tambah pengguna menggunakan UserController
+            return $userController->store($request, $response);
         }
-        return renderView($response, 'pages/admin/tambahPengguna.php');
+
+        // Ambil daftar pengguna
+        $users = $userController->index($request, $response);
+
+        // Render halaman dengan daftar pengguna
+        return renderView($response, 'pages/admin/tambahPengguna.php', ['users' => $users]);
     });
 
     // Tambah Mahasiswa
-    $admin->map(['GET', 'POST'], '/tambah-mahasiswa', function (Request $request, Response $response) {
-        if ($request->getMethod() === 'POST') {
-            // Proses tambah mahasiswa
-            $data = $request->getParsedBody();
-            return $response->withHeader('Location', '/admin/dashboard')->withStatus(302);
-        }
-        return renderView($response, 'pages/admin/tambahPengguna.php');
-    });
+    // $admin->map(['GET', 'POST'], '/tambah-mahasiswa', function (Request $request, Response $response) {
+    //     $mahasiswaController = new MahasiswaController();
 
-    // Tambah Dosen
-    $admin->map(['GET', 'POST'], '/tambah-dosen', function (Request $request, Response $response) {
-        if ($request->getMethod() === 'POST') {
-            // Proses tambah dosen
-            $data = $request->getParsedBody();
-            return $response->withHeader('Location', '/admin/dashboard')->withStatus(302);
-        }
-        return renderView($response, 'pages/admin/tambah_dosen.php');
-    });
+    //     if ($request->getMethod() === 'POST') {
+    //         // Proses tambah mahasiswa menggunakan MahasiswaController
+    //         return $mahasiswaController->store($request, $response);
+    //     }
 
-    // Validasi Prestasi
-    $admin->get('/validasi-prestasi', function (Request $request, Response $response) {
-        return renderView($response, 'pages/admin/validasi_prestasi.php');
-    });
+    //     return renderView($response, 'pages/admin/tambah_mahasiswa.php');
+    // });
 
-    // Lihat Ranking Mahasiswa
-    $admin->get('/lihat-ranking', function (Request $request, Response $response) {
-        return renderView($response, 'pages/admin/lihat_ranking.php');
-    });
+    // // Tambah Dosen
+    // $admin->map(['GET', 'POST'], '/tambah-dosen', function (Request $request, Response $response) {
+    //     $dosenController = new DosenController();
 
-    $admin->post('/export-prestasi', function (Request $request, Response $response) {
-        // Proses export data
-        // Logika untuk meng-export data prestasi mahasiswa ke file (Excel/CSV)
-        return $response->withHeader('Content-Type', 'application/octet-stream')
-            ->withHeader('Content-Disposition', 'attachment; filename="prestasi_mahasiswa.csv"');
-    });
+    //     if ($request->getMethod() === 'POST') {
+    //         // Proses tambah dosen menggunakan DosenController
+    //         return $dosenController->store($request, $response);
+    //     }
+
+    //     return renderView($response, 'pages/admin/tambah_dosen.php');
+    // });
+
+    // // Validasi Prestasi
+    // $admin->get('/validasi-prestasi', function (Request $request, Response $response) {
+    //     $prestasiController = new PrestasiController();
+    //     $prestasi = $prestasiController->index($request, $response);
+
+    //     // Decode hasil JSON dari PrestasiController
+    //     $dataPrestasi = json_decode((string)$prestasi->getBody(), true);
+    //     return renderView($response, 'pages/admin/validasi_prestasi.php', ['prestasi' => $dataPrestasi]);
+    // });
+
+    // // Lihat Ranking Mahasiswa
+    // $admin->get('/lihat-ranking', function (Request $request, Response $response) {
+    //     $rankingController = new RankingController();
+    //     $ranking = $rankingController->index($request, $response);
+
+    //     // Decode hasil JSON dari RankingController
+    //     $dataRanking = json_decode((string)$ranking->getBody(), true);
+    //     return renderView($response, 'pages/admin/lihat_ranking.php', ['ranking' => $dataRanking]);
+    // });
+
+    // // Export Prestasi
+    // $admin->post('/export-prestasi', function (Request $request, Response $response) {
+    //     $prestasiController = new PrestasiController();
+    //     return $prestasiController->export($request, $response);
+    // });
 })->add(new AuthMiddleware(3)); // Role admin
+
 
 
 // Dashboard untuk dosen pembimbing

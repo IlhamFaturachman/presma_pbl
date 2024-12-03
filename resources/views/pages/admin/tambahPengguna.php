@@ -2,11 +2,6 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-
-// Ambil informasi pengguna dari sesi
-$userId = $_SESSION['user']['id'];
-$userName = $_SESSION['user']['name'];
-$userRole = $_SESSION['user']['role'];
 ?>
 
 <!DOCTYPE html>
@@ -48,18 +43,33 @@ $userRole = $_SESSION['user']['role'];
                             <thead class="table-primary">
                                 <tr>
                                     <th>Nama Pengguna</th>
-                                    <th>Password</th>
-                                    <th>Roles</th>
-                                    <th>Email</th>
+                                    <th>Role</th>
                                     <th>Opsi</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php if (!empty($users)): ?>
+                                <?php foreach ($users as $user): ?>
                                 <tr>
-                                    <td>Admin_1</td>
-                                    <td>**********</td>
-                                    <td><span class="badge bg-primary">Admin</span></td>
-                                    <td>admin1@gmail.com</td>
+                                    <td><?= htmlspecialchars($user['username'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                    <td>
+                                        <?php
+                                                // Peta role berdasarkan role_id
+                                                $roles = [
+                                                    1 => ['label' => 'Mahasiswa', 'badge' => 'info'],
+                                                    2 => ['label' => 'Dosen', 'badge' => 'secondary'],
+                                                    3 => ['label' => 'Admin', 'badge' => 'primary'],
+                                                    4 => ['label' => 'Kajur', 'badge' => 'warning']
+                                                ];
+
+                                                // Dapatkan role berdasarkan role_id
+                                                $role = $roles[$user['role_id']] ?? ['label' => 'Unknown', 'badge' => 'dark'];
+                                                ?>
+                                        <span class="badge bg-<?= $role['badge']; ?>">
+                                            <?= htmlspecialchars($role['label'], ENT_QUOTES, 'UTF-8'); ?>
+                                        </span>
+                                    </td>
+
                                     <td>
                                         <button class="btn btn-sm btn-warning">
                                             <i class="bi bi-pencil"></i> Edit
@@ -69,37 +79,16 @@ $userRole = $_SESSION['user']['role'];
                                         </button>
                                     </td>
                                 </tr>
+                                <?php endforeach; ?>
+                                <?php else: ?>
                                 <tr>
-                                    <td>Dosen_1</td>
-                                    <td>**********</td>
-                                    <td><span class="badge bg-secondary">Dosen</span></td>
-                                    <td>dosen1@gmail.com</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-warning">
-                                            <i class="bi bi-pencil"></i> Edit
-                                        </button>
-                                        <button class="btn btn-sm btn-danger">
-                                            <i class="bi bi-trash"></i> Hapus
-                                        </button>
-                                    </td>
+                                    <td colspan="4" class="text-center">Tidak ada pengguna yang ditemukan.</td>
                                 </tr>
-                                <tr>
-                                    <td>Mahasiswa_1</td>
-                                    <td>**********</td>
-                                    <td><span class="badge bg-info">Mahasiswa</span></td>
-                                    <td>mahasiswa1@gmail.com</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-warning">
-                                            <i class="bi bi-pencil"></i> Edit
-                                        </button>
-                                        <button class="btn btn-sm btn-danger">
-                                            <i class="bi bi-trash"></i> Hapus
-                                        </button>
-                                    </td>
-                                </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
+
                 </div>
             </div>
         </div>
