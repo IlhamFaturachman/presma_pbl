@@ -1,0 +1,77 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+#content {
+    margin-top: 60px;
+    /* Hindari overlap dengan header */
+    /* Sesuaikan dengan lebar sidebar */
+    padding: 20px;
+    transition: margin-left 0.3s;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: calc(100vh - 60px);
+    /* Sesuaikan dengan tinggi yang tersedia */
+    overflow-y: auto;
+}
+
+.content-row {
+    display: flex;
+    flex-wrap: wrap;
+    /* Agar fleksibel di layar kecil */
+    gap: 20px;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    flex: 1;
+    min-width: 300px;
+    /* Grafik tidak terlalu kecil */
+}
+
+.wide {
+    flex: 2;
+}
+
+canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+
+#pertumbuhanMahasiswa,
+#donutChart,
+#barChart {
+    max-width: 100%;
+    height: auto;
+    max-height: 300px;
+    /* Sesuaikan tinggi maksimum */
+}
+
+/* Responsif */
+@media screen and (max-width: 768px) {
+    #sidebar {
+        width: 60px;
+        overflow-y: auto;
+    }
+
+    #content {
+        margin-left: 60px;
+    }
+
+    .content-row {
+        flex-direction: column;
+    }
+
+    .card {
+        flex: 1 1 100%;
+        /* Full width di layar kecil */
+    }
+}

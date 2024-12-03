@@ -20,6 +20,8 @@ $userRole = $_SESSION['user']['role'];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/header.css">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/sidebar.css">
+    <link rel="stylesheet" href="/presma_pbl/public/assets/css/admin/dashboard.css">
+
 </head>
 
 <body>
@@ -27,7 +29,7 @@ $userRole = $_SESSION['user']['role'];
     <!-- Header -->
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/presma_pbl/resources/views/layouts/header.php'; ?>
 
-    <div class="d-flex">
+    <div class="content-wrapper d-flex">
         <!-- Sidebar -->
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/presma_pbl/resources/views/layouts/sidebar.php'; ?>
 
@@ -35,69 +37,19 @@ $userRole = $_SESSION['user']['role'];
         <div id="content" class="p-4 w-100">
             <div class="card shadow">
                 <div class="card-body">
-                    <h2 class="mb-4">Daftar Pengguna</h2>
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <input type="text" class="form-control w-50" placeholder="Cari pengguna...">
-                        <button class="btn btn-primary">
-                            <i class="bi bi-plus-lg"></i> Tambah Pengguna
-                        </button>
+                    <div class="content-row">
+                        <div class="card">
+                            <div class="chart-title">Total Data Prestasi</div>
+                            <canvas id="donutChart"></canvas>
+                        </div>
+                        <div class="card">
+                            <div class="chart-title">Prestasi per Bulan</div>
+                            <canvas id="barChart"></canvas>
+                        </div>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead class="table-primary">
-                                <tr>
-                                    <th>Nama Pengguna</th>
-                                    <th>Password</th>
-                                    <th>Roles</th>
-                                    <th>Email</th>
-                                    <th>Opsi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Admin_1</td>
-                                    <td>**********</td>
-                                    <td><span class="badge bg-primary">Admin</span></td>
-                                    <td>admin1@gmail.com</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-warning">
-                                            <i class="bi bi-pencil"></i> Edit
-                                        </button>
-                                        <button class="btn btn-sm btn-danger">
-                                            <i class="bi bi-trash"></i> Hapus
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Dosen_1</td>
-                                    <td>**********</td>
-                                    <td><span class="badge bg-secondary">Dosen</span></td>
-                                    <td>dosen1@gmail.com</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-warning">
-                                            <i class="bi bi-pencil"></i> Edit
-                                        </button>
-                                        <button class="btn btn-sm btn-danger">
-                                            <i class="bi bi-trash"></i> Hapus
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Mahasiswa_1</td>
-                                    <td>**********</td>
-                                    <td><span class="badge bg-info">Mahasiswa</span></td>
-                                    <td>mahasiswa1@gmail.com</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-warning">
-                                            <i class="bi bi-pencil"></i> Edit
-                                        </button>
-                                        <button class="btn btn-sm btn-danger">
-                                            <i class="bi bi-trash"></i> Hapus
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="card wide mt-4">
+                        <div class="chart-title">Pertumbuhan Mahasiswa</div>
+                        <canvas id="pertumbuhanMahasiswa"></canvas>
                     </div>
                 </div>
             </div>
@@ -106,7 +58,9 @@ $userRole = $_SESSION['user']['role'];
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/presma_pbl/public/assets/js/sidebar.js"></script>
+    <script src="/presma_pbl/public/assets/js/admin/dashboard.js"></script>
 </body>
 
 </html>

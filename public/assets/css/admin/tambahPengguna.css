@@ -6,6 +6,27 @@ body {
     padding: 0;
 }
 
+#content {
+    margin-top: 60px;
+    /* Hindari overlap dengan header */
+    /* Sesuaikan dengan lebar sidebar */
+    padding: 20px;
+    transition: margin-left 0.3s;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: calc(100vh - 60px);
+    /* Sesuaikan dengan tinggi yang tersedia */
+    overflow-y: auto;
+}
+
+.content-row {
+    display: flex;
+    flex-wrap: wrap;
+    /* Agar fleksibel di layar kecil */
+    gap: 20px;
+}
+
 .card {
     background-color: #fff;
     /* Warna putih untuk card */
@@ -14,11 +35,14 @@ body {
     /* Sudut membulat */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     /* Efek bayangan */
+    padding: 20px;
 }
 
 .card-title {
     color: #333;
 }
+
+
 
 .table th {
     text-transform: uppercase;

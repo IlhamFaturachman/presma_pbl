@@ -1,32 +1,64 @@
 /* Styling untuk header */
 header.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 0.5rem 1rem;
-    height: auto;
+    height: 60px;
+    /* Konsisten dengan tinggi header yang digunakan di sidebar */
+    background-color: #000000;
+    /* Warna yang konsisten */
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    /* Pastikan header berada di atas elemen lainnya */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 header.navbar img {
-    height: 50px;
-    max-width: 100%;
+    height: 40px;
+    /* Sesuaikan tinggi logo */
     object-fit: contain;
 }
 
 header.navbar .navbar-brand {
     font-size: 1rem;
     font-weight: 500;
+    margin-left: 1rem;
+    /* Berikan sedikit jarak dengan logo */
+    color: rgb(0, 0, 0);
+    text-decoration: none;
 }
 
 header.navbar .btn {
-    padding: 0.3rem 0.5rem;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.9rem;
+    color: rgb(0, 0, 0);
+    background-color: transparent;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header.navbar .btn:hover {
+    background-color: rgb(0, 0, 0);
+    color: #ffffff;
 }
 
 /* Responsif untuk header */
 @media (max-width: 768px) {
-    header.navbar .container-fluid {
+    header.navbar {
         flex-direction: column;
+        height: auto;
+        /* Tinggi fleksibel untuk tampilan kecil */
+        padding: 1rem;
         align-items: flex-start;
     }
 
     header.navbar img {
+        height: 30px;
+        /* Logo lebih kecil di layar kecil */
         margin-bottom: 0.5rem;
     }
 
@@ -43,5 +75,7 @@ header.navbar .btn {
 
     header.navbar .btn {
         margin-left: auto;
+        font-size: 0.8rem;
+        /* Tombol lebih kecil di layar kecil */
     }
 }
