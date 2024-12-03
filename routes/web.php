@@ -140,8 +140,10 @@ $app->group('/mahasiswa', function ($mahasiswa) {
     $mahasiswa->get('/dashboard', function (Request $request, Response $response) {
         return renderView($response, 'pages/mahasiswa/dashboard.php');
     });
-});
-// ->add(new AuthMiddleware(1));
+    $mahasiswa->get('/listPres', function (Request $request, Response $response) {
+        return renderView($response, 'pages/mahasiswa/listPres.php');
+    });
+})->add(new AuthMiddleware(1));
 
 // Dashboard untuk Ketua Jurusan (Kajur)
 $app->group('/kajur', function ($kajur) {
