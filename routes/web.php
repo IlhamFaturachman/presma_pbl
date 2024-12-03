@@ -75,7 +75,7 @@ $app->group('/admin', function ($admin) {
             $data = $request->getParsedBody();
             return $response->withHeader('Location', '/admin/dashboard')->withStatus(302);
         }
-        return renderView($response, 'pages/admin/tambah_mahasiswa.php');
+        return renderView($response, 'pages/admin/tambahPengguna.php');
     });
 
     // Tambah Dosen
@@ -96,11 +96,6 @@ $app->group('/admin', function ($admin) {
     // Lihat Ranking Mahasiswa
     $admin->get('/lihat-ranking', function (Request $request, Response $response) {
         return renderView($response, 'pages/admin/lihat_ranking.php');
-    });
-
-    // Lihat Semua Prestasi dan Export
-    $admin->get('/lihat-prestasi', function (Request $request, Response $response) {
-        return renderView($response, 'pages/admin/lihat_semua_prestasi.php');
     });
 
     $admin->post('/export-prestasi', function (Request $request, Response $response) {
@@ -124,8 +119,7 @@ $app->group('/mahasiswa', function ($mahasiswa) {
     $mahasiswa->get('/dashboard', function (Request $request, Response $response) {
         return renderView($response, 'pages/mahasiswa/dashboard.php');
     });
-});
-// ->add(new AuthMiddleware(1));
+})->add(new AuthMiddleware(1));
 
 // Dashboard untuk Ketua Jurusan (Kajur)
 $app->group('/kajur', function ($kajur) {

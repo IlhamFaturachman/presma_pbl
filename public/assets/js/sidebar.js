@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function toggleSidebar() {
         if (sidebar.style.width === '250px' || sidebar.style.width === '') {
-            sidebar.style.width = '76px';
+            sidebar.style.width = '110px';
             menuTextElements.forEach(text => text.style.display = 'none');
         } else {
             sidebar.style.width = '250px';
