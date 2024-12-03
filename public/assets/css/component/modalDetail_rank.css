@@ -1,0 +1,36 @@
+.modal-body {
+    padding: 20px;
+}
+
+.detail-info {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    row-gap: 10px;
+    column-gap: 20px;
+    align-items: center;
+}
+
+.detail-info div:nth-child(odd) {
+    text-align: right;
+    font-weight: bold;
+}
+
+.table-container {
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+}
+
+.table {
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+.table-container::-webkit-scrollbar {
+    width: 0px; /* Atur lebar scrollbar */
+}

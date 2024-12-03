@@ -34,7 +34,7 @@ $app->group('/auth', function ($auth) {
     });
 
     $auth->get('/test', function (Request $request, Response $response) {
-        return renderView($response, 'pages/auth/test.php');
+        return renderView($response, 'component/tabel_rank.php');
     });
 
     // Login API Route
