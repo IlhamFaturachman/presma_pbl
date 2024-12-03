@@ -35,7 +35,7 @@
                     <td>Teknik Informatika</td>
                     <td>20</td>
                     <td>750</td>
-                    <td><button class="btn btn-primary btn-sm">Detail</button></td>
+                    <td><button class="btn btn-primary btn-sm" data-id="1" data-bs-toggle="modal" data-bs-target="#detailModal">Detail</button></td>
                 </tr>
                 <tr>
                     <td>🥈</td>
@@ -105,7 +105,7 @@
             </tbody>
         </table>
 
-        <div class="pagination-container">
+        <div class="pagination-container mt-3">
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <li class="page-item disabled"><a class="page-link">Prev</a></li>
@@ -118,7 +118,48 @@
         </div>
     </div>
 
+    <!-- Include Modal Detail -->
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/presma_pbl/resources/views/component/modalDetail_rank.php'; ?>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        // Ketika tombol "Detail" diklik
+        $('button[data-id]').on('click', function () {
+            var mahasiswaId = $(this).data('id');
+
+            // Ambil data mahasiswa dan prestasinya menggunakan AJAX
+            $.ajax({
+                url: '/get_student_details/' + mahasiswaId, // Ganti dengan URL yang sesuai
+                method: 'GET',
+                success: function (data) {
+                    // Isi modal dengan data mahasiswa
+                    $('#modal-name').text(data.name);
+                    $('#modal-nim').text(data.nim);
+                    $('#modal-program').text(data.program);
+                    $('#modal-prestasi').text(data.achievementsCount);
+                    $('#modal-poin').text(data.totalPoints);
+
+                    // Isi tabel prestasi dengan data prestasi
+                    var achievementsTable = $('#achievements-tbody');
+                    achievementsTable.empty();
+                    data.achievements.forEach(function (achievement, index) {
+                        achievementsTable.append(`
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>${achievement.name}</td>
+                                <td>${achievement.year}</td>
+                                <td>${achievement.level}</td>
+                                <td>${achievement.rank}</td>
+                                <td>${achievement.points}</td>
+                            </tr>
+                        `);
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
