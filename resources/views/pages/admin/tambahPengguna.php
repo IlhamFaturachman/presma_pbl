@@ -34,7 +34,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     <h2 class="mb-4">Daftar Pengguna</h2>
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <input type="text" class="form-control w-50" placeholder="Cari pengguna...">
-                        <button class="btn btn-primary">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahPenggunaModal">
                             <i class="bi bi-plus-lg"></i> Tambah Pengguna
                         </button>
                     </div>
@@ -88,11 +88,14 @@ if (session_status() === PHP_SESSION_NONE) {
                             </tbody>
                         </table>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
+    </div>
+    </div>
+
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/presma_pbl/resources/views/component/admin/modalTambahUser.php'; ?>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
