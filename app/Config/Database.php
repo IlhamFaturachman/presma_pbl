@@ -13,7 +13,8 @@ class Database
     {
         if ($this->connection === null) {
             // Ambil nilai dari .env
-            $host = 'LAPTOP-KGRDEANA'; // Nama server SQL Server
+            $host = 'LAPTOP-KGRDEANA'; // Nama server SQL Server Ilham
+            // $host = 'LAPTOP-7ODSNK1P'; // Nama server SQL Server Gilang
             $dbName = 'Presma'; // Nama database
 
             // DSN untuk koneksi SQL Server
