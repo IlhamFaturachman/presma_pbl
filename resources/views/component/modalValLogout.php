@@ -9,19 +9,18 @@
 </head>
 <body>
     <!-- Modal Logout -->
-    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="logoutModalLabel">Validasi Logout</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center">
+            <div class="modal-content text-center">
+                <div class="modal-body">
+                    <div class="logout-icon">
+                        <i class="bi bi-box-arrow-right"></i>
+                    </div>
                     <p>Apakah Anda yakin ingin keluar?</p>
                 </div>
                 <div class="modal-footer justify-content-center">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
-                    <a href="/presma_pbl/logout.php" class="btn btn-danger">Ya</a>
+                    <a href="/presma_pbl/public/auth/login" class="btn btn-danger">Ya</a>
                 </div>
             </div>
         </div>

@@ -59,7 +59,7 @@ $userRole = $_SESSION['user']['role'];
                                 <div class="menu-text-mhs">Tambah</div>
                             </a>
 
-                            <a href="#" class="menu-item menu-item-blue">
+                            <a href="#" class="menu-item menu-item-blue" id="btnPrestasi">
                                 <div class="menu-icon">
                                     <img src="../../public/assets/img/pres.png" alt="Prestasi">
                                 </div>
@@ -130,12 +130,21 @@ $userRole = $_SESSION['user']['role'];
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).on('click', '#btnTambah', function(e) {
+        $(document).on('click', '#btnPrestasi', function(e) {
             e.preventDefault();
             const modalUrl = $(this).data('modal-url');
-            $('#modalContainer').load(modalUrl, function() {
+            $('#modalContainer').load('/presma_pbl/listPres.php', function() {
                 const modal = new bootstrap.Modal(document.getElementById('addPrestasiModal'));
                 modal.show();
+            });
+        });
+
+        // js modal Tambah
+        $(document).on('click', '#btnTambah', function (e) {
+            e.preventDefault();
+            // Memuat modal dari file terpisah
+            $('#modalContainer').load('/presma_pbl/resources/views/component/modalTambahPres.php', function () {
+                $('#prestasiModal').modal('show');
             });
         });
 

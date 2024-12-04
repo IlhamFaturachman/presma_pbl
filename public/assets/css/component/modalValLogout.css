@@ -1,49 +1,55 @@
 /* Styling Modal */
 .modal-content {
-    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    background: linear-gradient(135deg, #fdfbfb, #ebedee);
     border-radius: 20px;
     border: none;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-}
-.modal-header {
-    border-bottom: none;
-    text-align: center;
-}
-.modal-header h5 {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    max-width: 380px;
+    margin: auto;
 }
 .modal-body {
     font-size: 18px;
-    color: #555;
+    color: #2c3e50;
+    padding: 30px 40px;
+}
+.modal-body p {
+    font-weight: 600;
+    margin-bottom: 20px;
 }
 .modal-footer {
     border-top: none;
+    padding-bottom: 20px;
 }
 .modal-footer .btn {
     width: 120px;
     font-size: 16px;
     font-weight: bold;
     transition: all 0.3s ease;
+    border-radius: 30px;
 }
 .btn-secondary {
     background-color: #6c757d;
     color: #fff;
-    border-radius: 30px;
+    border: none;
 }
 .btn-secondary:hover {
     background-color: #5a6268;
 }
 .btn-danger {
-    background-color: #e63946;
+    background-color: #d63031;
     color: white;
-    border-radius: 30px;
+    border: none;
 }
 .btn-danger:hover {
-    background-color: #d62839;
+    background-color: #c0392b;
 }
-/* Animasi Masuk Modal */
+/* Icon Styling */
+.logout-icon {
+    font-size: 40px;
+    color: #e74c3c;
+    margin-bottom: 15px;
+}
+/* Animation for Modal */
 .modal.fade .modal-dialog {
     transform: translateY(-50px);
     transition: transform 0.3s ease-out;
