@@ -25,6 +25,10 @@
                                     <input type="text" class="form-control" placeholder="MHS 1">
                                 </div>
                                 <div class="mb-3">
+                                    <label class="form-label required">NIM</label>
+                                    <input type="text" class="form-control" placeholder="1234567890">
+                                </div>
+                                <div class="mb-3">
                                     <label class="form-label required">Dosen Pembimbing</label>
                                     <select class="form-select">
                                         <option>Ir. Gilang S.T, M.T</option>
@@ -32,23 +36,23 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label required">NIM</label>
-                                        <input type="text" class="form-control" placeholder="1234567890">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
                                         <label class="form-label required">Nama Lomba</label>
                                         <input type="text" class="form-control" placeholder="Lomba Memanah">
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label required">Kategori</label>
                                         <select class="form-select">
                                             <option>Kelompok</option>
                                         </select>
                                     </div>
+                                </div>
+                                <div class="row">
+                                <div class="col-md-6 mb-3">
+                                        <label class="form-label required">Waktu Lomba(Mulai)</label>
+                                        <input type="date" class="form-control" value="2024-11-27">
+                                    </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label required">Waktu Lomba</label>
+                                        <label class="form-label required">Waktu Lomba(Selesai)</label>
                                         <input type="date" class="form-control" value="2024-11-27">
                                     </div>
                                 </div>
