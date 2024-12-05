@@ -1,40 +1,28 @@
+/* Global Styles */
 body {
-    background-color: #f8f9fa;
-    /* Warna latar abu-abu terang */
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
+    font-family: 'Poppins', sans-serif;
 }
 
+/* Content Container */
 #content {
     margin-top: 60px;
     /* Hindari overlap dengan header */
-    /* Sesuaikan dengan lebar sidebar */
     padding: 20px;
-    transition: margin-left 0.3s;
     display: flex;
     flex-direction: column;
     gap: 20px;
     height: calc(100vh - 60px);
     /* Sesuaikan dengan tinggi yang tersedia */
     overflow-y: auto;
+    box-sizing: border-box;
 }
 
-.content-row {
-    display: flex;
-    flex-wrap: wrap;
-    /* Agar fleksibel di layar kecil */
-    gap: 20px;
-}
-
+/* Card Styles */
 .card {
     background-color: #fff;
-    /* Warna putih untuk card */
     border: none;
     border-radius: 12px;
-    /* Sudut membulat */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    /* Efek bayangan */
     padding: 20px;
 }
 
@@ -42,46 +30,147 @@ body {
     color: #333;
 }
 
-.table th {
-    text-transform: uppercase;
-    font-size: 14px;
+.search-box input {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.btn-primary {
     text-align: center;
 }
 
 
-.name-col {
+/* Tabel peringkat prestasi */
+.table-container {
+    background-color: #F4F6F9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    /* Memberikan ruang di atas tabel */
+}
+
+.table-container h4 {
+    margin-bottom: 20px;
+}
+
+.search-box {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.search-box input {
+    max-width: 300px;
+}
+
+/* Table Styles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table th,
+.table td {
+    padding: 12px;
     text-align: left;
+    border-bottom: 1px solid #F4F6F9;
 }
 
-.role-col {
+.table th {
+    background-color: #F4F6F9;
+    /* Warna yang sama seperti background tabel */
+    color: #212529;
+    /* Warna teks agar kontras */
+    font-weight: bold;
+}
+
+/* Rows Styling */
+.table tbody tr {
+    background-color: #F4F6F9;
+    /* Warna seragam untuk semua baris */
+}
+
+.table tbody tr:hover {
+    background-color: #F4F6F9;
+    /* Tambahkan efek hover jika diinginkan */
+}
+
+/* Styling for ranking cells (Peringkat) */
+.table tbody td:first-child {
+    background-color: #F4F6F9;
+    /* Warna abu-abu untuk kolom peringkat */
+    font-weight: bold;
     text-align: center;
-    padding-left: 1000px;
 }
 
-.action-col {
-    text-align: center;
-    padding-left: 1000px;
+/* Pagination Styles */
+.pagination {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
 }
 
-.badge {
-    padding: 5px 10px;
-    font-size: 12px;
-    border-radius: 5px;
-}
-
-.btn {
-    font-size: 14px;
+.pagination .page-item {
+    margin: 0 5px;
 }
 
 .pagination .page-link {
+    border: none;
+    /* Menghapus garis border */
     color: #007bff;
-}
-
-.pagination .page-link:hover {
-    background-color: #e9ecef;
+    /* Warna teks tetap biru */
+    background-color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
 }
 
 .pagination .page-item.active .page-link {
     background-color: #007bff;
     color: white;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #ccc;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+    .d-flex {
+        flex-direction: column;
+        /* Atur sidebar dan konten secara vertikal pada perangkat kecil */
+    }
+
+    .sidebar {
+        width: 100%;
+        /* Sidebar lebar penuh pada perangkat kecil */
+        height: auto;
+    }
+
+    .content {
+        margin-left: 0;
+        /* Konten tidak perlu margin */
+    }
+
+    .search-box input {
+        max-width: 100%;
+        /* Form pencarian lebar penuh pada perangkat kecil */
+    }
+
+    .table-container {
+        padding: 10px;
+    }
+}
+
+.table tbody td:first-child {
+    background-color: #F4F6F9;
+    /* Warna abu-abu untuk kolom peringkat */
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px;
+}
+
+.table-container h4 {
+    font-size: 20px;
+    /* Sesuaikan ukuran font yang diinginkan */
 }

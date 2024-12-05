@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/sidebar.css">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/dosenCSS/ranking.css">
 </head>
+
 <body>
     <!-- Header -->
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/presma_pbl/resources/views/layouts/header.php'; ?>
@@ -20,7 +22,7 @@
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/presma_pbl/resources/views/layouts/sidebar.php'; ?>
 
         <!-- Main Content -->
-        <div class="content flex-grow-1 p-4">
+        <div id="content" class="content flex-grow-1 p-4">
             <section class="table-container">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h4>Peringkat Prestasi</h4>
@@ -56,4 +58,5 @@
     <script src="/presma_pbl/public/assets/js/dosen/ranking.js"></script>
     <script src="/presma_pbl/public/assets/js/sidebar.js"></script>
 </body>
+
 </html>
