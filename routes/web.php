@@ -1,6 +1,8 @@
 <?php
 
 use App\Controllers\AuthController;
+use App\Controllers\MahasiswaController;
+use App\Controllers\ProdiController;
 use App\Controllers\RolesController;
 use App\Controllers\UserController;
 use Slim\Psr7\Request;
@@ -144,18 +146,68 @@ $app->group('/admin', function ($admin) {
         return $response->withHeader('Content-Type', 'application/json')->withStatus(405);
     });
 
+    // Get Program Studi
+    $admin->get('/program-studi', function (Request $request, Response $response) {
+        $prodiController = new ProdiController();
+        return $prodiController->index($request, $response);
+    });
 
+    // Get mahasiswa by id
+    $admin->get('/mahasiswa/{nim}', function (Request $request, Response $response, array $args) {
+        $mahasiswaController = new MahasiswaController(); // Controller untuk mahasiswa
+        return $mahasiswaController->show($request, $response, $args); // Kirim seluruh $args
+    });
+
+    // Get all mahasiswa
+    $admin->get('/mahasiswa', function (Request $request, Response $response) {
+        $mahasiswaController = new MahasiswaController(); // Controller untuk mahasiswa
+        $mahasiswa = $mahasiswaController->index($request, $response); // Kirim seluruh $args
+        return renderView($response, 'pages/admin/mahasiswa.php', ['mahasiswa' => $mahasiswa]);
+    });
 
     // Tambah Mahasiswa
-    $admin->map(['GET', 'POST'], '/mahasiswa', function (Request $request, Response $response) {
-        // $mahasiswaController = new MahasiswaController();
+    $admin->map(['POST', 'DELETE', 'PUT'], '/mahasiswa[/{nim}]', function (Request $request, Response $response, array $args) {
+        $mahasiswaController = new MahasiswaController();
 
+        // Jika metode adalah POST, proses tambah mahasiswa
         if ($request->getMethod() === 'POST') {
-            // Proses tambah mahasiswa menggunakan MahasiswaController
-            // return $mahasiswaController->store($request, $response);
+            return $mahasiswaController->store($request, $response);
         }
 
-        return renderView($response, 'pages/admin/mahasiswa.php');
+        // Jika metode adalah DELETE, hapus mahasiswa
+        if ($request->getMethod() === 'DELETE') {
+            // Pastikan nim mahasiswa ada dalam args
+            if (isset($args['nim'])) {
+                // Mengirimkan args sebagai array ke metode delete
+                return $mahasiswaController->delete($request, $response, $args);
+            } else {
+                // Menggunakan getBody()->write() untuk menulis ke dalam respons
+                $response->getBody()->write('NIM is required for deletion.');
+                return $response->withStatus(400);
+            }
+        }
+
+        // Jika metode adalah PUT, update mahasiswa
+        if ($request->getMethod() === 'PUT') {
+            // Pastikan nim mahasiswa ada dalam args
+            if (isset($args['nim'])) {
+                // Panggil metode update di mahasiswaController
+                return $mahasiswaController->update($request, $response, $args);
+            } else {
+                // nim mahasiswa diperlukan untuk pembaruan
+                $response->getBody()->write(json_encode([
+                    'success' => false,
+                    'message' => 'NIM is required for update.',
+                ]));
+                return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+            }
+        }
+        // Jika metode tidak dikenal, kembalikan error
+        $response->getBody()->write(json_encode([
+            'success' => false,
+            'message' => 'Invalid request method.',
+        ]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(405);
     });
 
     // // Tambah Dosen

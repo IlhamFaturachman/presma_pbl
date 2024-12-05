@@ -10,27 +10,27 @@ class MahasiswaModel extends Model
     protected string $tableName = 'UserManagement.mahasiswa';
     protected string $primaryKey = 'nim';
 
-    public function getAllUsers(): array
+    public function getAllMahasiswa(): array
     {
         return $this->findAll();
     }
 
-    public function getUserByNIM(int $nim): array
+    public function getMahasiswaByNim(int $nim): array
     {
         return $this->find($nim);
     }
 
-    public function addUser(array $userData): bool
+    public function addMahasiswa(array $userData): bool
     {
         return $this->insert($userData);
     }
 
-    public function updateUser(int $mhsNim, array $userData): bool
+    public function updateMahasiswa(int $mhsNim, array $userData): bool
     {
         return $this->update($mhsNim, $userData);
     }
 
-    public function deleteUser(int $mhsNim): bool
+    public function deleteMahasiswa(int $mhsNim): bool
     {
         return $this->delete($mhsNim);
     }
