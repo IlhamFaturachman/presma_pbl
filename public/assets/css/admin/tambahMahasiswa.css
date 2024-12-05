@@ -42,25 +42,17 @@ body {
     color: #333;
 }
 
+
+
 .table th {
     text-transform: uppercase;
     font-size: 14px;
     text-align: center;
 }
 
-
-.name-col {
+.table td {
     text-align: left;
-}
-
-.role-col {
-    text-align: center;
-    padding-left: 1000px;
-}
-
-.action-col {
-    text-align: center;
-    padding-left: 1000px;
+    vertical-align: middle;
 }
 
 .badge {

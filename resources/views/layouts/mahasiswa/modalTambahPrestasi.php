@@ -7,19 +7,22 @@
             </div>
             <div class="modal-body">
                 <form action="path_to_your_server_endpoint" method="POST" enctype="multipart/form-data">
-                <div class="row g-3">
+                    <div class="row g-3">
                         <!-- Baris 1 -->
                         <div class="col-md-4">
                             <label for="namaMahasiswa" class="form-label">Nama Mahasiswa *</label>
-                            <input type="text" class="form-control" id="namaMahasiswa" name="namaMahasiswa" placeholder="Masukkan Nama Mahasiswa" required>
+                            <input type="text" class="form-control" id="namaMahasiswa" name="namaMahasiswa"
+                                placeholder="Masukkan Nama Mahasiswa" required>
                         </div>
                         <div class="col-md-4">
                             <label for="nim" class="form-label">NIM *</label>
-                            <input type="text" class="form-control" id="nim" name="nim" placeholder="Masukkan NIM" required>
+                            <input type="text" class="form-control" id="nim" name="nim" placeholder="Masukkan NIM"
+                                required>
                         </div>
                         <div class="col-md-4">
                             <label for="namaLomba" class="form-label">Nama Lomba *</label>
-                            <input type="text" class="form-control" id="namaLomba" name="namaLomba" placeholder="Masukkan Nama Lomba" required>
+                            <input type="text" class="form-control" id="namaLomba" name="namaLomba"
+                                placeholder="Masukkan Nama Lomba" required>
                         </div>
 
                         <!-- Baris 2 -->
@@ -79,11 +82,13 @@
                         <!-- Baris 4 -->
                         <div class="col-md-4">
                             <label for="penyelenggara" class="form-label">Penyelenggara *</label>
-                            <input type="text" class="form-control" id="penyelenggara" name="penyelenggara" placeholder="Masukkan Penyelenggara" required>
+                            <input type="text" class="form-control" id="penyelenggara" name="penyelenggara"
+                                placeholder="Masukkan Penyelenggara" required>
                         </div>
                         <div class="col-md-4">
                             <label for="tempatLomba" class="form-label">Tempat Lomba *</label>
-                            <input type="text" class="form-control" id="tempatLomba" name="tempatLomba" placeholder="Masukkan Tempat Lomba" required>
+                            <input type="text" class="form-control" id="tempatLomba" name="tempatLomba"
+                                placeholder="Masukkan Tempat Lomba" required>
                         </div>
                     </div>
 

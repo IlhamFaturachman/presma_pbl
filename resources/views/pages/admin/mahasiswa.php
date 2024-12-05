@@ -1,13 +1,13 @@
 <!-- <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 
-// Ambil informasi pengguna dari sesi
-$userId = $_SESSION['user']['id'];
-$userName = $_SESSION['user']['name'];
-$userRole = $_SESSION['user']['role'];
-?> -->
+        // Ambil informasi pengguna dari sesi
+        $userId = $_SESSION['user']['id'];
+        $userName = $_SESSION['user']['name'];
+        $userRole = $_SESSION['user']['role'];
+        ?> -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +21,7 @@ $userRole = $_SESSION['user']['role'];
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/header.css">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/sidebar.css">
-    <link rel="stylesheet" href="/presma_pbl/public/assets/css/mahasiswa/dashboard.css">
+    <link rel="stylesheet" href="/presma_pbl/public/assets/css/admin/tambahMahasiswa.css">
 </head>
 
 <body>
@@ -32,12 +32,12 @@ $userRole = $_SESSION['user']['role'];
         <!-- Sidebar -->
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/presma_pbl/resources/views/layouts/sidebar.php'; ?>
         <div id="content" class="p-4 w-100">
-            <div class="card-shadow">
+            <div class="card shadow">
                 <div class="card-body">
                     <h1>Daftar Mahasiswa</h1>
                     <div class="row mb-3">
                         <div class="col-md-6 offset-md-6 d-flex justify-content-end">
-                            <input type="text" class="form-control mr-2" placeholder="Pencarian">
+                            <input type="text" class="form-control w-50 mr-2" placeholder="Pencarian">
                             <button class="btn btn-primary">Tambah</button>
                         </div>
                     </div>
