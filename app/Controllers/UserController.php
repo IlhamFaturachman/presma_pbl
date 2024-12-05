@@ -18,9 +18,16 @@ class UserController extends Controller
     // Override index method for listing users
     public function index(Request $request, Response $response)
     {
+        // Ambil semua pengguna dari model
         return $users = $this->userModel->getAllUsers();
+
+        // // Mengatur header Content-Type menjadi application/json
+        // $response = $response->withHeader('Content-Type', 'application/json');
+
+        // // Mengubah array pengguna menjadi JSON dan menulis ke body respons
         // $response->getBody()->write(json_encode($users));
-        // return $response->withHeader('Content-Type', 'application/json');
+
+        // return $response; // Kembalikan objek Response
     }
 
     // Override show method for fetching user by ID
