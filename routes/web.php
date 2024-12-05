@@ -37,7 +37,7 @@ $app->group('/auth', function ($auth) {
     });
 
     $auth->get('/test', function (Request $request, Response $response) {
-        return renderView($response, 'component/tabel_rank.php');
+        return renderView($response, 'pages/admin/prestasi.php');
     });
 
     // Login API Route
@@ -106,7 +106,7 @@ $app->group('/admin', function ($admin) {
 
     //     // Decode hasil JSON dari PrestasiController
     //     $dataPrestasi = json_decode((string)$prestasi->getBody(), true);
-    //     return renderView($response, 'pages/admin/validasi_prestasi.php', ['prestasi' => $dataPrestasi]);
+    //     return renderView($response, 'pages/admin/prestasi.php', ['prestasi' => $dataPrestasi]);
     // });
 
     // // Lihat Ranking Mahasiswa
