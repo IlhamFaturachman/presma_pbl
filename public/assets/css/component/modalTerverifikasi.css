@@ -1,0 +1,17 @@
+.modal-content {
+    width: 300px;
+    margin: auto;
+}
+.modal-body {
+    text-align: center;
+}
+.modal-body img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+}
+.modal-body p {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+}
