@@ -10,20 +10,42 @@ use App\Middleware\AuthMiddleware;
 // Fungsi utilitas untuk render view
 function renderView(Response $response, string $viewPath, array $data = []): Response
 {
-    $filePath = __DIR__ . '/../resources/views/' . $viewPath;
-    if (file_exists($filePath)) {
-        extract($data); // Mengekstrak array menjadi variabel
-        ob_start(); // Mulai output buffering
-        require $filePath; // Sertakan file view
-        $output = ob_get_clean(); // Ambil hasil buffer dan bersihkan buffer
-        $response->getBody()->write($output); // Tulis output ke body response
-        return $response->withHeader('Content-Type', 'text/html')->withStatus(200);
-    } else {
-        $response->getBody()->write("File view '{$viewPath}' tidak ditemukan.");
+    // Pastikan path file tidak berbahaya
+    $filePath = realpath(__DIR__ . '/../resources/views/' . $viewPath);
+
+    // Validasi: apakah file ada dan berada di folder views
+    if (!$filePath || strpos($filePath, realpath(__DIR__ . '/../resources/views/')) !== 0) {
+        $response->getBody()->write("File view '{$viewPath}' tidak valid atau tidak ditemukan.");
         return $response->withHeader('Content-Type', 'text/plain')->withStatus(404);
     }
-}
 
+    try {
+        // Bersihkan semua buffer yang ada untuk mencegah output sebelumnya
+        while (ob_get_level() > 0) {
+            ob_end_clean();
+        }
+
+        // Mulai output buffering
+        ob_start();
+
+        // Ekstrak data menjadi variabel
+        extract($data);
+
+        // Sertakan file view
+        require $filePath;
+
+        // Ambil hasil output buffer
+        $output = ob_get_clean();
+
+        // Tulis output ke response body
+        $response->getBody()->write($output);
+        return $response->withHeader('Content-Type', 'text/html')->withStatus(200);
+    } catch (\Throwable $e) {
+        // Tangani error saat rendering view
+        $response->getBody()->write("Terjadi kesalahan saat merender view: " . $e->getMessage());
+        return $response->withHeader('Content-Type', 'text/plain')->withStatus(500);
+    }
+}
 
 // Landing Page
 $app->get('/', function (Request $request, Response $response) {
@@ -66,14 +88,19 @@ $app->group('/admin', function ($admin) {
     });
 
     // Mendapatkan data pengguna berdasarkan ID
-    $admin->get('/users/act=get&id={user_id}', function (Request $request, Response $response, array $args) {
+    $admin->get('/users/{user_id}', function (Request $request, Response $response, array $args) {
         $usersController = new UserController(); // Controller untuk pengguna
         return $usersController->show($request, $response, $args); // Kirim seluruh $args
     });
 
+    $admin->get('/users', function (Request $request, Response $response) {
+        $usersController = new UserController(); // Controller untuk pengguna
+        $users = $usersController->index($request, $response); // Kirim seluruh $args
+        return renderView($response, 'pages/admin/users.php', ['users' => $users]);
+    });
 
     // Tambah Pengguna
-    $admin->map(['GET', 'POST', 'DELETE', 'PUT'], '/users[/{user_id}]', function (Request $request, Response $response, array $args) {
+    $admin->map(['POST', 'DELETE', 'PUT'], '/users[/{user_id}]', function (Request $request, Response $response, array $args) {
         $userController = new UserController();
 
         // Jika metode adalah POST, proses tambah pengguna
@@ -89,11 +116,12 @@ $app->group('/admin', function ($admin) {
                 return $userController->delete($request, $response, $args);
             } else {
                 // Menggunakan getBody()->write() untuk menulis ke dalam respons
-                $response->getBody()->write('User  ID is required for deletion.');
+                $response->getBody()->write('User ID is required for deletion.');
                 return $response->withStatus(400);
             }
         }
 
+        // Jika metode adalah PUT, update pengguna
         if ($request->getMethod() === 'PUT') {
             // Pastikan ID pengguna ada dalam args
             if (isset($args['user_id'])) {
@@ -108,13 +136,14 @@ $app->group('/admin', function ($admin) {
                 return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
             }
         }
-
-        // Jika metode adalah GET, ambil daftar pengguna
-        $users = $userController->index($request, $response);
-
-        // Render halaman dengan daftar pengguna
-        return renderView($response, 'pages/admin/users.php', ['users' => $users]);
+        // Jika metode tidak dikenal, kembalikan error
+        $response->getBody()->write(json_encode([
+            'success' => false,
+            'message' => 'Invalid request method.',
+        ]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(405);
     });
+
 
 
     // Tambah Mahasiswa
@@ -173,9 +202,13 @@ $app->group('/admin', function ($admin) {
 // Dashboard untuk dosen pembimbing
 $app->group('/dosbim', function ($dosbim) {
     $dosbim->get('/dashboard', function (Request $request, Response $response) {
-        return renderView($response, 'pages/dosbim/dashboard.php');
+        return renderView($response, 'pages/dosen/dashboard.php');
     });
-})->add(new AuthMiddleware(2));
+    $dosbim->get('/ranking', function (Request $request, Response $response) {
+        return renderView($response, 'pages/dosen/ranking.php');
+    });
+});
+// ->add(new AuthMiddleware(2));
 
 // Dashboard untuk mahasiswa
 $app->group('/mahasiswa', function ($mahasiswa) {
