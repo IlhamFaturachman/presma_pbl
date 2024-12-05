@@ -23,12 +23,12 @@
             ],
             3 => [
                 ['url' => '/presma_pbl/public/admin/dashboard', 'icon' => 'dashboard-icon.png', 'text' => 'Dashboard'],
-                ['url' => '/presma_pbl/public/admin/tambah-pengguna', 'icon' => 'user-icon.png', 'text' => 'Pengguna'],
-                ['url' => '/presma_pbl/public/admin/tambah-dosen', 'icon' => 'dosen-icon.png', 'text' => 'Dosen'],
-                ['url' => '/presma_pbl/public/admin/tambah-mahasiswa', 'icon' => 'mahasiswa-icon.png', 'text' => 'Mahasiswa'],
-                ['url' => '/presma_pbl/public/admin/validasi-prestasi', 'icon' => 'prestasi-icon.png', 'text' => 'Prestasi'],
-                ['url' => '/presma_pbl/public/admin/lihat-ranking', 'icon' => 'ranking-icon.png', 'text' => 'Peringkat'],
-                ['url' => '/presma_pbl/public/admin/lihat-prestasi', 'icon' => 'laporan-icon.png', 'text' => 'Laporan'],
+                ['url' => '/presma_pbl/public/admin/users', 'icon' => 'user-icon.png', 'text' => 'Pengguna'],
+                ['url' => '/presma_pbl/public/admin/dosen', 'icon' => 'dosen-icon.png', 'text' => 'Dosen'],
+                ['url' => '/presma_pbl/public/admin/mahasiswa', 'icon' => 'mahasiswa-icon.png', 'text' => 'Mahasiswa'],
+                ['url' => '/presma_pbl/public/admin/prestasi', 'icon' => 'prestasi-icon.png', 'text' => 'Prestasi'],
+                ['url' => '/presma_pbl/public/admin/ranking', 'icon' => 'ranking-icon.png', 'text' => 'Peringkat'],
+                ['url' => '/presma_pbl/public/admin/laporan', 'icon' => 'laporan-icon.png', 'text' => 'Laporan'],
             ],
             4 => [
                 ['url' => '/kajur/dashboard', 'icon' => 'dashboard-icon.png', 'text' => 'Dashboard'],
@@ -41,14 +41,14 @@
         ?>
 
         <?php foreach ($menus as $menu): ?>
-        <li class="mb-3">
-            <a href="<?= htmlspecialchars($menu['url']) ?>"
-                class="text-white text-decoration-none d-flex align-items-center <?= ($_SERVER['REQUEST_URI'] === $menu['url']) ? 'active' : '' ?>">
-                <img src="../../public/assets/icon/<?= htmlspecialchars($menu['icon']) ?>"
-                    alt="<?= htmlspecialchars($menu['text']) ?> Icon" class="sidebar-icon me-2">
-                <span class="menu-text"><?= htmlspecialchars($menu['text']) ?></span>
-            </a>
-        </li>
+            <li class="mb-3">
+                <a href="<?= htmlspecialchars($menu['url']) ?>"
+                    class="text-white text-decoration-none d-flex align-items-center <?= ($_SERVER['REQUEST_URI'] === $menu['url']) ? 'active' : '' ?>">
+                    <img src="../../public/assets/icon/<?= htmlspecialchars($menu['icon']) ?>"
+                        alt="<?= htmlspecialchars($menu['text']) ?> Icon" class="sidebar-icon me-2">
+                    <span class="menu-text"><?= htmlspecialchars($menu['text']) ?></span>
+                </a>
+            </li>
         <?php endforeach; ?>
     </ul>
 </div>

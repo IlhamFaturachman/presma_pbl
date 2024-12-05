@@ -2,6 +2,20 @@ body {
     background-color: #FFFFFF;
 }
 
+#content {
+    margin-top: 60px;
+    /* Hindari overlap dengan header */
+    /* Sesuaikan dengan lebar sidebar */
+    padding: 20px;
+    transition: margin-left 0.3s;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: calc(100vh - 60px);
+    /* Sesuaikan dengan tinggi yang tersedia */
+    overflow-y: auto;
+}
+
 .profile-container {
     display: flex;
     border-radius: 10px;

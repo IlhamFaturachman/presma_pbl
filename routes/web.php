@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\AuthController;
+use App\Controllers\RolesController;
 use App\Controllers\UserController;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
@@ -59,33 +60,74 @@ $app->group('/admin', function ($admin) {
         return renderView($response, 'pages/admin/dashboard.php');
     });
 
+    $admin->get('/roles', function (Request $request, Response $response) {
+        $rolesController = new RolesController();
+        return $rolesController->index($request, $response);
+    });
+
+    // Mendapatkan data pengguna berdasarkan ID
+    $admin->get('/users/act=get&id={user_id}', function (Request $request, Response $response, array $args) {
+        $usersController = new UserController(); // Controller untuk pengguna
+        return $usersController->show($request, $response, $args); // Kirim seluruh $args
+    });
+
+
     // Tambah Pengguna
-    $admin->map(['GET', 'POST'], '/tambah-pengguna', function (Request $request, Response $response) {
+    $admin->map(['GET', 'POST', 'DELETE', 'PUT'], '/users[/{user_id}]', function (Request $request, Response $response, array $args) {
         $userController = new UserController();
 
+        // Jika metode adalah POST, proses tambah pengguna
         if ($request->getMethod() === 'POST') {
-            // Proses tambah pengguna menggunakan UserController
             return $userController->store($request, $response);
         }
 
-        // Ambil daftar pengguna
+        // Jika metode adalah DELETE, hapus pengguna
+        if ($request->getMethod() === 'DELETE') {
+            // Pastikan ID pengguna ada dalam args
+            if (isset($args['user_id'])) {
+                // Mengirimkan args sebagai array ke metode delete
+                return $userController->delete($request, $response, $args);
+            } else {
+                // Menggunakan getBody()->write() untuk menulis ke dalam respons
+                $response->getBody()->write('User  ID is required for deletion.');
+                return $response->withStatus(400);
+            }
+        }
+
+        if ($request->getMethod() === 'PUT') {
+            // Pastikan ID pengguna ada dalam args
+            if (isset($args['user_id'])) {
+                // Panggil metode update di UserController
+                return $userController->update($request, $response, $args);
+            } else {
+                // ID pengguna diperlukan untuk pembaruan
+                $response->getBody()->write(json_encode([
+                    'success' => false,
+                    'message' => 'User ID is required for update.',
+                ]));
+                return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+            }
+        }
+
+        // Jika metode adalah GET, ambil daftar pengguna
         $users = $userController->index($request, $response);
 
         // Render halaman dengan daftar pengguna
-        return renderView($response, 'pages/admin/tambahPengguna.php', ['users' => $users]);
+        return renderView($response, 'pages/admin/users.php', ['users' => $users]);
     });
 
+
     // Tambah Mahasiswa
-    // $admin->map(['GET', 'POST'], '/tambah-mahasiswa', function (Request $request, Response $response) {
-    //     $mahasiswaController = new MahasiswaController();
+    $admin->map(['GET', 'POST'], '/mahasiswa', function (Request $request, Response $response) {
+        // $mahasiswaController = new MahasiswaController();
 
-    //     if ($request->getMethod() === 'POST') {
-    //         // Proses tambah mahasiswa menggunakan MahasiswaController
-    //         return $mahasiswaController->store($request, $response);
-    //     }
+        if ($request->getMethod() === 'POST') {
+            // Proses tambah mahasiswa menggunakan MahasiswaController
+            // return $mahasiswaController->store($request, $response);
+        }
 
-    //     return renderView($response, 'pages/admin/tambah_mahasiswa.php');
-    // });
+        return renderView($response, 'pages/admin/mahasiswa.php');
+    });
 
     // // Tambah Dosen
     // $admin->map(['GET', 'POST'], '/tambah-dosen', function (Request $request, Response $response) {
