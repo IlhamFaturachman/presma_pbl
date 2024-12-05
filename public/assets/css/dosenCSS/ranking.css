@@ -3,11 +3,14 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+/* Main Content Styles */
 .content {
     flex-grow: 1;
     background-color: white; /* Warna latar belakang terang */
     padding: 20px;
     box-sizing: border-box;
+    margin-top: 45px; /* Menambahkan ruang di atas konten agar tidak tertutup header */
+    overflow: auto; /* Membuat konten bisa digulir jika melebihi ruang */
 }
 
 /* Tabel peringkat prestasi */
@@ -16,6 +19,7 @@ body {
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px; /* Memberikan ruang di atas tabel */
 }
 
 .table-container h4 {
@@ -121,9 +125,9 @@ body {
     background-color: #F4F6F9; /* Warna abu-abu untuk kolom peringkat */
     font-weight: bold;
     text-align: center;
-
+    font-size: 14px;
 }
 
 .table-container h4 {
-    font-size: 24px; /* Sesuaikan ukuran font yang diinginkan */
+    font-size: 20px; /* Sesuaikan ukuran font yang diinginkan */
 }

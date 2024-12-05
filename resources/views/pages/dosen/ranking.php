@@ -54,5 +54,6 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/presma_pbl/public/assets/js/dosen/ranking.js"></script>
+    <script src="/presma_pbl/public/assets/js/sidebar.js"></script>
 </body>
 </html>

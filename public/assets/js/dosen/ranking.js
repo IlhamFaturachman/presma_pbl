@@ -31,7 +31,7 @@ $(document).ready(function() {
     ];
 
     // Variables
-    const rowsPerPage = 13;
+    const rowsPerPage = 10;
     let currentPage = 1;
 
     // Function to render rankings
