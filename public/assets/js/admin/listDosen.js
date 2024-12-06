@@ -111,11 +111,11 @@ $(document).on('click', '.editDosen', async function () {
     try {
         // Ambil data pengguna berdasarkan ID
         const response = await fetch(`/presma_pbl/public/admin/dosen/${nip}`);
-        if (!response.ok) throw new Error('Gagal memuat data Mahasiswa');
+        if (!response.ok) throw new Error('Gagal memuat data Dosen');
         const dsnData = await response.json();
 
         // Isi form dengan data pengguna
-        $('#edit-nim').val(dsnData.nim);
+        $('#edit-nip').val(dsnData.nip);
         $('#edit-nama').val(dsnData.nama);
         $('#edit-email').val(dsnData.email);
         $('#edit-phone').val(dsnData.phone);

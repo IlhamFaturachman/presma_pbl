@@ -126,10 +126,10 @@ $userRole = $_SESSION['user']['role'];
 
         <div id="modalContainer"></div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
         $(document).on('click', '#btnPrestasi', function(e) {
             e.preventDefault();
             const modalUrl = $(this).data('modal-url');
@@ -140,24 +140,24 @@ $userRole = $_SESSION['user']['role'];
         });
 
         // js modal Tambah
-        $(document).on('click', '#btnTambah', function (e) {
+        $(document).on('click', '#btnTambah', function(e) {
             e.preventDefault();
             // Memuat modal dari file terpisah
-            $('#modalContainer').load('/presma_pbl/resources/views/component/modalTambahPres.php', function () {
+            $('#modalContainer').load('/presma_pbl/resources/views/component/modalTambahPres.php', function() {
                 $('#prestasiModal').modal('show');
             });
         });
 
         // js modal Logout
-        $(document).on('click', '#btnLogout', function (e) {
+        $(document).on('click', '#btnLogout', function(e) {
             e.preventDefault();
             // Memuat modal dari file terpisah
-            $('#modalContainer').load('/presma_pbl/resources/views/component/modalValLogout.php', function () {
+            $('#modalContainer').load('/presma_pbl/resources/views/component/modalValLogout.php', function() {
                 $('#logoutModal').modal('show');
             });
         });
-    </script>
-    <script src="/presma_pbl/public/assets/js/sidebar.js"></script>
+        </script>
+        <script src="/presma_pbl/public/assets/js/sidebar.js"></script>
 </body>
 
 </html>

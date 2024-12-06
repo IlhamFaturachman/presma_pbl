@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Tambah Prestasi Mahasiswa</title>
+    <title>Tambah Prestasi Mahasiswa</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/component/modalTambahPres.css">
 </head>
+
 <body>
-    <div class="modal fade" id="prestasiModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+    <div class="modal fade" id="prestasiModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Tambah Prestasi Mahasiswa</h5>
@@ -17,124 +19,150 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div class="row">
-                            <!-- Form Input Data (Left side) -->
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label required">Nama Mahasiswa</label>
-                                    <input type="text" class="form-control" placeholder="MHS 1">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label required">NIM</label>
-                                    <input type="text" class="form-control" placeholder="1234567890">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label required">Dosen Pembimbing</label>
-                                    <select class="form-select">
-                                        <option>Ir. Gilang S.T, M.T</option>
-                                    </select>
+                        <!-- Form Input Data -->
+                        <div class="row g-4">
+                            <div class="col-md-12">
+                                <div class="col-md-12 mb-3">
+                                    <label for="namaMahasiswa" class="form-label required">Nama Mahasiswa</label>
+                                    <input type="text" id="namaMahasiswa" class="form-control"
+                                        placeholder="Masukkan nama mahasiswa">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label required">Nama Lomba</label>
-                                        <input type="text" class="form-control" placeholder="Lomba Memanah">
+                                        <label for="nimMahasiswa" class="form-label required">NIM</label>
+                                        <input type="text" id="nimMahasiswa" class="form-control"
+                                            placeholder="Masukkan NIM">
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label required">Kategori</label>
-                                        <select class="form-select">
+                                        <label for="dosenPembimbing" class="form-label required">Dosen
+                                            Pembimbing</label>
+                                        <select id="dosenPembimbing" class="form-select">
+                                            <option>Pilih dosen pembimbing</option>
+                                            <option>Ir. Gilang S.T, M.T</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="namaLomba" class="form-label required">Nama Lomba</label>
+                                        <input type="text" id="namaLomba" class="form-control"
+                                            placeholder="Masukkan nama lomba">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="kategoriLomba" class="form-label required">Kategori</label>
+                                        <select id="kategoriLomba" class="form-select">
+                                            <option>Pilih kategori lomba</option>
                                             <option>Kelompok</option>
+                                            <option>Individu</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="row">
-                                <div class="col-md-6 mb-3">
-                                        <label class="form-label required">Waktu Lomba(Mulai)</label>
-                                        <input type="date" class="form-control" value="2024-11-27">
-                                    </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label required">Waktu Lomba(Selesai)</label>
-                                        <input type="date" class="form-control" value="2024-11-27">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label required">Tingkat</label>
-                                        <input type="text" class="form-control" placeholder="Nasional">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label required">Penyelenggara</label>
-                                        <input type="text" class="form-control" placeholder="Polinema">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label required">Peringkat</label>
-                                        <select class="form-select">
+                                        <label for="peringkatLomba" class="form-label required">Peringkat</label>
+                                        <select id="peringkatLomba" class="form-select">
+                                            <option>Pilih peringkat</option>
+                                            <option>Juara 1</option>
+                                            <option>Juara 2</option>
+                                            <option>Juara 3</option>
                                             <option>Harapan 1</option>
+                                            <option>Harapan 2</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label required">Tempat Lomba</label>
-                                        <input type="text" class="form-control" placeholder="Malang">
+                                        <label for="tingkatLomba" class="form-label required">Tingkat</label>
+                                        <input type="text" id="tingkatLomba" class="form-control"
+                                            placeholder="Masukkan tingkat lomba">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="waktuMulai" class="form-label required">Waktu Lomba (Mulai)</label>
+                                        <input type="date" id="waktuMulai" class="form-control">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="waktuSelesai" class="form-label required">Waktu Lomba
+                                            (Selesai)</label>
+                                        <input type="date" id="waktuSelesai" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="penyelenggara" class="form-label required">Penyelenggara</label>
+                                        <input type="text" id="penyelenggara" class="form-control"
+                                            placeholder="Masukkan nama penyelenggara">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="tempatLomba" class="form-label required">Tempat Lomba</label>
+                                        <input type="text" id="tempatLomba" class="form-control"
+                                            placeholder="Masukkan lokasi lomba">
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-
-                            <!-- Form Upload (Right side) -->
-                            <div class="col-md-6">
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label required">Foto Sertifikat</label>
-                                        <div class="upload-box">
-                                            <div class="upload-icon">📤</div>
-                                            <input type="file" onchange="updateUploadBox(this)" accept="image/jpeg, image/png, application/pdf">
-                                            <div class="file-name">Upload File</div>
-                                            <span class="remove-icon" onclick="removeFile(this)">&#10005;</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label required">Foto Lomba</label>
-                                        <div class="upload-box">
-                                            <div class="upload-icon">📤</div>
-                                            <input type="file" onchange="updateUploadBox(this)" accept="image/jpeg, image/png, application/pdf">
-                                            <div class="file-name">Upload File</div>
-                                            <span class="remove-icon" onclick="removeFile(this)">&#10005;</span>
-                                        </div>
+                        <!-- Form Upload -->
+                        <div class="col-md-12 mb-3">
+                            <label for="fotoSertifikat" class="form-label required">Foto Sertifikat</label>
+                            <div class="upload-box">
+                                <div class="upload-icon">📤</div>
+                                <input type="file" id="fotoSertifikat" accept="image/jpeg, application/pdf"
+                                    onchange="updateUploadBox(this)">
+                                <div class="pdf-icon">&#128196;</div>
+                                <img src="" alt="Preview Image" class="preview-image">
+                                <div class="file-name">Upload file</div>
+                                <span class="remove-icon" onclick="removeFile(this)">&#10005;</span>
+                            </div>
+                            <div class="row g-4 mt-4">
+                                <div class="col-md-6 mb-3">
+                                    <label for="fotoLomba" class="form-label required">Foto Lomba</label>
+                                    <div class="upload-box">
+                                        <div class="upload-icon">📤</div>
+                                        <input type="file" id="fotoLomba" accept="image/jpeg, application/pdf"
+                                            onchange="updateUploadBox(this)">
+                                        <div class="pdf-icon">&#128196;</div>
+                                        <img src="" alt="Preview Image" class="preview-image">
+                                        <div class="file-name">Upload file</div>
+                                        <span class="remove-icon" onclick="removeFile(this)">&#10005;</span>
                                     </div>
                                 </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label required">Flyer Lomba</label>
-                                        <div class="upload-box">
-                                            <div class="upload-icon">📤</div>
-                                            <input type="file" onchange="updateUploadBox(this)">
-                                            <div class="file-name">Upload File</div>
-                                            <span class="remove-icon" onclick="removeFile(this)">&#10005;</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label required">Surat Tugas</label>
-                                        <div class="upload-box">
-                                            <div class="upload-icon">📤</div>
-                                            <input type="file" onchange="updateUploadBox(this)">
-                                            <div class="file-name">Upload File</div>
-                                            <span class="remove-icon" onclick="removeFile(this)">&#10005;</span>
-                                        </div>
+                                <div class="col-md-6">
+                                    <label for="flyerLomba" class="form-label required">Flyer Lomba</label>
+                                    <div class="upload-box">
+                                        <div class="upload-icon">📤</div>
+                                        <input type="file" id="flyerLomba" accept="image/jpeg, application/pdf"
+                                            onchange="updateUploadBox(this)">
+                                        <div class="pdf-icon">&#128196;</div>
+                                        <img src="" alt="Preview Image" class="preview-image">
+                                        <div class="file-name">Upload file</div>
+                                        <span class="remove-icon" onclick="removeFile(this)">&#10005;</span>
                                     </div>
                                 </div>
-
-                                <div class="row justify-content-center mb-3">
-                                    <div class="col-md-12">
-                                        <label class="form-label required">Ide Proposal</label>
-                                        <div class="upload-box">
-                                            <div class="upload-icon">📤</div>
-                                            <input type="file" onchange="updateUploadBox(this)">
-                                            <div class="file-name">Upload File</div>
-                                            <span class="remove-icon" onclick="removeFile(this)">&#10005;</span>
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
+                        <div class="row g-4 mb-3">
+                            <div class="col-md-6 mb-3">
+                                <label for="suratTugas" class="form-label required">Surat Tugas</label>
+                                <div class="upload-box">
+                                    <div class="upload-icon">📤</div>
+                                    <input type="file" id="suratTugas" accept="image/jpeg, application/pdf"
+                                        onchange="updateUploadBox(this)">
+                                    <div class="pdf-icon">&#128196;</div>
+                                    <img src="" alt="Preview Image" class="preview-image">
+                                    <div class="file-name">Upload file</div>
+                                    <span class="remove-icon" onclick="removeFile(this)">&#10005;</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="ideProposal" class="form-label">Ide Proposal</label>
+                                <div class="upload-box">
+                                    <div class="upload-icon">📤</div>
+                                    <input type="file" id="ideProposal" accept="image/jpeg, application/pdf"
+                                        onchange="updateUploadBox(this)">
+                                    <div class="pdf-icon">&#128196;</div>
+                                    <img src="" alt="Preview Image" class="preview-image">
+                                    <div class="file-name">Upload file</div>
+                                    <span class="remove-icon" onclick="removeFile(this)">&#10005;</span>
                                 </div>
                             </div>
                         </div>
@@ -147,78 +175,73 @@
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Menutup modal dan mereset form
-        function resetForm() {
-            const form = document.querySelector('#prestasiModal form');
-            form.reset(); // Reset semua input di form
-            const uploadBoxes = form.querySelectorAll('.upload-box .file-name');
-            uploadBoxes.forEach(box => {
-                box.textContent = 'Upload File'; // Reset teks file
-                box.style.color = '#333'; // Reset warna teks file
-            });
-            const removeIcons = form.querySelectorAll('.remove-icon');
-            removeIcons.forEach(icon => icon.style.display = 'none'); // Sembunyikan semua ikon "X"
-        }
+    function updateUploadBox(inputElement) {
+        const file = inputElement.files[0];
+        const uploadBox = inputElement.closest('.upload-box');
+        const previewImage = uploadBox.querySelector('.preview-image');
+        const pdfIcon = uploadBox.querySelector('.pdf-icon');
+        const uploadIcon = uploadBox.querySelector('.upload-icon');
+        const fileNameElement = uploadBox.querySelector('.file-name');
+        const removeIcon = uploadBox.querySelector('.remove-icon');
 
-        // Tambahkan event listener pada tombol "Batal" dan ikon "X"
-        document.querySelector('#btnBatal').addEventListener('click', resetForm);
-        document.querySelector('.btn-close').addEventListener('click', resetForm);
-
-        // Fungsi untuk memeriksa jenis file
-        function validateFile(file) {
-            const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf']; // Jenis file yang diizinkan
+        if (file) {
             const fileType = file.type;
-            const fileName = file.name;
 
-            if (!allowedTypes.includes(fileType)) {
-                alert('File yang diupload harus berupa gambar (JPEG, PNG) atau PDF.');
-                return false; // Menolak file yang tidak sesuai
-            }
-
-            // Jika file valid, lanjutkan
-            return true;
-        }
-
-        // Fungsi untuk memperbarui upload box
-        function updateUploadBox(inputElement) {
-            const file = inputElement.files[0]; // Mendapatkan file pertama yang diunggah
-            const uploadBox = inputElement.closest('.upload-box');
-            const fileNameElement = uploadBox.querySelector('.file-name');
-            const removeIcon = uploadBox.querySelector('.remove-icon');
-
-            if (file) {
-                // Memvalidasi file
-                if (validateFile(file)) {
+            if (fileType.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = 'block';
+                    pdfIcon.style.display = 'none';
+                    uploadIcon.style.display = 'none';
                     fileNameElement.textContent = file.name;
                     fileNameElement.style.color = '#007bff';
-                    removeIcon.style.display = 'inline'; // Tampilkan ikon "X"
-                } else {
-                    // Jika file tidak valid, reset tampilan
-                    inputElement.value = '';
-                    fileNameElement.textContent = 'Upload File';
-                    fileNameElement.style.color = '#333';
-                    removeIcon.style.display = 'none'; // Sembunyikan ikon "X"
-                }
+                };
+                reader.readAsDataURL(file);
+            } else if (fileType === 'application/pdf') {
+                previewImage.style.display = 'none';
+                pdfIcon.style.display = 'block';
+                uploadIcon.style.display = 'none';
+                fileNameElement.textContent = file.name;
+                fileNameElement.style.color = '#007bff';
             } else {
-                fileNameElement.textContent = 'Upload File'; // Reset nama file
-                fileNameElement.style.color = '#333';
-                removeIcon.style.display = 'none'; // Sembunyikan ikon "X"
+                alert('Hanya mendukung file gambar (JPEG/JPG) atau PDF.');
+                inputElement.value = '';
+                resetUploadBox(uploadBox);
+                return;
             }
-        }
 
-        function removeFile(iconElement) {
-            const uploadBox = iconElement.closest('.upload-box');
-            const inputElement = uploadBox.querySelector('input[type="file"]');
-            const fileNameElement = uploadBox.querySelector('.file-name');
-
-            inputElement.value = ''; // Hapus file dari input
-            fileNameElement.textContent = 'Upload File'; // Reset nama file
-            fileNameElement.style.color = '#333'; // Reset warna teks
-            iconElement.style.display = 'none'; // Sembunyikan ikon "X"
+            removeIcon.style.display = 'inline';
+            uploadBox.classList.add('active');
+        } else {
+            resetUploadBox(uploadBox);
         }
+    }
+
+    function removeFile(iconElement) {
+        const uploadBox = iconElement.closest('.upload-box');
+        const inputElement = uploadBox.querySelector('input[type="file"]');
+        resetUploadBox(uploadBox);
+        inputElement.value = '';
+    }
+
+    function resetUploadBox(uploadBox) {
+        const previewImage = uploadBox.querySelector('.preview-image');
+        const pdfIcon = uploadBox.querySelector('.pdf-icon');
+        const uploadIcon = uploadBox.querySelector('.upload-icon');
+        const fileNameElement = uploadBox.querySelector('.file-name');
+        const removeIcon = uploadBox.querySelector('.remove-icon');
+
+        previewImage.style.display = 'none';
+        pdfIcon.style.display = 'none';
+        uploadIcon.style.display = 'block';
+        fileNameElement.textContent = 'Upload file';
+        fileNameElement.style.color = '#6c757d';
+        removeIcon.style.display = 'none';
+        uploadBox.classList.remove('active');
+    }
     </script>
 </body>
+
 </html>

@@ -20,6 +20,7 @@ body {
     display: flex;
     border-radius: 10px;
     overflow: hidden;
+    height: 83.5%;
 }
 
 .profile-image {
@@ -47,6 +48,7 @@ body {
 .profile-info h4 {
     margin: 0;
     font-size: 24px;
+    margin-bottom: 20px;
 }
 
 .profile-info p {
@@ -61,7 +63,7 @@ body {
 .menu-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 60px;
+    gap: 30px;
 }
 
 .menu-item {
@@ -118,7 +120,7 @@ body {
     background-color: #F4F6F9;
     padding: 20px;
     border-radius: 10px;
-    margin-top: 40px;
+    margin-top: 0px;
 }
 
 .ranking-table table {
