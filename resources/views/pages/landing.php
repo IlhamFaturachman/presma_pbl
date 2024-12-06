@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Landing Page</title>
-    <link rel="stylesheet" href="/presma_pbl/public/assets/css/landing_page.css">
+    <link rel="stylesheet" href="/presma_pbl/public/assets/css/landing.css">
 </head>
 
 <body>
@@ -20,14 +20,14 @@
         <a href="#ranking">Rangking</a>
         <a href="#">Dashboard</a>
     </nav>
-    <button class="button-masuk">Masuk</button>
+    <button class="button-masuk" id="btnMasuk">Masuk</button>
 </header>
 
 <section id="home" class="hero">
     <div class="hero-content">
         <h1>Catat Prestasi, Wujudkan Masa Depan</h1>
         <p>Jadikan setiap pencapaian Anda sebagai batu loncatan menuju kesuksesan. Platform kami memudahkan mahasiswa, dosen, dan admin kampus dalam mencatat, memverifikasi, dan melacak prestasi akademik serta non-akademik secara efisien. Mulailah mengelola perjalanan prestasi Anda hari ini!</p>
-        <button>Catat Prestasi Sekarang</button>
+        <button id="btnCatatPrestasi">Catat Prestasi Sekarang</button>
     </div>
     <img src="../public/assets/img/Taking notes-amico 1.png" alt="Ilustrasi Prestasi">
     <img class="circle-pattern" src="../public/assets/img/image 16.png" alt="Pola Lingkaran">
@@ -153,6 +153,13 @@
     </div>
     </div>
 </section>
+
+<footer class="footer">
+    <p>Sistem Informasi Prestasi Mahasiswa - Politeknik Negeri Malang</p>
+    <p>© 2024 Politeknik Negeri Malang. All rights reserved.</p>
+</footer>
+
+<script src="/presma_pbl/public/assets/js/landing.js"></script>
 
 </body>
 

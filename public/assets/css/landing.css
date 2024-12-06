@@ -543,3 +543,20 @@ font-size: 12px;
 width: 80%;
 }
 }
+
+.footer {
+    background-color: #FF6D26;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.footer p {
+    margin: 5px 0;
+}
