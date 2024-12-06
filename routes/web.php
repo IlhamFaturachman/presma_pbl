@@ -1,6 +1,9 @@
 <?php
 
 use App\Controllers\AuthController;
+use App\Controllers\DosenController;
+use App\Controllers\MahasiswaController;
+use App\Controllers\ProdiController;
 use App\Controllers\RolesController;
 use App\Controllers\UserController;
 use Slim\Psr7\Request;
@@ -10,20 +13,42 @@ use App\Middleware\AuthMiddleware;
 // Fungsi utilitas untuk render view
 function renderView(Response $response, string $viewPath, array $data = []): Response
 {
-    $filePath = __DIR__ . '/../resources/views/' . $viewPath;
-    if (file_exists($filePath)) {
-        extract($data); // Mengekstrak array menjadi variabel
-        ob_start(); // Mulai output buffering
-        require $filePath; // Sertakan file view
-        $output = ob_get_clean(); // Ambil hasil buffer dan bersihkan buffer
-        $response->getBody()->write($output); // Tulis output ke body response
-        return $response->withHeader('Content-Type', 'text/html')->withStatus(200);
-    } else {
-        $response->getBody()->write("File view '{$viewPath}' tidak ditemukan.");
+    // Pastikan path file tidak berbahaya
+    $filePath = realpath(__DIR__ . '/../resources/views/' . $viewPath);
+
+    // Validasi: apakah file ada dan berada di folder views
+    if (!$filePath || strpos($filePath, realpath(__DIR__ . '/../resources/views/')) !== 0) {
+        $response->getBody()->write("File view '{$viewPath}' tidak valid atau tidak ditemukan.");
         return $response->withHeader('Content-Type', 'text/plain')->withStatus(404);
     }
-}
 
+    try {
+        // Bersihkan semua buffer yang ada untuk mencegah output sebelumnya
+        while (ob_get_level() > 0) {
+            ob_end_clean();
+        }
+
+        // Mulai output buffering
+        ob_start();
+
+        // Ekstrak data menjadi variabel
+        extract($data);
+
+        // Sertakan file view
+        require $filePath;
+
+        // Ambil hasil output buffer
+        $output = ob_get_clean();
+
+        // Tulis output ke response body
+        $response->getBody()->write($output);
+        return $response->withHeader('Content-Type', 'text/html')->withStatus(200);
+    } catch (\Throwable $e) {
+        // Tangani error saat rendering view
+        $response->getBody()->write("Terjadi kesalahan saat merender view: " . $e->getMessage());
+        return $response->withHeader('Content-Type', 'text/plain')->withStatus(500);
+    }
+}
 
 // Landing Page
 $app->get('/', function (Request $request, Response $response) {
@@ -38,7 +63,7 @@ $app->group('/auth', function ($auth) {
     });
 
     $auth->get('/test', function (Request $request, Response $response) {
-        return renderView($response, 'component/mahasiswa/modalTambahPrestasi.php');
+        return renderView($response, 'pages/admin/prestasi.php');
     });
 
     // Login API Route
@@ -66,14 +91,19 @@ $app->group('/admin', function ($admin) {
     });
 
     // Mendapatkan data pengguna berdasarkan ID
-    $admin->get('/users/act=get&id={user_id}', function (Request $request, Response $response, array $args) {
+    $admin->get('/users/{user_id}', function (Request $request, Response $response, array $args) {
         $usersController = new UserController(); // Controller untuk pengguna
         return $usersController->show($request, $response, $args); // Kirim seluruh $args
     });
 
+    $admin->get('/users', function (Request $request, Response $response) {
+        $usersController = new UserController(); // Controller untuk pengguna
+        $users = $usersController->index($request, $response); // Kirim seluruh $args
+        return renderView($response, 'pages/admin/users.php', ['users' => $users]);
+    });
 
-    // Tambah Pengguna
-    $admin->map(['GET', 'POST', 'DELETE', 'PUT'], '/users[/{user_id}]', function (Request $request, Response $response, array $args) {
+    // Manage Pengguna
+    $admin->map(['POST', 'DELETE', 'PUT'], '/users[/{user_id}]', function (Request $request, Response $response, array $args) {
         $userController = new UserController();
 
         // Jika metode adalah POST, proses tambah pengguna
@@ -89,11 +119,12 @@ $app->group('/admin', function ($admin) {
                 return $userController->delete($request, $response, $args);
             } else {
                 // Menggunakan getBody()->write() untuk menulis ke dalam respons
-                $response->getBody()->write('User  ID is required for deletion.');
+                $response->getBody()->write('User ID is required for deletion.');
                 return $response->withStatus(400);
             }
         }
 
+        // Jika metode adalah PUT, update pengguna
         if ($request->getMethod() === 'PUT') {
             // Pastikan ID pengguna ada dalam args
             if (isset($args['user_id'])) {
@@ -108,38 +139,140 @@ $app->group('/admin', function ($admin) {
                 return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
             }
         }
-
-        // Jika metode adalah GET, ambil daftar pengguna
-        $users = $userController->index($request, $response);
-
-        // Render halaman dengan daftar pengguna
-        return renderView($response, 'pages/admin/users.php', ['users' => $users]);
+        // Jika metode tidak dikenal, kembalikan error
+        $response->getBody()->write(json_encode([
+            'success' => false,
+            'message' => 'Invalid request method.',
+        ]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(405);
     });
 
+    // Get Program Studi
+    $admin->get('/program-studi', function (Request $request, Response $response) {
+        $prodiController = new ProdiController();
+        return $prodiController->index($request, $response);
+    });
 
-    // Tambah Mahasiswa
-    $admin->map(['GET', 'POST'], '/mahasiswa', function (Request $request, Response $response) {
-        // $mahasiswaController = new MahasiswaController();
+    // untuk Dropdown isi NIM pada mahasiswa, datanya dari tabel user
+    $admin->get('/for-mahasiswa', function (Request $request, Response $response) {
+        $usersController = new UserController(); // Controller untuk pengguna
+        return $usersController->getForMahasiswaDropdown($request, $response);
+    });
 
+    // Get mahasiswa by id
+    $admin->get('/mahasiswa/{nim}', function (Request $request, Response $response, array $args) {
+        $mahasiswaController = new MahasiswaController(); // Controller untuk mahasiswa
+        return $mahasiswaController->show($request, $response, $args); // Kirim seluruh $args
+    });
+
+    // Get all mahasiswa
+    $admin->get('/mahasiswa', function (Request $request, Response $response) {
+        $mahasiswaController = new MahasiswaController(); // Controller untuk mahasiswa
+        $mahasiswa = $mahasiswaController->index($request, $response); // Kirim seluruh $args
+        return renderView($response, 'pages/admin/mahasiswa.php', ['mahasiswa' => $mahasiswa]);
+    });
+
+    // Manage Mahasiswa
+    $admin->map(['POST', 'DELETE', 'PUT'], '/mahasiswa[/{nim}]', function (Request $request, Response $response, array $args) {
+        $mahasiswaController = new MahasiswaController();
+
+        // Jika metode adalah POST, proses tambah mahasiswa
         if ($request->getMethod() === 'POST') {
-            // Proses tambah mahasiswa menggunakan MahasiswaController
-            // return $mahasiswaController->store($request, $response);
+            return $mahasiswaController->store($request, $response);
         }
 
-        return renderView($response, 'pages/admin/mahasiswa.php');
+        // Jika metode adalah DELETE, hapus mahasiswa
+        if ($request->getMethod() === 'DELETE') {
+            // Pastikan nim mahasiswa ada dalam args
+            if (isset($args['nim'])) {
+                // Mengirimkan args sebagai array ke metode delete
+                return $mahasiswaController->delete($request, $response, $args);
+            } else {
+                // Menggunakan getBody()->write() untuk menulis ke dalam respons
+                $response->getBody()->write('NIM is required for deletion.');
+                return $response->withStatus(400);
+            }
+        }
+
+        // Jika metode adalah PUT, update mahasiswa
+        if ($request->getMethod() === 'PUT') {
+            // Pastikan nim mahasiswa ada dalam args
+            if (isset($args['nim'])) {
+                // Panggil metode update di mahasiswaController
+                return $mahasiswaController->update($request, $response, $args);
+            } else {
+                // nim mahasiswa diperlukan untuk pembaruan
+                $response->getBody()->write(json_encode([
+                    'success' => false,
+                    'message' => 'NIM is required for update.',
+                ]));
+                return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+            }
+        }
+        // Jika metode tidak dikenal, kembalikan error
+        $response->getBody()->write(json_encode([
+            'success' => false,
+            'message' => 'Invalid request method.',
+        ]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(405);
     });
 
-    // // Tambah Dosen
-    // $admin->map(['GET', 'POST'], '/tambah-dosen', function (Request $request, Response $response) {
-    //     $dosenController = new DosenController();
+    $admin->get('/for-dosen', function (Request $request, Response $response) {
+        $usersController = new UserController(); // Controller untuk pengguna
+        return $usersController->getForDosenDropdown($request, $response);
+    });
 
-    //     if ($request->getMethod() === 'POST') {
-    //         // Proses tambah dosen menggunakan DosenController
-    //         return $dosenController->store($request, $response);
-    //     }
+    // Get all dosen
+    $admin->get('/dosen', function (Request $request, Response $response) {
+        $dosenController = new DosenController(); // Controller untuk dosen
+        $dosen = $dosenController->index($request, $response); // Kirim seluruh $args
+        return renderView($response, 'pages/admin/dosen.php', ['dosen' => $dosen]);
+    });
 
-    //     return renderView($response, 'pages/admin/tambah_dosen.php');
-    // });
+    // Manage Dosen
+    $admin->map(['POST', 'DELETE', 'PUT'], '/dosen[/{nip}]', function (Request $request, Response $response, array $args) {
+        $dosenController = new DosenController();
+
+        // Jika metode adalah POST, proses tambah dosen
+        if ($request->getMethod() === 'POST') {
+            return $dosenController->store($request, $response);
+        }
+
+        // Jika metode adalah DELETE, hapus dosen
+        if ($request->getMethod() === 'DELETE') {
+            // Pastikan nip dosen ada dalam args
+            if (isset($args['nip'])) {
+                // Mengirimkan args sebagai array ke metode delete
+                return $dosenController->delete($request, $response, $args);
+            } else {
+                // Menggunakan getBody()->write() untuk menulis ke dalam respons
+                $response->getBody()->write('NIP is required for deletion.');
+                return $response->withStatus(400);
+            }
+        }
+
+        // Jika metode adalah PUT, update dosen
+        if ($request->getMethod() === 'PUT') {
+            // Pastikan nim dosen ada dalam args
+            if (isset($args['nim'])) {
+                // Panggil metode update di dosenController
+                return $dosenController->update($request, $response, $args);
+            } else {
+                // nim dosen diperlukan untuk pembaruan
+                $response->getBody()->write(json_encode([
+                    'success' => false,
+                    'message' => 'NIM is required for update.',
+                ]));
+                return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+            }
+        }
+        // Jika metode tidak dikenal, kembalikan error
+        $response->getBody()->write(json_encode([
+            'success' => false,
+            'message' => 'Invalid request method.',
+        ]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(405);
+    });
 
     // // Validasi Prestasi
     // $admin->get('/validasi-prestasi', function (Request $request, Response $response) {
@@ -151,15 +284,13 @@ $app->group('/admin', function ($admin) {
     //     return renderView($response, 'pages/admin/prestasi.php', ['prestasi' => $dataPrestasi]);
     // });
 
-    // // Lihat Ranking Mahasiswa
-    // $admin->get('/lihat-ranking', function (Request $request, Response $response) {
-    //     $rankingController = new RankingController();
-    //     $ranking = $rankingController->index($request, $response);
-
-    //     // Decode hasil JSON dari RankingController
-    //     $dataRanking = json_decode((string)$ranking->getBody(), true);
-    //     return renderView($response, 'pages/admin/lihat_ranking.php', ['ranking' => $dataRanking]);
-    // });
+    // Lihat Ranking Mahasiswa
+    $admin->get('/ranking', function (Request $request, Response $response) {
+        return renderView($response, 'pages/admin/rank.php');
+    });
+    $admin->get('/prestasi', function (Request $request, Response $response) {
+        return renderView($response, 'pages/admin/prestasi.php');
+    });
 
     // // Export Prestasi
     // $admin->post('/export-prestasi', function (Request $request, Response $response) {
@@ -173,16 +304,20 @@ $app->group('/admin', function ($admin) {
 // Dashboard untuk dosen pembimbing
 $app->group('/dosbim', function ($dosbim) {
     $dosbim->get('/dashboard', function (Request $request, Response $response) {
-        return renderView($response, 'pages/dosbim/dashboard.php');
+        return renderView($response, 'pages/dosen/dashboard.php');
     });
-})->add(new AuthMiddleware(2));
+    $dosbim->get('/ranking', function (Request $request, Response $response) {
+        return renderView($response, 'pages/dosen/ranking.php');
+    });
+});
+// ->add(new AuthMiddleware(2));
 
 // Dashboard untuk mahasiswa
 $app->group('/mahasiswa', function ($mahasiswa) {
     $mahasiswa->get('/dashboard', function (Request $request, Response $response) {
         return renderView($response, 'pages/mahasiswa/dashboard.php');
     });
-    $mahasiswa->get('/listPres', function (Request $request, Response $response) {
+    $mahasiswa->get('/prestasi', function (Request $request, Response $response) {
         return renderView($response, 'pages/mahasiswa/listPres.php');
     });
 });

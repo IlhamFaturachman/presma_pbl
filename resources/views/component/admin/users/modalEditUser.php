@@ -42,6 +42,8 @@
                         </select>
                         <div class="invalid-feedback">Role wajib dipilih.</div>
                     </div>
+                    <div id="role-warning" class="form-text text-danger d-none">Role tidak dapat diubah untuk pengguna
+                        ini karena sudah memiliki data di tabel lain.</div>
                     <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary" id="edit-submitButton">Perbarui</button>
@@ -81,20 +83,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const modal = document.getElementById('editPenggunaModal');
 
         try {
-            // Ambil data pengguna berdasarkan ID
-            const response = await fetch(`/presma_pbl/public/admin/users/act=get&id=${userId}`);
-            if (!response.ok) {
-                console.error("Error response:", await response.text());
-                throw new Error("Gagal memuat data pengguna");
-            }
+            const response = await fetch(`/presma_pbl/public/admin/users/${userId}`);
+            if (!response.ok) throw new Error("Gagal memuat data pengguna");
             const data = await response.json();
 
-
-            // Isi form dengan data pengguna
             modal.querySelector("#edit-user_id").value = data.user_id;
             modal.querySelector("#edit-username").value = data.username;
 
-            // Load roles
             const rolesResponse = await fetch('/presma_pbl/public/admin/roles');
             if (!rolesResponse.ok) throw new Error("Gagal memuat roles");
             const roles = await rolesResponse.json();
@@ -110,6 +105,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
                 rolesSelect.appendChild(option);
             });
+
+            // Simpan data-current-role untuk validasi di submit
+            rolesSelect.setAttribute("data-current-role", data.role_id);
+
+            // Nonaktifkan dropdown role jika user tidak bisa mengubah role
+            if (data.is_role_editable === false) {
+                rolesSelect.setAttribute("disabled", "true");
+                document.getElementById("role-warning").classList.remove("d-none");
+            } else {
+                rolesSelect.removeAttribute("disabled");
+                document.getElementById("role-warning").classList.add("d-none");
+            }
         } catch (error) {
             alert("Terjadi kesalahan saat memuat data. Silakan coba lagi.");
             console.error(error);
@@ -120,6 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
+        // Validasi password cocok
         if (!validatePasswordMatch()) {
             alert("Password tidak cocok. Mohon periksa kembali.");
             return;
@@ -132,8 +140,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const userId = form["edit-user_id"].value;
         const payload = {
             username: form["edit-username"].value,
-            role_id: form["edit-roles"].value,
         };
+
+        // Tambahkan role_id jika dropdown roles tidak disabled
+        const rolesSelect = form.querySelector("#edit-roles");
+        const currentRole = rolesSelect.getAttribute("data-current-role");
+        if (!rolesSelect.disabled) {
+            payload.role_id = rolesSelect.value;
+        }
 
         // Tambahkan password jika diisi
         if (form["edit-password"].value) {
@@ -144,16 +158,18 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await fetch(`/presma_pbl/public/admin/users/${userId}`, {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify(payload),
             });
 
             const result = await response.json();
+
             if (result.success) {
+                // Berikan pesan jika role tidak diperbarui
+                alert("Pengguna berhasil diperbarui!");
                 form.reset();
                 bootstrap.Modal.getInstance(document.getElementById("editPenggunaModal")).hide();
-                alert("Pengguna berhasil diperbarui!");
                 window.location.reload(); // Refresh halaman
             } else {
                 alert(result.message || "Terjadi kesalahan. Silakan coba lagi.");
