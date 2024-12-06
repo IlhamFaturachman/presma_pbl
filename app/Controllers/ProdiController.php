@@ -16,12 +16,12 @@ class ProdiController extends Controller
     }
     public function index(Request $request, Response $response)
     {
-        $users = $this->prodiModel->getAllProdi();
+        $prodi = $this->prodiModel->getAllProdi();
 
-        if (!empty($users)) {
-            $response->getBody()->write(json_encode($users));
+        if (!empty($prodi)) {
+            $response->getBody()->write(json_encode($prodi));
         } else {
-            $response->getBody()->write(json_encode(["error" => "No roles found"]));
+            $response->getBody()->write(json_encode(["error" => "No Program Studi found"]));
         }
 
         return $response->withHeader('Content-Type', 'application/json');

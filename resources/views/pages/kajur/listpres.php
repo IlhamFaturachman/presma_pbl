@@ -31,33 +31,40 @@ $userRole = $_SESSION['user']['role'];
     <div class="d-flex">
         <!-- Sidebar -->
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/presma_pbl/resources/views/layouts/sidebar.php'; ?>
-
         <div class="container">
-            <h1>Laporan Prestasi</h1>
+            <h2 class="small-title">Laporan Prestasi</h2>
 
             <!-- Form Section -->
-<form class="row row-cols-lg-auto g-3 align-items-center mb-4">
-    <div class="col">
-        <label for="program-studi" class="form-label">Program Studi</label>
-        <select id="program-studi" class="form-select">
-            <option>Teknik Informatika</option>
-        </select>
-    </div>
-    <div class="col">
-        <label for="tahun-prestasi" class="form-label">Tahun Prestasi</label>
-        <input type="text" id="tahun-prestasi" class="form-control" value="2023">
-    </div>
-    <div class="col">
-        <label for="tingkat" class="form-label">Tingkat</label>
-        <select id="tingkat" class="form-select">
-            <option>Nasional</option>
-        </select>
-    </div>
-    <div class="col align-self-end">
-        <button type="submit" class="btn btn-primary">Tampilkan Data</button>
-    </div>
-</form>
-
+            <form id="filter-form" class="row row-cols-lg-auto g-3 align-items-center mb-4">
+                <div class="col">
+                    <label for="program-studi" class="form-label">Program Studi</label>
+                    <select id="program-studi" class="form-select">
+                        <option value="Teknik Informatika">Teknik Informatika</option>
+                        <option value="Sistem Informasi Bisnis">Sistem Informasi Bisnis</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="tahun-prestasi" class="form-label">Tahun Prestasi</label>
+                    <select id="tahun-prestasi" class="form-select">
+                        <?php
+                        $currentYear = date("Y");
+                        for ($year = 2020; $year <= $currentYear; $year++) {
+                            echo "<option value='$year'>$year</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="tingkat" class="form-label">Tingkat</label>
+                    <select id="tingkat" class="form-select">
+                        <option value="Nasional">Nasional</option>
+                        <option value="Internasional">Internasional</option>
+                    </select>
+                </div>
+                <div class="col align-self-end">
+                    <button type="button" id="filter-btn" class="btn btn-primary">Tampilkan Data</button>
+                </div>
+            </form>
 
             <!-- Table Section -->
             <div class="table-responsive">
@@ -72,7 +79,7 @@ $userRole = $_SESSION['user']['role'];
                             <th>Peringkat</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="prestasi-tbody">
                         <tr>
                             <td class="no-data text-center" colspan="6">
                                 <em>Data tidak tersedia saat ini.</em>
@@ -85,8 +92,78 @@ $userRole = $_SESSION['user']['role'];
     </div>
 
     <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Data Dummy
+        const dataDummy = [
+    {
+        nama: "Gilang Purnomo",
+        programStudi: "Teknik Informatika",
+        namaPrestasi: "Lomba CTF Nasional",
+        tingkatPrestasi: "Nasional",
+        tahunPrestasi: "2023",
+        peringkat: "Juara 1"
+    },
+    {
+        nama: "Najwa Alya Nurizza",
+        programStudi: "Teknik Informatika",
+        namaPrestasi: "PIMNAS XXXVIII",
+        tingkatPrestasi: "Internasional",
+        tahunPrestasi: "2022",
+        peringkat: "1"
+    },
+    {
+        nama: "Sesy Tana Lina Rahmatin",
+        programStudi: "Teknik Informatika",
+        namaPrestasi: "HOLOGI",
+        tingkatPrestasi: "Internasional",
+        tahunPrestasi: "2023",
+        peringkat: "Juara 3"
+    }
+];
+
+
+        // Event Listener untuk Filter
+        document.getElementById('filter-btn').addEventListener('click', function () {
+            // Ambil nilai filter
+            const programStudi = document.getElementById('program-studi').value;
+            const tahunPrestasi = document.getElementById('tahun-prestasi').value;
+            const tingkatPrestasi = document.getElementById('tingkat').value;
+
+            // Filter Data
+            const filteredData = dataDummy.filter(item =>
+                item.programStudi === programStudi &&
+                item.tahunPrestasi === tahunPrestasi &&
+                item.tingkatPrestasi === tingkatPrestasi
+            );
+
+            // Render Data ke Tabel
+            const tableBody = document.getElementById('prestasi-tbody');
+            tableBody.innerHTML = ''; // Kosongkan tabel
+
+            if (filteredData.length > 0) {
+                filteredData.forEach((item, index) => {
+                    const row = `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${item.nama}</td>
+                            <td>${item.programStudi}</td>
+                            <td>${item.namaPrestasi}</td>
+                            <td>${item.tingkatPrestasi}</td>
+                            <td>${item.peringkat}</td>
+                        </tr>
+                    `;
+                    tableBody.insertAdjacentHTML('beforeend', row);
+                });
+            } else {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td class="no-data text-center" colspan="6">
+                            <em>Data tidak tersedia saat ini.</em>
+                        </td>
+                    </tr>
+                `;
+            }
+        });
+    </script>
 </body>
 </html>

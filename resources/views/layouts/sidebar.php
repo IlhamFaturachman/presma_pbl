@@ -12,9 +12,9 @@
 
         $menuItems = [
             1 => [
-                ['url' => '/mahasiswa/dashboard', 'icon' => 'dashboard-icon.png', 'text' => 'Dashboard'],
-                ['url' => '/mahasiswa/prestasi', 'icon' => 'prestasi-icon.png', 'text' => 'Prestasi'],
-                ['url' => '/mahasiswa/peringkat', 'icon' => 'ranking-icon.png', 'text' => 'Peringkat'],
+                ['url' => '/presma_pbl/public/mahasiswa/dashboard', 'icon' => 'dashboard-icon.png', 'text' => 'Dashboard'],
+                ['url' => '/presma_pbl/public/mahasiswa/prestasi', 'icon' => 'prestasi-icon.png', 'text' => 'Prestasi'],
+                ['url' => '/presma_pbl/public/mahasiswa/peringkat', 'icon' => 'ranking-icon.png', 'text' => 'Peringkat'],
             ],
             2 => [
                 ['url' => '/dosbim/dashboard', 'icon' => 'dashboard-icon.png', 'text' => 'Dashboard'],
@@ -41,14 +41,14 @@
         ?>
 
         <?php foreach ($menus as $menu): ?>
-            <li class="mb-3">
-                <a href="<?= htmlspecialchars($menu['url']) ?>"
-                    class="text-white text-decoration-none d-flex align-items-center <?= ($_SERVER['REQUEST_URI'] === $menu['url']) ? 'active' : '' ?>">
-                    <img src="../../public/assets/icon/<?= htmlspecialchars($menu['icon']) ?>"
-                        alt="<?= htmlspecialchars($menu['text']) ?> Icon" class="sidebar-icon me-2">
-                    <span class="menu-text"><?= htmlspecialchars($menu['text']) ?></span>
-                </a>
-            </li>
+        <li class="mb-3">
+            <a href="<?= htmlspecialchars($menu['url']) ?>"
+                class="text-white text-decoration-none d-flex align-items-center <?= ($_SERVER['REQUEST_URI'] === $menu['url']) ? 'active' : '' ?>">
+                <img src="../../public/assets/icon/<?= htmlspecialchars($menu['icon']) ?>"
+                    alt="<?= htmlspecialchars($menu['text']) ?> Icon" class="sidebar-icon me-2">
+                <span class="menu-text"><?= htmlspecialchars($menu['text']) ?></span>
+            </a>
+        </li>
         <?php endforeach; ?>
     </ul>
 </div>

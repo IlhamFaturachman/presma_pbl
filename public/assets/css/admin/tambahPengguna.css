@@ -101,7 +101,7 @@ body {
     background-color: #F4F6F9;
     /* Warna abu-abu untuk kolom peringkat */
     font-weight: bold;
-    text-align: center;
+    text-align: left;
 }
 
 /* Pagination Styles */
@@ -160,14 +160,6 @@ body {
     .table-container {
         padding: 10px;
     }
-}
-
-.table tbody td:first-child {
-    background-color: #F4F6F9;
-    /* Warna abu-abu untuk kolom peringkat */
-    font-weight: bold;
-    text-align: center;
-    font-size: 14px;
 }
 
 .table-container h4 {
