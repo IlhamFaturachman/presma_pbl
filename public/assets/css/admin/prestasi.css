@@ -1,5 +1,5 @@
 body {
-    padding-top: 20px;
+    padding-top: 60px;
 }
 .status {
     padding: 5px 10px;
@@ -32,45 +32,38 @@ table {
     border-radius: 10px;
     border-collapse: collapse;
     width: 100%;
-    border-bottom: 1px solid #ddd; /* Garis bawah seluruh tabel */
 }
-table th, table td {
-    border: none;
-    padding: 12px 16px;
+th, td {
+    text-align: left;
+    vertical-align: middle;
 }
-table tbody tr {
-    border-bottom: 1px solid #ddd;
+
+.table th, .table td {
+    vertical-align: middle;
 }
-table thead th {
-    background-color: #f8f9fa;
-    font-weight: bold;
-    border-bottom: 2px solid #ddd; /* Garis pemisah thead dan tbody */
-    position: relative;
-}
-table tbody tr:last-child {
-    border-bottom: none;
-}
-table tbody tr:hover {
-    background-color: #f1f1f1; /* Warna latar belakang saat hover pada baris */
+
+/* Menambahkan aturan untuk membuat Nama Mahasiswa rata kiri */
+td:first-child {
+    text-align: left !important; /* Memastikan Nama Mahasiswa rata kiri */
 }
   /* Posisi gambar dropdown */
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
 .dropdown-image {
     background: none;
     border: none;
-    padding: 0;
     cursor: pointer;
     position: static;
-    right: 45%;
-    top: 50%;
+    right: 0;
+    top: 0;
     transform: translateY(-10%); /* Vertikal center */
 }
 .dropdown-menu {
-    min-width: 200px;
-    display: none; /* Sembunyikan dropdown menu secara default */
-    position: absolute;
-    top: 100%; /* Menampilkan dropdown di bawah */
-    right: 0;
-    z-index: 100;
+    left: 0;
+    right: auto;
 }
 .dropdown-image.open {
   transform: rotate(180deg); /* Memutar gambar ikon 180 derajat */

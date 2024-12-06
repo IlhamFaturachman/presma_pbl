@@ -62,7 +62,7 @@ $app->group('/auth', function ($auth) {
     });
 
     $auth->get('/test', function (Request $request, Response $response) {
-        return renderView($response, 'component/mahasiswa/modalTambahPrestasi.php');
+        return renderView($response, 'pages/admin/prestasi.php');
     });
 
     // Login API Route
