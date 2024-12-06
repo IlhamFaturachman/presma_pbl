@@ -5,6 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Ambil informasi pengguna dari sesi
 $userId = $_SESSION['user']['id'];
+$userNameFromTableUsers = $_SESSION['user']['username'];
 $userName = $_SESSION['user']['name'];
 $userRole = $_SESSION['user']['role'];
 ?>
@@ -16,11 +17,13 @@ $userRole = $_SESSION['user']['role'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Mahasiswa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/header.css">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/sidebar.css">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/mahasiswa/dashboard.css">
+    <link rel="stylesheet" href="/presma_pbl/public/assets/css/admin/tambahPengguna.css">
 </head>
 
 <body>
@@ -34,7 +37,7 @@ $userRole = $_SESSION['user']['role'];
 
         <!-- Main Content -->
 
-        <div class="p-4 w-100" id="content">
+        <div class="content flex-grow-1 p-4" id="content">
             <div class="row mb-4">
                 <!-- Profil Mahasiswa -->
                 <div class="col-md-6">
@@ -43,15 +46,15 @@ $userRole = $_SESSION['user']['role'];
                             <img src="../../public/assets/img/Resume-rafiki.png" alt="Foto Profil">
                         </div>
                         <div class="profile-info">
-                            <h4>Ilham Faturachman</h4>
-                            <p>244107023001 / TI 2A</p>
+                            <h4><?php echo $userName; ?></h4>
+                            <p><?php echo $userNameFromTableUsers; ?> / TI 2A</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Menu dan Statistik -->
                 <div class="col-md-6">
-                    <div class="menu-stat-section">
+                    <div class="menu-stat-section p-0">
                         <div class="menu-grid">
                             <a href="#" class="menu-item menu-item-blue" id="btnTambah">
                                 <div class="menu-icon">
@@ -131,32 +134,33 @@ $userRole = $_SESSION['user']['role'];
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-            $(document).on('click', '#btnPrestasi', function(e) {
-                e.preventDefault();
-                const modalUrl = $(this).data('modal-url');
-                $('#modalContainer').load('/presma_pbl/listPres.php', function() {
-                    const modal = new bootstrap.Modal(document.getElementById('addPrestasiModal'));
-                    modal.show();
-                });
+        $(document).on('click', '#btnPrestasi', function(e) {
+            e.preventDefault();
+            const modalUrl = $(this).data('modal-url');
+            $('#modalContainer').load('/presma_pbl/listPres.php', function() {
+                const modal = new bootstrap.Modal(document.getElementById('addPrestasiModal'));
+                modal.show();
             });
+        });
 
-            // js modal Tambah
-            $(document).on('click', '#btnTambah', function(e) {
-                e.preventDefault();
-                // Memuat modal dari file terpisah
-                $('#modalContainer').load('/presma_pbl/resources/views/component/modalTambahPres.php', function() {
+        // js modal Tambah
+        $(document).on('click', '#btnTambah', function(e) {
+            e.preventDefault();
+            // Memuat modal dari file terpisah
+            $('#modalContainer').load('/presma_pbl/resources/views/component/mahasiswa/modalTambahPres.php',
+                function() {
                     $('#prestasiModal').modal('show');
                 });
-            });
+        });
 
-            // js modal Logout
-            $(document).on('click', '#btnLogout', function(e) {
-                e.preventDefault();
-                // Memuat modal dari file terpisah
-                $('#modalContainer').load('/presma_pbl/resources/views/component/modalValLogout.php', function() {
-                    $('#logoutModal').modal('show');
-                });
+        // js modal Logout
+        $(document).on('click', '#btnLogout', function(e) {
+            e.preventDefault();
+            // Memuat modal dari file terpisah
+            $('#modalContainer').load('/presma_pbl/resources/views/component/modalValLogout.php', function() {
+                $('#logoutModal').modal('show');
             });
+        });
         </script>
         <script src="/presma_pbl/public/assets/js/sidebar.js"></script>
 </body>

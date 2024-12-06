@@ -222,6 +222,11 @@ $app->group('/admin', function ($admin) {
         return $usersController->getForDosenDropdown($request, $response);
     });
 
+    $admin->get('/dosen/{nip}', function (Request $request, Response $response, array $args) {
+        $dosenController = new DosenController(); // Controller untuk mahasiswa
+        return $dosenController->show($request, $response, $args); // Kirim seluruh $args
+    });
+
     // Get all dosen
     $admin->get('/dosen', function (Request $request, Response $response) {
         $dosenController = new DosenController(); // Controller untuk dosen
@@ -253,15 +258,15 @@ $app->group('/admin', function ($admin) {
 
         // Jika metode adalah PUT, update dosen
         if ($request->getMethod() === 'PUT') {
-            // Pastikan nim dosen ada dalam args
-            if (isset($args['nim'])) {
+            // Pastikan nip dosen ada dalam args
+            if (isset($args['nip'])) {
                 // Panggil metode update di dosenController
                 return $dosenController->update($request, $response, $args);
             } else {
-                // nim dosen diperlukan untuk pembaruan
+                // nip dosen diperlukan untuk pembaruan
                 $response->getBody()->write(json_encode([
                     'success' => false,
-                    'message' => 'NIM is required for update.',
+                    'message' => 'NIP is required for update.',
                 ]));
                 return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
             }

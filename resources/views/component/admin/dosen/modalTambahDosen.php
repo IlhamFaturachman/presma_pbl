@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 nipSelect.appendChild(option);
             });
         } catch (error) {
-            alert("Terjadi kesalahan saat memuat NIM. Silakan coba lagi.");
+            alert("Terjadi kesalahan saat memuat NIP. Silakan coba lagi.");
             console.error(error);
         }
 
@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    nim: form.nim.value, // NIM diambil dari username
+                    nip: form.nip.value, // NIP diambil dari username
                     nama: form.nama.value,
                     email: form.email.value,
                     phone: form.no_telp.value,
