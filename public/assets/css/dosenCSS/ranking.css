@@ -19,12 +19,13 @@ body {
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 20px; /* Memberikan ruang di atas tabel */
+    margin-top: 15px; /* Memberikan ruang di atas tabel */
 }
 
 .table-container h4 {
+    font-weight: 600;
     margin-bottom: 20px;
-}
+  }
 
 .search-box {
     display: flex;
@@ -43,9 +44,10 @@ body {
 }
 
 .table th, .table td {
-    padding: 12px;
+    padding: 10px;
     text-align: left;
     border-bottom: 1px solid #F4F6F9;
+    font-size: 14px;
 }
 
 .table th {
@@ -125,7 +127,7 @@ body {
     background-color: #F4F6F9; /* Warna abu-abu untuk kolom peringkat */
     font-weight: bold;
     text-align: center;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .table-container h4 {

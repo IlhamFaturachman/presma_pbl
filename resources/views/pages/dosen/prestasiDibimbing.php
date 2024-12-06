@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daftar Prestasi yang Dibimbing</title>
-  <link rel="stylesheet" href="/presma_pbl/public/assets/css/dosenCSS/prestasiDibimbing.css">
-  <link rel="stylesheet" href="/presma_pbl/public/assets/css/header.css">
-  <link rel="stylesheet" href="/presma_pbl/public/assets/css/sidebar.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Prestasi Yang Dibimbing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/presma_pbl/public/assets/css/dosenCSS/prestasiDibimbing.css">
+    <link rel="stylesheet" href="/presma_pbl/public/assets/css/header.css">
+    <link rel="stylesheet" href="/presma_pbl/public/assets/css/sidebar.css">
 </head>
 <body>
     <!-- Header -->
@@ -20,7 +23,7 @@
         <div class="content flex-grow-1 p-4">
             <section class="table-container">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h4>Daftar Prestasi yang Dibimbing</h4>
+                    <h4>Daftar Prestasi Yang Dibimbing</h4>
                     <div class="search-box">
                         <input type="text" class="form-control" placeholder="Pencarian" id="searchInput">
                     </div>
@@ -29,54 +32,27 @@
                 <table class="table table-striped" id="rankingTable">
                     <thead>
                         <tr>
-                            <th>Kategori Prestasi</th>
-                            <th>Peringkat</th>
-                            <th>Nama Pembimbing</th>
-                            <th>Skala</th>
+                            <th>Nama Lomba</th>
+                            <th>Tingkat Juara</th>
+                            <th>Dosen Pembimbing</th>
+                            <th>Tingkat</th>
                             <th>Status</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="rankingBody">
-                        <tr>
-                            <td>Lomba Menembak</td>
-                            <td>Juara 1</td>
-                            <td>Ir. Gilang S.T., M.T</td>
-                            <td>Nasional</td>
-                            <td><span class="status pending">Menunggu Validasi</span></td>
-                            <td><button class="btn btn-detail">Detail</button></td>
-                        </tr>
-                        <tr>
-                            <td>XXL Freshman Cypher</td>
-                            <td>Juara Harapan 3</td>
-                            <td>Ir. Gilang S.T., M.T</td>
-                            <td>Nasional</td>
-                            <td><span class="status verified">Terverifikasi</span></td>
-                            <td><button class="btn btn-detail">Detail</button></td>
-                        </tr>
-                        <tr>
-                            <td>Complexcon Best Suite</td>
-                            <td>Juara 2</td>
-                            <td>Ir. Gilang S.T., M.T</td>
-                            <td>Internasional</td>
-                            <td><span class="status rejected">Ditolak</span></td>
-                            <td><button class="btn btn-info">Info</button></td>
-                        </tr>
+                        <!-- Data will be rendered dynamically -->
                     </tbody>
                 </table>
 
                 <!-- Pagination -->
-                <div class="pagination">
-                    <button class="page-btn">Prev</button>
-                    <button class="page-btn">1</button>
-                    <button class="page-btn">2</button>
-                    <button class="page-btn">10</button>
-                    <button class="page-btn">Next</button>
-                </div>
+                <ul class="pagination" id="pagination"></ul>
             </section>
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/presma_pbl/public/assets/js/dosen/prestasiDibimbing.js"></script>
+    <script src="/presma_pbl/public/assets/js/sidebar.js"></script>
 </body>
 </html>
