@@ -1,7 +1,7 @@
 // Konfigurasi paginasi
 const rowsPerPage = 10;
 let currentPage = 1;
-let allMahasiswa = [];
+let allDosen = [];
 
 // Render tabel
 function renderTable(data) {
@@ -10,33 +10,31 @@ function renderTable(data) {
     const paginatedData = data.slice(startIndex, endIndex);
 
     // Kosongkan tbody
-    $('#mahasiswaBody').empty();
+    $('#dosenBody').empty();
 
     if (paginatedData.length === 0) {
-        $('#mahasiswaBody').append('<tr><td colspan="8" class="text-center">Tidak ada mahasiswa yang ditemukan.</td></tr>');
+        $('#dosenBody').append('<tr><td colspan="6" class="text-center">Tidak ada dosen yang ditemukan.</td></tr>');
         return;
     }
 
     // Isi data ke tabel
-    paginatedData.forEach(mahasiswa => {
-        const trimmedEmail = mahasiswa.email.length > 10
-            ? mahasiswa.email.substring(0, 17) + '...'
-            : mahasiswa.email;
+    paginatedData.forEach(dosen => {
+        const trimmedEmail = dosen.email.length > 10
+            ? dosen.email.substring(0, 17) + '...'
+            : dosen.email;
 
-        $('#mahasiswaBody').append(`
+        $('#dosenBody').append(`
             <tr>
-                <td>${mahasiswa.nim}</td>
-                <td>${mahasiswa.nama}</td>
-                <td title="${mahasiswa.email}">${trimmedEmail}</td>
-                <td>${mahasiswa.phone}</td>
-                <td>${mahasiswa.angkatan}</td>
-                <td>${mahasiswa.kelas}</td>
-                <td>${mahasiswa.nama_prodi}</td>
+                <td>${dosen.nip}</td>
+                <td>${dosen.nama}</td>
+                <td title="${dosen.email}">${trimmedEmail}</td>
+                <td>${dosen.phone}</td>
+                <td>${dosen.nama_prodi}</td>
                 <td>
-                    <button class="btn btn-sm btn-warning editMahasiswa" data-mahasiswa-nim="${mahasiswa.nim}">
+                    <button class="btn btn-sm btn-warning editDosen" data-dosen-nip="${dosen.nip}">
                         <i class="bi bi-pencil"></i> Edit
                     </button>
-                    <button class="btn btn-sm btn-danger deleteMahasiswa" data-mahasiswa-nim="${mahasiswa.nim}">
+                    <button class="btn btn-sm btn-danger deleteDosen" data-dosen-nip="${dosen.nip}">
                         <i class="bi bi-trash"></i> Hapus
                     </button>
                 </td>
@@ -78,52 +76,50 @@ function renderPagination(totalItems) {
 $(document).on('click', '#pagination .page-link', function (e) {
     e.preventDefault();
     const page = parseInt($(this).data('page'));
-    const totalPages = Math.ceil(allMahasiswa.length / rowsPerPage);
+    const totalPages = Math.ceil(allDosen.length / rowsPerPage);
 
     if (page >= 1 && page <= totalPages) {
         currentPage = page;
-        renderTable(allMahasiswa);
-        renderPagination(allMahasiswa.length);
+        renderTable(allDosen);
+        renderPagination(allDosen.length);
     }
 });
 
 // Fitur pencarian
 $('#searchInput').on('keyup', function () {
     const value = $(this).val().toLowerCase();
-    const filteredMahasiswa = allMahasiswa.filter(mahasiswa =>
-        mahasiswa.nama.toLowerCase().includes(value)
+    const filteredDosen = allDosen.filter(dosen =>
+        dosen.nama.toLowerCase().includes(value)
     );
 
     currentPage = 1; // Reset ke halaman pertama
-    renderTable(filteredMahasiswa);
-    renderPagination(filteredMahasiswa.length);
+    renderTable(filteredDosen);
+    renderPagination(filteredDosen.length);
 });
 
 // Event delegation untuk tombol Edit
-$(document).on('click', '.editMahasiswa', async function () {
-    const nim = $(this).data('mahasiswa-nim');
-    if (!nim) {
-        console.error('NIM tidak ditemukan!');
+$(document).on('click', '.editDosen', async function () {
+    const nip = $(this).data('dosen-nip');
+    if (!nip) {
+        console.error('NIP tidak ditemukan!');
         return;
     }
 
     // Buka modal edit pengguna
-    $('#editMahasiswaModal').modal('show');
+    $('#editDosenModal').modal('show');
 
     try {
         // Ambil data pengguna berdasarkan ID
-        const response = await fetch(`/presma_pbl/public/admin/mahasiswa/${nim}`);
+        const response = await fetch(`/presma_pbl/public/admin/dosen/${nip}`);
         if (!response.ok) throw new Error('Gagal memuat data Mahasiswa');
-        const mhsData = await response.json();
+        const dsnData = await response.json();
 
         // Isi form dengan data pengguna
-        $('#edit-nim').val(mhsData.nim);
-        $('#edit-nama').val(mhsData.nama);
-        $('#edit-email').val(mhsData.email);
-        $('#edit-phone').val(mhsData.phone);
-        $('#edit-angkatan').val(mhsData.angkatan);
-        $('#edit-kelas').val(mhsData.kelas);
-        $('#edit-prodi').val(mhsData.prodi);
+        $('#edit-nim').val(dsnData.nim);
+        $('#edit-nama').val(dsnData.nama);
+        $('#edit-email').val(dsnData.email);
+        $('#edit-phone').val(dsnData.phone);
+        $('#edit-prodi').val(dsnData.prodi);
 
         // Load prodi
         const prodiResponse = await fetch('/presma_pbl/public/admin/program-studi');
@@ -134,7 +130,7 @@ $(document).on('click', '.editMahasiswa', async function () {
         prodiSelect.empty();
         prodiSelect.append('<option value="" disabled>Pilih Prodi</option>');
         prodi.forEach(prodi => {
-            const option = `<option value="${prodi.prodi_id}" ${prodi.prodi_id === mhsData.prodi_id ? 'selected' : ''}>${prodi.nama_prodi}</option>`;
+            const option = `<option value="${prodi.prodi_id}" ${prodi.prodi_id === dsnData.prodi_id ? 'selected' : ''}>${prodi.nama_prodi}</option>`;
             prodiSelect.append(option);
         });
     } catch (error) {
@@ -144,42 +140,42 @@ $(document).on('click', '.editMahasiswa', async function () {
 });
 
 // Event delegation untuk tombol Hapus
-$(document).on('click', '.deleteMahasiswa', function () {
-    const nim = $(this).data('mahasiswa-nim');
-    if (!nim) {
-        console.error('NIM tidak ditemukan!');
+$(document).on('click', '.deleteDosen', function () {
+    const nip = $(this).data('dosen-nip');
+    if (!nip) {
+        console.error('NIP tidak ditemukan!');
         return;
     }
 
     // Buka modal konfirmasi hapus
-    $('#deleteMahasiswaModal').modal('show');
-    $('#confirmDelete').data('mahasiswa-nim', nim);
+    $('#deleteDosenModal').modal('show');
+    $('#confirmDelete').data('dosen-nip', nip);
 });
 
 // Konfirmasi Hapus
 $(document).on('click', '#confirmDelete', async function () {
-    const nim = $(this).data('mahasiswa-nim');
-    if (!nim) {
-        console.error('NIM tidak ditemukan!');
+    const nip = $(this).data('dosen-nip');
+    if (!nip) {
+        console.error('NIP tidak ditemukan!');
         return;
     }
 
     try {
-        const response = await fetch(`/presma_pbl/public/admin/mahasiswa/${nim}`, {
+        const response = await fetch(`/presma_pbl/public/admin/dosen/${nip}`, {
             method: 'DELETE'
         });
-        if (!response.ok) throw new Error('Gagal menghapus mahasiswa');
-        alert('Mahasiswa berhasil dihapus!');
+        if (!response.ok) throw new Error('Gagal menghapus Dosen');
+        alert('Dosen berhasil dihapus!');
         location.reload();
     } catch (error) {
         console.error(error);
-        alert('Terjadi kesalahan saat menghapus mahasiswa.');
+        alert('Terjadi kesalahan saat menghapus Dosen.');
     }
 });
 
 // Load data dari PHP saat halaman dimuat
 $(document).ready(function () {
-    allMahasiswa = window.allMahasiswa || []; // Ambil data dari PHP
-    renderTable(allMahasiswa);
-    renderPagination(allMahasiswa.length);
+    allDosen = window.allDosen || []; // Ambil data dari PHP
+    renderTable(allDosen);
+    renderPagination(allDosen.length);
 });

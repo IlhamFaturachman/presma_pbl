@@ -30,6 +30,37 @@ class UserController extends Controller
         // return $response; // Kembalikan objek Response
     }
 
+
+    public function getForMahasiswaDropdown(Request $request, Response $response)
+    {
+        // Ambil daftar pengguna yang belum memiliki data di tabel mahasiswa
+        $users = $this->userModel->getUserNotInMahasiswa();
+
+        // Atur header Content-Type menjadi application/json
+        if (!empty($users)) {
+            $response->getBody()->write(json_encode($users));
+        } else {
+            $response->getBody()->write(json_encode(["error" => "No Mahasiswa found"]));
+        }
+
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public function getForDosenDropdown(Request $request, Response $response)
+    {
+        // Ambil daftar pengguna yang belum memiliki data di tabel mahasiswa
+        $users = $this->userModel->getUserNotInDosen();
+
+        // Atur header Content-Type menjadi application/json
+        if (!empty($users)) {
+            $response->getBody()->write(json_encode($users));
+        } else {
+            $response->getBody()->write(json_encode(["error" => "No Mahasiswa found"]));
+        }
+
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
     // Override show method for fetching user by ID
     public function show(Request $request, Response $response, array $args)
     {
@@ -116,20 +147,54 @@ class UserController extends Controller
     // Override update method for updating user data
     public function update(Request $request, Response $response, array $args)
     {
-        // Ambil user_id dari args
         $user_id = $args['user_id'];
 
-        // Cek apakah user dengan user_id tersebut ada
+        // Cek apakah user_id ada
         if (!$user_id) {
             $response->getBody()->write(json_encode([
                 'success' => false,
-                'message' => 'Pengguna tidak ditemukan.',
+                'message' => 'Pengguna tidak ditemukan.'
             ]));
             return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
         }
 
-        // Ambil dan decode data dari request
+        // Ambil data pengguna dengan roles
+        try {
+            $user = $this->userModel->getUserByIdWithRoles($user_id);
+            if (!$user) {
+                throw new \Exception("User not found or query failed");
+            }
+        } catch (\Exception $e) {
+            $response->getBody()->write(json_encode([
+                'success' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ]));
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+        }
+        if (!$user) {
+            $response->getBody()->write(json_encode([
+                'success' => false,
+                'message' => 'Pengguna tidak ditemukan.'
+            ]));
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
+        }
+
+        // Decode JSON request body
         $data = json_decode($request->getBody(), true);
+
+        // Validasi jika JSON tidak valid
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            $response->getBody()->write(json_encode([
+                'success' => false,
+                'message' => 'Data yang dikirim tidak valid.'
+            ]));
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+        }
+
+        // Jika role tidak bisa diedit, hapus role_id dari data
+        if (!$user['is_role_editable'] && isset($data['role_id'])) {
+            unset($data['role_id']);
+        }
 
         // Validasi input
         $errors = [];
@@ -143,13 +208,14 @@ class UserController extends Controller
             $errors['password'] = 'Password minimal 6 karakter.';
         }
 
-        if (empty($data['role_id'])) {
+        // Validasi role_id hanya jika role dapat diubah
+        if ($user['is_role_editable'] && empty($data['role_id'])) {
             $errors['role_id'] = 'Role ID wajib diisi.';
-        } elseif (!is_numeric($data['role_id'])) {
+        } elseif ($user['is_role_editable'] && !is_numeric($data['role_id'])) {
             $errors['role_id'] = 'Role ID harus berupa angka.';
         }
 
-        // Jika ada error, kirimkan respons dengan status 422
+        // Jika ada error validasi
         if (!empty($errors)) {
             $response->getBody()->write(json_encode([
                 'success' => false,
@@ -175,25 +241,26 @@ class UserController extends Controller
             if ($result) {
                 $response->getBody()->write(json_encode([
                     'success' => true,
-                    'message' => 'Pengguna berhasil diperbarui.',
+                    'message' => 'Pengguna berhasil diperbarui.'
                 ]));
                 return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
             } else {
                 $response->getBody()->write(json_encode([
                     'success' => false,
-                    'message' => 'Gagal memperbarui pengguna. Silakan coba lagi.',
+                    'message' => 'Gagal memperbarui pengguna. Silakan coba lagi.'
                 ]));
                 return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
             }
         } catch (\Exception $e) {
-            // Error handling untuk masalah yang tidak terduga
+            // Error handling
             $response->getBody()->write(json_encode([
                 'success' => false,
-                'message' => 'Terjadi kesalahan server: ' . $e->getMessage(),
+                'message' => 'Terjadi kesalahan server: ' . $e->getMessage()
             ]));
             return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
         }
     }
+
 
 
     // Override delete method for removing a user

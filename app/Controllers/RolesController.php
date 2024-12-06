@@ -16,10 +16,10 @@ class RolesController extends Controller
     }
     public function index(Request $request, Response $response)
     {
-        $users = $this->rolesModel->getAllRoles();
+        $roles = $this->rolesModel->getAllRoles();
 
-        if (!empty($users)) {
-            $response->getBody()->write(json_encode($users));
+        if (!empty($roles)) {
+            $response->getBody()->write(json_encode($roles));
         } else {
             $response->getBody()->write(json_encode(["error" => "No roles found"]));
         }

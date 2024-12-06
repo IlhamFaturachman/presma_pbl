@@ -117,6 +117,10 @@ abstract class Model
             $stmt->execute($params);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
+            // Log error untuk debugging
+            error_log("SQL Error: " . $e->getMessage());
+            error_log("Query: " . $sql);
+            error_log("Params: " . json_encode($params));
             $this->handleError($e);
         }
         return []; // Return default value jika terjadi error
