@@ -55,7 +55,7 @@ function renderTable() {
         });
     } else {
         // Jika tidak ada hasil, tampilkan pesan
-        $('#rankingBody').append(`<tr><td colspan="5" class="text-center">No data found for the selected filter.</td></tr>`);
+        $('#rankingBody').append(`<tr><td colspan="5" class="text-center">Data tidak ditemukan.</td></tr>`);
     }
 
     // Render pagination

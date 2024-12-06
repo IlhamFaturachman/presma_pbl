@@ -63,7 +63,7 @@ $app->group('/auth', function ($auth) {
     });
 
     $auth->get('/test', function (Request $request, Response $response) {
-        return renderView($response, 'pages/admin/prestasi.php');
+        return renderView($response, 'pages/mahasiswa/dashboard.php');
     });
 
     // Login API Route
