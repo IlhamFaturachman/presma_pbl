@@ -1,0 +1,45 @@
+/* Table Styles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #F4F6F9;
+}
+
+.table th {
+    background-color: #F4F6F9;
+    /* Warna yang sama seperti background tabel */
+    color: #212529;
+    /* Warna teks agar kontras */
+    font-weight: bold;
+}
+
+/* Rows Styling */
+.table tbody tr {
+    background-color: #F4F6F9;
+    /* Warna seragam untuk semua baris */
+}
+
+.table tbody tr:hover {
+    background-color: #F4F6F9;
+    /* Tambahkan efek hover jika diinginkan */
+}
+
+/* Styling for the 1st, 4th, and 5th columns (Peringkat, Jumlah Prestasi, and Poin Total) */
+.table th:nth-child(1),
+.table th:nth-child(4),
+.table th:nth-child(5),
+.table tbody td:nth-child(1),
+.table tbody td:nth-child(4),
+.table tbody td:nth-child(5) {
+    background-color: #F4F6F9;
+    /* Gray color for the columns */
+    text-align: center;
+    /* Center the text */
+}

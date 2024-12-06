@@ -94,8 +94,6 @@ class UserModel extends Model
         return $this->find($user_id);
     }
 
-
-
     // Memanfaatkan insert dari superclass
     public function addUser(array $userData): bool
     {
