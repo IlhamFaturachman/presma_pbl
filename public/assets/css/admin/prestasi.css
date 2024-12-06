@@ -1,73 +1,238 @@
+/* Main Content Styles */
 body {
-    padding-top: 60px;
+    font-family: 'Poppins', sans-serif;
 }
+
+/* Main Content Styles */
+.content {
+    flex-grow: 1;
+    background-color: white; /* Warna latar belakang terang */
+    padding: 20px;
+    box-sizing: border-box;
+    margin-top: 45px; /* Menambahkan ruang di atas konten agar tidak tertutup header */
+    overflow: auto; /* Membuat konten bisa digulir jika melebihi ruang */
+}
+
+/* Tabel peringkat prestasi */
+.table-container {
+    background-color: #F4F6F9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 15px; /* Memberikan ruang di atas tabel */
+}
+
+.table-container h4 {
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.search-box input {
+    max-width: 300px;
+}
+
+/* Table Styles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* Table Styles */
+.table th, .table td {
+    padding: 6px 10px;  /* Mengurangi padding */
+    border-bottom: 1px solid #F4F6F9;
+    font-size: 14px;  /* Mengurangi ukuran font */
+    line-height: 2;  /* Menyesuaikan tinggi baris */
+}
+
+/* Menyelaraskan kolom Nama Mahasiswa (kolom pertama atau kedua) ke kiri */
+.table th:nth-child(1), 
+.table td:nth-child(1),
+.table th:nth-child(2), 
+.table td:nth-child(2) {
+    text-align: left !important; /* Menggunakan !important untuk memastikan aturan ini diutamakan */
+}
+
+/* Memastikan teks di tengah untuk kolom tertentu */
+.table th:nth-child(5), 
+.table td:nth-child(5) {
+    text-align: center; /* Mengatur kolom lainnya ke tengah */
+}
+
+/* Styling untuk header tabel */
+.table th {
+    background-color: #F4F6F9; /* Warna yang sama seperti background tabel */
+    color: #212529; /* Warna teks agar kontras */
+    font-weight: bold;
+    font-size: 14px; /* Ukuran font header lebih kecil */
+    text-align: left;
+    padding: 6px 10px; /* Mengurangi jarak pada teks header */
+}
+
+/* Untuk kolom header yang terletak di tengah (seperti Peringkat) */
+.table th:nth-child(5) {
+    text-align: center; /* Menyelaraskan teks di header kolom tertentu ke tengah */
+}
+
+/* Penyesuaian pada header cell peringkat */
+.table tbody td:first-child {
+    font-weight: bold;
+    text-align: center;
+    background-color: #F4F6F9; /* Sama dengan header */
+}
+
+/* Rows Styling */
+.table tbody tr {
+    background-color: #F4F6F9; /* Warna seragam untuk semua baris */
+}
+
+.table tbody tr:hover {
+    background-color: #F4F6F9; /* Tambahkan efek hover jika diinginkan */
+}
+
+/* Styling for ranking cells (Peringkat) */
+.table tbody td:first-child {
+    background-color: #F4F6F9; /* Warna abu-abu untuk kolom peringkat */
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Pagination Styles */
+.pagination {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.pagination .page-item {
+    margin: 0 5px;
+}
+
+.pagination .page-link {
+    border: none; /* Menghapus garis border */
+    color: #007bff; /* Warna teks tetap biru */
+    background-color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #ccc;
+}
+
+/* Status badge styling */
 .status {
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 12px;
     font-weight: bold;
     color: #fff;
-    display: inline-block;
 }
+
 .status.waiting {
     background-color: #ffc107;
 }
+
 .status.verified {
     background-color: #28a745;
 }
+
 .status.rejected {
     background-color: #dc3545;
 }
-.pagination .page-link {
-    border-radius: 5px;
-}
-.table-container {
-    background-color: #F4F6F9;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
-table {
-    background-color: #fff;
-    border-radius: 10px;
-    border-collapse: collapse;
-    width: 100%;
-}
-th, td {
-    text-align: left;
-    vertical-align: middle;
-}
 
-.table th, .table td {
-    vertical-align: middle;
-}
-
-/* Menambahkan aturan untuk membuat Nama Mahasiswa rata kiri */
-td:first-child {
-    text-align: left !important; /* Memastikan Nama Mahasiswa rata kiri */
-}
-  /* Posisi gambar dropdown */
+/* Styling untuk dropdown */
 .dropdown-container {
     position: relative;
     display: inline-block;
     vertical-align: middle;
 }
+
 .dropdown-image {
     background: none;
     border: none;
     cursor: pointer;
     position: static;
-    right: 0;
-    top: 0;
-    transform: translateY(-10%); /* Vertikal center */
+    transform: translateY(-10%);
 }
+
 .dropdown-menu {
     left: 0;
     right: auto;
+    display: none;
+    z-index: 10;
 }
+
 .dropdown-image.open {
-  transform: rotate(180deg); /* Memutar gambar ikon 180 derajat */
+    transform: rotate(180deg);
 }
+
 .dropdown-menu.show {
-    display: block; /* Menampilkan dropdown jika di-trigger */
+    display: block;
+}
+
+/* Pagination Styles */
+.pagination {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.pagination .page-item {
+    margin: 0 5px;
+}
+
+.pagination .page-link {
+    border: none; /* Menghapus garis border */
+    color: #007bff; /* Warna teks tetap biru */
+    background-color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+}
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #ccc;
+}
+/* Efek hover tombol */
+.pagination .page-link:hover {
+    background-color: #e2e6ea;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+    .d-flex {
+        flex-direction: column; /* Atur sidebar dan konten secara vertikal pada perangkat kecil */
+    }
+
+    .sidebar {
+        width: 100%; /* Sidebar lebar penuh pada perangkat kecil */
+        height: auto;
+    }
+
+    .content {
+        margin-left: 0; /* Konten tidak perlu margin */
+    }
+
+    .search-box input {
+        max-width: 100%; /* Form pencarian lebar penuh pada perangkat kecil */
+    }
+
+    .table-container {
+        padding: 10px;
+    }
 }

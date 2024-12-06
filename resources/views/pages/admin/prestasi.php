@@ -35,7 +35,6 @@
                             <th>Nama Mahasiswa</th>
                             <th>
                                 Program Studi
-                                <!-- Dropdown untuk Prodi -->
                                 <div class="dropdown-container">
                                     <button class="dropdown-image" type="button" id="dropdownProdiButton" data-bs-toggle="dropdown" aria-expanded="false">
                                         <img src="/presma_pbl/public/assets/img/dropdown.png" alt="Program Studi" class="img-fluid" width="20">
@@ -50,7 +49,6 @@
                             <th>Nama Lomba</th>
                             <th>
                                 Tingkat
-                                <!-- Dropdown untuk Tingkat -->
                                 <div class="dropdown-container">
                                     <button class="dropdown-image" type="button" id="dropdownTingkatButton" data-bs-toggle="dropdown" aria-expanded="false">
                                         <img src="/presma_pbl/public/assets/img/dropdown.png" alt="Tingkat" class="img-fluid" width="20">
@@ -68,7 +66,7 @@
                         </tr>
                     </thead>
                     <tbody id="prestasiBody">
-                        <!-- Data will be inserted here dynamically -->
+                        <!-- Data akan dimasukkan di sini secara dinamis -->
                     </tbody>
                 </table>
 
