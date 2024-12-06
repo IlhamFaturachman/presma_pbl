@@ -317,6 +317,7 @@ $app->group('/dosbim', function ($dosbim) {
 });
 // ->add(new AuthMiddleware(2));
 
+
 // Dashboard untuk mahasiswa
 $app->group('/mahasiswa', function ($mahasiswa) {
     $mahasiswa->get('/dashboard', function (Request $request, Response $response) {
@@ -324,6 +325,51 @@ $app->group('/mahasiswa', function ($mahasiswa) {
     });
     $mahasiswa->get('/prestasi', function (Request $request, Response $response) {
         return renderView($response, 'pages/mahasiswa/listPres.php');
+    });
+
+    // Manage Prestasi
+    $mahasiswa->map(['POST', 'DELETE', 'PUT'], '/prestasi[/{nip}]', function (Request $request, Response $response, array $args) {
+        $dosenController = new DosenController();
+
+        // Jika metode adalah POST, proses tambah dosen
+        if ($request->getMethod() === 'POST') {
+            return $dosenController->store($request, $response);
+        }
+
+        // Jika metode adalah DELETE, hapus dosen
+        if ($request->getMethod() === 'DELETE') {
+            // Pastikan nip dosen ada dalam args
+            if (isset($args['nip'])) {
+                // Mengirimkan args sebagai array ke metode delete
+                return $dosenController->delete($request, $response, $args);
+            } else {
+                // Menggunakan getBody()->write() untuk menulis ke dalam respons
+                $response->getBody()->write('NIP is required for deletion.');
+                return $response->withStatus(400);
+            }
+        }
+
+        // Jika metode adalah PUT, update dosen
+        if ($request->getMethod() === 'PUT') {
+            // Pastikan nip dosen ada dalam args
+            if (isset($args['nip'])) {
+                // Panggil metode update di dosenController
+                return $dosenController->update($request, $response, $args);
+            } else {
+                // nip dosen diperlukan untuk pembaruan
+                $response->getBody()->write(json_encode([
+                    'success' => false,
+                    'message' => 'NIP is required for update.',
+                ]));
+                return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+            }
+        }
+        // Jika metode tidak dikenal, kembalikan error
+        $response->getBody()->write(json_encode([
+            'success' => false,
+            'message' => 'Invalid request method.',
+        ]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(405);
     });
 });
 // ->add(new AuthMiddleware(1));

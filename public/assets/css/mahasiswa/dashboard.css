@@ -16,6 +16,23 @@ body {
     overflow-y: auto;
 }
 
+.table-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    /* Memberikan ruang di atas tabel */
+}
+
+.card {
+    background-color: #fff;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
 .profile-container {
     display: flex;
     border-radius: 10px;
@@ -43,6 +60,7 @@ body {
     flex-direction: column;
     justify-content: center;
     flex-grow: 1;
+    text-align: center;
 }
 
 .profile-info h4 {

@@ -1,22 +1,28 @@
+/* Global Styles */
 body {
-    background-color: #f8f9fa;
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
+    font-family: 'Poppins', sans-serif;
 }
+
 
 #content {
     margin-top: 60px;
     /* Hindari overlap dengan header */
-    /* Sesuaikan dengan lebar sidebar */
     padding: 20px;
-    transition: margin-left 0.3s;
     display: flex;
     flex-direction: column;
+    transition: margin-left 0.3s;
     gap: 20px;
     height: calc(100vh - 60px);
     /* Sesuaikan dengan tinggi yang tersedia */
     overflow-y: auto;
+}
+
+.table-container {
+    background-color: #F4F6F9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 15px;
 }
 
 .content-row {
@@ -27,13 +33,14 @@ body {
 }
 
 .card {
+    margin: 0;
+    padding: 0;
     border: none;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 20px;
     flex: 1;
     min-width: 300px;
-    /* Grafik tidak terlalu kecil */
 }
 
 .wide {
