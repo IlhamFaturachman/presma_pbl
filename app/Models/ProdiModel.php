@@ -4,7 +4,7 @@ namespace App\Models;
 
 class ProdiModel extends Model
 {
-    protected string $tableName = 'UserManagement.users';
+    protected string $tableName = 'UserManagement.ProgramStudi';
     protected string $primaryKey = 'user_id';
 
     // Memanfaatkan findAll dari superclass

@@ -2,55 +2,48 @@
 
 namespace App\Controllers;
 
-use App\Models\MahasiswaModel;
-use App\Models\UserModel;
+use App\Models\DosenModel;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
-class MahasiswaController extends Controller
+class DosenController extends Controller
 {
-    protected MahasiswaModel $mahasiswaModel;
-    protected UserModel $userModel;
+    protected DosenModel $dosenModel;
 
     public function __construct()
     {
-        $this->mahasiswaModel = new MahasiswaModel();
-        $this->userModel = new UserModel();
+        $this->dosenModel = new DosenModel();
     }
 
-    // Override index method for listing mahasiswa
     public function index(Request $request, Response $response)
     {
-        return $mahasiswa = $this->mahasiswaModel->getAllMahasiswa();
+        return $dosenList = $this->dosenModel->getAllDosen();
+        // $response->getBody()->write(json_encode($dosenList));
+        // return $response->withHeader('Content-Type', 'application/json');
     }
 
-    // Override show method for fetching mahasiswa by ID
     public function show(Request $request, Response $response, array $args)
     {
-        $nim = $args['nim'];
-        $mahasiswa = $this->mahasiswaModel->getMahasiswaByNim($nim);
-        if ($mahasiswa) {
-            $response->getBody()->write(json_encode($mahasiswa));
+        $nip = $args['nip'];
+        $dosen = $this->dosenModel->getDosenByNip($nip);
+
+        if ($dosen) {
+            $response->getBody()->write(json_encode($dosen));
         } else {
-            $response->getBody()->write(json_encode(["error" => "Mahasiswa tidak ditemukan."]));
+            $response->getBody()->write(json_encode(["error" => "Dosen tidak ditemukan."]));
         }
+
         return $response->withHeader('Content-Type', 'application/json');
     }
 
-    // Override store method for creating a new mahasiswa
     public function store(Request $request, Response $response)
     {
         $data = json_decode($request->getBody(), true);
 
-        // Validasi input
         $errors = [];
 
-        if (empty($data['user_id'])) {
-            $errors['user_id'] = 'User ID wajib disertakan.';
-        }
-
-        if (empty($data['nim'])) {
-            $errors['nim'] = 'NIM wajib dipilih.';
+        if (empty($data['nip'])) {
+            $errors['nip'] = 'NIP wajib diisi.';
         }
 
         if (empty($data['nama'])) {
@@ -69,19 +62,10 @@ class MahasiswaController extends Controller
             $errors['phone'] = 'No. Telp harus berupa angka.';
         }
 
-        if (empty($data['angkatan'])) {
-            $errors['angkatan'] = 'Angkatan wajib dipilih.';
-        }
-
-        if (empty($data['kelas'])) {
-            $errors['kelas'] = 'Kelas wajib dipilih.';
-        }
-
         if (empty($data['prodi_id'])) {
             $errors['prodi_id'] = 'Prodi wajib dipilih.';
         }
 
-        // Jika ada error validasi, kembalikan respons
         if (!empty($errors)) {
             $response->getBody()->write(json_encode([
                 'success' => false,
@@ -91,23 +75,21 @@ class MahasiswaController extends Controller
             return $response->withHeader('Content-Type', 'application/json')->withStatus(422);
         }
 
-        // Tambahkan timestamp
         $data['created_at'] = date('Y-m-d H:i:s');
 
         try {
-            // Simpan data ke database melalui model
-            $result = $this->mahasiswaModel->addMahasiswa($data);
+            $result = $this->dosenModel->addDosen($data);
 
             if ($result) {
                 $response->getBody()->write(json_encode([
                     'success' => true,
-                    'message' => 'Mahasiswa berhasil ditambahkan.',
+                    'message' => 'Dosen berhasil ditambahkan.',
                 ]));
                 return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
             } else {
                 $response->getBody()->write(json_encode([
                     'success' => false,
-                    'message' => 'Gagal menyimpan mahasiswa.',
+                    'message' => 'Gagal menyimpan dosen.',
                 ]));
                 return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
             }
@@ -120,15 +102,11 @@ class MahasiswaController extends Controller
         }
     }
 
-
-
-    // Override update method for updating mahasiswa data
     public function update(Request $request, Response $response, array $args)
     {
-        $nim = $args['nim']; // Pastikan nim yang diambil benar
+        $nip = $args['nip'];
         $data = json_decode($request->getBody(), true);
 
-        // Validasi input
         $errors = [];
 
         if (empty($data['nama'])) {
@@ -143,14 +121,6 @@ class MahasiswaController extends Controller
 
         if (empty($data['phone'])) {
             $errors['phone'] = 'No. Telp wajib diisi.';
-        }
-
-        if (empty($data['angkatan'])) {
-            $errors['angkatan'] = 'Angkatan wajib diisi.';
-        }
-
-        if (empty($data['kelas'])) {
-            $errors['kelas'] = 'Kelas wajib diisi.';
         }
 
         if (empty($data['prodi_id'])) {
@@ -169,19 +139,18 @@ class MahasiswaController extends Controller
         $data['updated_at'] = date('Y-m-d H:i:s');
 
         try {
-            // Perbarui data mahasiswa di database
-            $result = $this->mahasiswaModel->updateMahasiswa($nim, $data);
+            $result = $this->dosenModel->updateDosen($nip, $data);
 
             if ($result) {
                 $response->getBody()->write(json_encode([
                     'success' => true,
-                    'message' => 'Mahasiswa berhasil diperbarui.',
+                    'message' => 'Dosen berhasil diperbarui.',
                 ]));
                 return $response->withHeader('Content-Type', 'application/json');
             } else {
                 $response->getBody()->write(json_encode([
                     'success' => false,
-                    'message' => 'Gagal memperbarui mahasiswa.',
+                    'message' => 'Gagal memperbarui dosen.',
                 ]));
                 return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
             }
@@ -194,38 +163,36 @@ class MahasiswaController extends Controller
         }
     }
 
-
-    // Override delete method for removing mahasiswa
     public function delete(Request $request, Response $response, array $args)
     {
-        $nim = $args['nim'];
+        $nip = $args['nip'];
 
-        if (empty($nim) || !is_numeric($nim)) {
+        if (empty($nip) || !is_numeric($nip)) {
             $response->getBody()->write(json_encode([
-                "success" => false,
-                "message" => "NIM mahasiswa tidak valid.",
+                'success' => false,
+                'message' => 'NIP dosen tidak valid.',
             ]));
             return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
         }
 
         try {
-            $result = $this->mahasiswaModel->deleteMahasiswa($nim);
+            $result = $this->dosenModel->deleteDosen($nip);
 
             if ($result) {
                 $response->getBody()->write(json_encode([
-                    "success" => true,
-                    "message" => "Mahasiswa berhasil dihapus.",
+                    'success' => true,
+                    'message' => 'Dosen berhasil dihapus.',
                 ]));
             } else {
                 $response->getBody()->write(json_encode([
-                    "success" => false,
-                    "message" => "Mahasiswa tidak ditemukan atau gagal dihapus.",
+                    'success' => false,
+                    'message' => 'Dosen tidak ditemukan atau gagal dihapus.',
                 ]));
             }
         } catch (\Exception $e) {
             $response->getBody()->write(json_encode([
-                "success" => false,
-                "message" => "Terjadi kesalahan: " . $e->getMessage(),
+                'success' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage(),
             ]));
             return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
         }

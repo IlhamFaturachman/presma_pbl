@@ -8,26 +8,42 @@ use PDOException;
 class MahasiswaModel extends Model
 {
     protected string $tableName = 'UserManagement.mahasiswa';
+    protected string $prodiTableName = 'UserManagement.ProgramStudi';
+
     protected string $primaryKey = 'nim';
 
     public function getAllMahasiswa(): array
     {
-        return $this->findAll();
+        $sql = "
+            SELECT 
+                mahasiswa.nim, 
+                mahasiswa.nama, 
+                mahasiswa.email, 
+                mahasiswa.phone, 
+                mahasiswa.angkatan, 
+                mahasiswa.kelas, 
+                prodi.nama_prodi AS nama_prodi
+            FROM {$this->tableName} AS mahasiswa
+            INNER JOIN {$this->prodiTableName} AS prodi
+            ON mahasiswa.prodi_id = prodi.prodi_id
+        ";
+        return $this->query($sql); // Gunakan metode query() dari superclass
     }
+
 
     public function getMahasiswaByNim(int $nim): array
     {
         return $this->find($nim);
     }
 
-    public function addMahasiswa(array $userData): bool
+    public function addMahasiswa(array $mhsData): bool
     {
-        return $this->insert($userData);
+        return $this->insert($mhsData);
     }
 
-    public function updateMahasiswa(int $mhsNim, array $userData): bool
+    public function updateMahasiswa(int $mhsNim, array $mhsData): bool
     {
-        return $this->update($mhsNim, $userData);
+        return $this->update($mhsNim, $mhsData);
     }
 
     public function deleteMahasiswa(int $mhsNim): bool
