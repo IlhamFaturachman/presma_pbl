@@ -33,7 +33,7 @@
                     </div>
                     <hr>
                     <!-- Tabel Prestasi -->
-                    <div class="table-container">
+                    <div class="table-container-modal">
                         <table class="table table-striped" id="achievements-table">
                             <thead>
                                 <tr>
@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Export</button>
+                    <button type="button" class="btn btn-primary" id="exportButton">Export</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                 </div>
             </div>
@@ -60,6 +60,9 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/presma_pbl/public/assets/js/modalDetail_rank.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 </body>
 
 </html>

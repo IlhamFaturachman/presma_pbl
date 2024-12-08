@@ -15,7 +15,7 @@
     font-weight: bold;
 }
 
-.table-container {
+.table-container-modal {
     max-height: 150px;
     overflow-y: auto;
 }
@@ -26,11 +26,6 @@
     background-color: #fff;
 }
 
-.table {
-    font-size: 14px;
-    margin-bottom: 0;
-}
-
-.table-container::-webkit-scrollbar {
-    width: 0px; /* Atur lebar scrollbar */
+.table-container-modal::-webkit-scrollbar {
+    width: 0px;
 }
