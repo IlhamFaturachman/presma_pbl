@@ -52,6 +52,7 @@
                             </th>
                             <th>Jumlah Prestasi</th>
                             <th>Poin Total</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="rankingBody">
@@ -67,6 +68,9 @@
         </div>
     </div>
 
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/presma_pbl/resources/views/component/admin/modalDetail_rank.php'; ?>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/presma_pbl/public/assets/js/admin/rank.js"></script>
     <script src="/presma_pbl/public/assets/js/sidebar.js"></script>
