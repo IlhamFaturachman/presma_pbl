@@ -6,6 +6,7 @@ use App\Controllers\JuaraController;
 use App\Controllers\MahasiswaController;
 use App\Controllers\PrestasiController;
 use App\Controllers\ProdiController;
+use App\Controllers\RankController;
 use App\Controllers\RolesController;
 use App\Controllers\TingkatanController;
 use App\Controllers\UserController;
@@ -309,7 +310,9 @@ $app->group('/admin', function ($admin) {
 
     // Lihat Ranking Mahasiswa
     $admin->get('/ranking', function (Request $request, Response $response) {
-        return renderView($response, 'pages/admin/rank.php');
+        $rankController = new RankController(); // Controller untuk Prestasi
+        $rank = $rankController->index($request, $response); // Kirim seluruh $args
+        return renderView($response, 'pages/admin/rank.php', ['rank' => $rank]);
     });
 
     // // Export Prestasi
@@ -328,6 +331,9 @@ $app->group('/dosbim', function ($dosbim) {
     });
     $dosbim->get('/ranking', function (Request $request, Response $response) {
         return renderView($response, 'pages/dosen/ranking.php');
+    });
+    $dosbim->get('/prestasi', function (Request $request, Response $response) {
+        return renderView($response, 'pages/dosen/prestasiDibimbing.php');
     });
 });
 // ->add(new AuthMiddleware(2));
@@ -420,4 +426,8 @@ $app->group('/kajur', function ($kajur) {
     $kajur->get('/dashboard', function (Request $request, Response $response) {
         return renderView($response, 'pages/kajur/dashboard.php');
     });
-})->add(new AuthMiddleware(4));
+    $kajur->get('/prestasi', function (Request $request, Response $response) {
+        return renderView($response, 'pages/kajur/listPres.php');
+    });
+});
+// ->add(new AuthMiddleware(4));
