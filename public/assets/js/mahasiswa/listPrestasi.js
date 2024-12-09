@@ -24,40 +24,40 @@ function renderTable(data) {
             ? prestasi.nama_lomba.substring(0, 14) + '...'
             : prestasi.nama_lomba;
 
-        if (prestasi.validasi_status === 'Tervalidasi') {
-            actionButtons = `
-            <button class="btn btn-sm btn-info action-button detailPrestasi" style="font-size: 15px; data-prestasi-id="${prestasi.PrestasiID}">
-                <i class="bi bi-eye"></i> Detail
-            </button>
-        `;
-        } else if (prestasi.validasi_status === 'Ditolak') {
-            actionButtons = `
-            <button class="btn btn-sm btn-danger action-button infoDitolak" style="font-size: 15px; data-prestasi-id="${prestasi.PrestasiID}">
-                <i class="bi bi-exclamation-circle"></i> Info Ditolak
-            </button>
-        `;
-        } else if (prestasi.validasi_status === 'Menunggu divalidasi') {
-            actionButtons = `
-            <div class="btn-group w-100" role="group" aria-label="Tombol Aksi">
-                <button class="btn btn-sm btn-warning action-button d-flex justify-content-center align-items-center" style="font-size: 15px; data-prestasi-id="${prestasi.PrestasiID}">
-                    <i class="bi bi-pencil"></i>
+            if (prestasi.validasi_status === 'Tervalidasi') {
+                actionButtons = `
+                <button class="btn btn-sm btn-primary action-button detailPrestasi" style="font-size: 15px;" data-prestasi-id="${prestasi.PrestasiID}">
+                    <i class="bi bi-eye"></i> Detail
                 </button>
-                <button class="btn btn-sm btn-info action-button d-flex justify-content-center align-items-center" style="font-size: 15px; data-prestasi-id="${prestasi.PrestasiID}">
-                    <i class="bi bi-eye"></i>
+                `;
+            } else if (prestasi.validasi_status === 'Ditolak') {
+                actionButtons = `
+                <button class="btn btn-sm btn-danger action-button infoDitolak" style="font-size: 15px;" data-prestasi-id="${prestasi.PrestasiID}">
+                    <i class="bi bi-exclamation-circle"></i> Info Ditolak
                 </button>
-                <button class="btn btn-sm btn-danger action-button d-flex justify-content-center align-items-center" style="font-size: 15px; data-prestasi-id="${prestasi.PrestasiID}">
-                    <i class="bi bi-trash"></i>
-                </button>
-            </div>
-        `;
-        }
+                `;
+            } else if (prestasi.validasi_status === 'Menunggu divalidasi') {
+                actionButtons = `
+                <div class="btn-group w-100" role="group" aria-label="Tombol Aksi">
+                    <button class="btn btn-sm btn-warning action-button d-flex justify-content-center align-items-center" style="font-size: 15px;" data-prestasi-id="${prestasi.PrestasiID}">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-sm btn-primary action-button d-flex justify-content-center align-items-center" style="font-size: 15px;" data-prestasi-id="${prestasi.PrestasiID}">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger action-button d-flex justify-content-center align-items-center" style="font-size: 15px;" data-prestasi-id="${prestasi.PrestasiID}">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+                `;
+            }            
 
         if (prestasi.validasi_status === 'Tervalidasi') {
-            statusBadge = '<span class="badge bg-success pt-3 pb-3 ps-5 pe-5" style="font-size: 15px;">Tervalidasi</span>'; // Hijau untuk Tervalidasi
+            statusBadge = '<span class="badge bg-success" style="font-size: 12px; padding: 8px 10px; color: #fff;">Tervalidasi</span>';
         } else if (prestasi.validasi_status === 'Ditolak') {
-            statusBadge = '<span class="badge bg-danger pt-3 pb-3 ps-5 pe-5" style="font-size: 15px;">Ditolak</span>'; // Merah untuk Ditolak
+            statusBadge = '<span class="badge bg-danger" style="font-size: 12px; padding: 8px 10px; color: #fff;">Ditolak</span>';
         } else if (prestasi.validasi_status === 'Menunggu divalidasi') {
-            statusBadge = '<span class="badge bg-warning pt-3 pb-3 ps-5 pe-5" style="font-size: 15px;">Menunggu divalidasi</span>'; // Kuning untuk Menunggu divalidasi
+            statusBadge = '<span class="badge bg-warning" style="font-size: 12px; padding: 8px 10px; color: #fff;">Menunggu divalidasi</span>';
         }
 
         $('#prestasiBody').append(`
@@ -213,4 +213,25 @@ $(document).ready(function () {
     allPrestasi = window.allPrestasi || []; // Ambil data dari PHP
     renderTable(allPrestasi);
     renderPagination(allPrestasi.length);
+});
+
+// Fungsi untuk filter berdasarkan tingkat
+function filterByTingkat(tingkat) {
+    let filteredPrestasi = [];
+
+    if (tingkat === 'All') {
+        filteredPrestasi = allPrestasi; // Tampilkan semua data
+    } else {
+        filteredPrestasi = allPrestasi.filter(prestasi => prestasi.Tingkat === tingkat);
+    }
+
+    currentPage = 1; // Reset ke halaman pertama
+    renderTable(filteredPrestasi);
+    renderPagination(filteredPrestasi.length);
+}
+
+// Menambahkan event listener untuk dropdown
+$(document).on('click', '.dropdown-item', function () {
+    const tingkat = $(this).text(); // Ambil teks dari item yang dipilih
+    filterByTingkat(tingkat); // Panggil fungsi filter
 });
