@@ -179,3 +179,24 @@ $(document).ready(function () {
     renderTable(allDosen);
     renderPagination(allDosen.length);
 });
+
+// Filter berdasarkan Program Studi
+function filterByProdi(prodi) {
+    let filteredDosen = [];
+
+    if (prodi === 'All') {
+        filteredDosen = allDosen; // Jika filter "All", tampilkan semua dosen
+    } else {
+        filteredDosen = allDosen.filter(dosen => dosen.nama_prodi === prodi); // Filter berdasarkan nama_prodi
+    }
+
+    currentPage = 1; // Reset ke halaman pertama setelah filter
+    renderTable(filteredDosen); // Render tabel dengan data yang telah difilter
+    renderPagination(filteredDosen.length); // Render pagination berdasarkan hasil filter
+}
+
+// Event listener untuk dropdown filter Program Studi
+$(document).on('click', '.dropdown-item', function () {
+    const prodi = $(this).text(); // Ambil teks dari item dropdown
+    filterByProdi(prodi); // Terapkan filter berdasarkan prodi
+});

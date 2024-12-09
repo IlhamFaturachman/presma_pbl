@@ -56,11 +56,11 @@ function renderTable(data) {
 
         let statusBadge = '';
         if (prestasi.validasi_status === 'Tervalidasi') {
-            statusBadge = '<span class="badge bg-success pt-3 pb-3 ps-5 pe-5" style="font-size: 15px;">Tervalidasi</span>'; // Hijau untuk Tervalidasi
+            statusBadge = '<span class="badge bg-success" style="font-size: 12px; padding: 8px 10px; color: #fff;">Tervalidasi</span>';
         } else if (prestasi.validasi_status === 'Ditolak') {
-            statusBadge = '<span class="badge bg-danger pt-3 pb-3 ps-5 pe-5" style="font-size: 15px;">Ditolak</span>'; // Merah untuk Ditolak
+            statusBadge = '<span class="badge bg-danger" style="font-size: 12px; padding: 8px 10px; color: #fff;">Ditolak</span>';
         } else if (prestasi.validasi_status === 'Menunggu divalidasi') {
-            statusBadge = '<span class="badge bg-warning pt-3 pb-3 ps-5 pe-5" style="font-size: 15px;">Menunggu divalidasi</span>'; // Kuning untuk Menunggu divalidasi
+            statusBadge = '<span class="badge bg-warning" style="font-size: 12px; padding: 8px 10px; color: #fff;">Menunggu divalidasi</span>';
         }
 
         $('#prestasiBody').append(`
@@ -196,4 +196,32 @@ $(document).ready(function () {
     filteredPrestasi = allPrestasi;
     renderTable(filteredPrestasi);
     renderPagination(filteredPrestasi.length);
+});
+
+// Fungsi untuk filter berdasarkan tingkat
+function filterByTingkat(tingkat) {
+    let filteredPrestasi = [];
+
+    if (tingkat === 'All') {
+        filteredPrestasi = allPrestasi; // Tampilkan semua data
+    } else {
+        filteredPrestasi = allPrestasi.filter(prestasi => prestasi.Tingkat === tingkat);
+    }
+
+    currentPage = 1; // Reset ke halaman pertama
+    renderTable(filteredPrestasi);
+    renderPagination(filteredPrestasi.length);
+}
+
+// Saat halaman dimuat, inisialisasi data dan render tabel
+$(document).ready(function () {
+    allPrestasi = window.allPrestasi || [];
+    renderTable(allPrestasi);
+    renderPagination(allPrestasi.length);
+
+    // Event listener untuk filter tingkat
+    $('#filterTingkat').on('change', function () {
+        const tingkat = $(this).val(); // Ambil tingkat yang dipilih
+        filterByTingkat(tingkat); // Terapkan filter
+    });
 });

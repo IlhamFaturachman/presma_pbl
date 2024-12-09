@@ -23,7 +23,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/header.css">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/sidebar.css">
-    <link rel="stylesheet" href="/presma_pbl/public/assets/css/mahasiswa/prestasi.css">
+    <link rel="stylesheet" href="/presma_pbl/public/assets/css/admin/prestasi.css">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/admin/modalDetailPres.css">
 </head>
 
@@ -67,7 +67,21 @@ if (session_status() === PHP_SESSION_NONE) {
                             <th>Nama Mahasiswa</th>
                             <th>Nama Lomba</th>
                             <th>Peringkat</th>
-                            <th>Tingkat</th>
+                            <th>
+                                Tingkat
+                                <!-- Dropdown untuk Tingkat -->
+                                <div class="dropdown-container">
+                                    <button class="dropdown-image" type="button" id="dropdownTingkatButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="/presma_pbl/public/assets/img/dropdown.png" alt="Tingkat" class="img-fluid" width="20">
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownTingkatButton">
+                                        <li><a class="dropdown-item" href="#" onclick="filterByTingkat('All')">All</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="filterByTingkat('Internasional')">Internasional</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="filterByTingkat('Nasional')">Nasional</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="filterByTingkat('Lokal')">Lokal</a></li>
+                                    </ul>
+                                </div>
+                            </th>
                             <th>Dosen Pembimbing</th>
                             <th>Status</th>
                             <th>Opsi</th>

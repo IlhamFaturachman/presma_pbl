@@ -16,7 +16,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/header.css">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/sidebar.css">
-    <link rel="stylesheet" href="/presma_pbl/public/assets/css/admin/tambahPengguna.css">
+    <link rel="stylesheet" href="/presma_pbl/public/assets/css/admin/prestasi.css">
 </head>
 
 <body>
@@ -39,7 +39,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             <input type="text" class="form-control" placeholder="Cari Mahasiswa" id="searchInput">
                         </div>
                         <!-- Kolom untuk tombol Tambah Pengguna -->
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahMahasiswaModal">
+                        <button class="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#tambahMahasiswaModal">
                             <i class="bi bi-plus-lg"></i> Tambah Mahasiswa
                         </button>
                     </div>
@@ -53,7 +53,20 @@ if (session_status() === PHP_SESSION_NONE) {
                             <th>No Telp</th>
                             <th>Angkatan</th>
                             <th>Kelas</th>
-                            <th>Prodi</th>
+                            <th>
+                                Program Studi
+                                <!-- Dropdown untuk Prodi -->
+                                <div class="dropdown-container">
+                                    <button class="dropdown-image" type="button" id="dropdownProdiButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="/presma_pbl/public/assets/img/dropdown.png" alt="Program Studi" class="img-fluid" width="20">
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownProdiButton">
+                                        <li><a class="dropdown-item" href="#" onclick="filterByProdi('All')">All</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="filterByProdi('Teknik Informatika')">Teknik Informatika</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="filterByProdi('Sistem Informasi Bisnis')">Sistem Informasi Bisnis</a></li>
+                                    </ul>
+                                </div>
+                            </th>
                             <th>Opsi</th>
                         </tr>
                     </thead>
