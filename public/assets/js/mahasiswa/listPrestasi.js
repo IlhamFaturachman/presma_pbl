@@ -18,6 +18,7 @@ function renderTable(data) {
     }
 
     // Isi data ke tabel
+        // Isi data ke tabel
     paginatedData.forEach(prestasi => {
         let actionButtons = '';
         const trimmedNamaLomba = prestasi.nama_lomba.length > 8
@@ -224,4 +225,25 @@ $(document).ready(function () {
         const tingkat = $(this).val(); // Ambil tingkat yang dipilih
         filterByTingkat(tingkat); // Terapkan filter
     });
+});
+
+// Fungsi untuk filter berdasarkan tingkat
+function filterByTingkat(tingkat) {
+    let filteredPrestasi = [];
+
+    if (tingkat === 'All') {
+        filteredPrestasi = allPrestasi; // Tampilkan semua data
+    } else {
+        filteredPrestasi = allPrestasi.filter(prestasi => prestasi.Tingkat === tingkat);
+    }
+
+    currentPage = 1; // Reset ke halaman pertama
+    renderTable(filteredPrestasi);
+    renderPagination(filteredPrestasi.length);
+}
+
+// Menambahkan event listener untuk dropdown
+$(document).on('click', '.dropdown-item', function () {
+    const tingkat = $(this).text(); // Ambil teks dari item yang dipilih
+    filterByTingkat(tingkat); // Panggil fungsi filter
 });

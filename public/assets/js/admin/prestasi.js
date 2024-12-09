@@ -221,8 +221,6 @@ function populateDetailModal(prestasi) {
     $('#modalIdeProposal').attr('href', prestasi.ide_proposal || '#').toggle(!!prestasi.ide_proposal);
     $('#modalSuratTugas').attr('href', prestasi.surat_tugas || '#').toggle(!!prestasi.surat_tugas);
 }
-
-
 // Saat halaman dimuat, inisialisasi data dan render tabel
 $(document).ready(function () {
     allPrestasi = window.allPrestasi || [];
