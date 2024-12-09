@@ -1,136 +1,135 @@
-// Variabel untuk menyimpan data ranking
-const rankings = [
-    { rank: '🥇', name: 'Gilang Purnomo', program: 'Teknik Informatika', achievements: 20, points: 750 },
-    { rank: '🥈', name: 'Gwido Putra Wijaya', program: 'Sistem Informasi Bisnis', achievements: 17, points: 520 },
-    { rank: '🥉', name: 'Ilham Faturachman', program: 'Sistem Informasi Bisnis', achievements: 15, points: 505 },
-    { rank: '4', name: 'Najwa Alya Nurizah', program: 'Teknik Informatika', achievements: 10, points: 500 },
-    { rank: '5', name: 'Sesy Tana Lina R', program: 'Teknik Informatika', achievements: 10, points: 500 },
-    { rank: '6', name: 'Dika Arie Arifky', program: 'Teknik Informatika', achievements: 8, points: 480 },
-    { rank: '7', name: 'Alvanza Saputra Y', program: 'Teknik Informatika', achievements: 9, points: 470 },
-    { rank: '8', name: 'M. Fatih Al Ghifary', program: 'Teknik Informatika', achievements: 5, points: 430 },
-    { rank: '9', name: 'Jiha Ramadhan', program: 'Teknik Informatika', achievements: 5, points: 430 },
-    { rank: '10', name: 'Aulia Rizky Pratama', program: 'Sistem Informasi', achievements: 4, points: 400 },
-    { rank: '11', name: 'Reza Fahlevi', program: 'Teknik Informatika', achievements: 4, points: 380 },
-    { rank: '12', name: 'Raka Dwi Santoso', program: 'Sistem Informasi Bisnis', achievements: 3, points: 370 },
-    { rank: '13', name: 'Rani Alivia', program: 'Sistem Informasi', achievements: 3, points: 360 },
-    { rank: '14', name: 'Budi Santoso', program: 'Teknik Informatika', achievements: 2, points: 350 },
-    { rank: '15', name: 'Dina Aulia', program: 'Teknik Informatika', achievements: 2, points: 340 }
-];
-
-// Variabel lainnya
+// Konfigurasi paginasi
 const rowsPerPage = 10;
 let currentPage = 1;
-let selectedProdi = 'All'; // Default filter
-let searchQuery = ''; // Store search query
+let allRankings = window.allRank || [];
 
 // Fungsi untuk merender tabel
-function renderTable() {
-    const filteredRankings = rankings.filter(ranking => {
-        const matchesProdi = selectedProdi === 'All' || ranking.program === selectedProdi;
-        const matchesSearch = ranking.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            ranking.program.toLowerCase().includes(searchQuery.toLowerCase());
-        return matchesProdi && matchesSearch;
-    });
-
+function renderTable(data) {
     const startIndex = (currentPage - 1) * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
-    const paginatedRankings = filteredRankings.slice(startIndex, endIndex);
+    const paginatedData = data.slice(startIndex, endIndex);
 
-    $('#rankingBody').empty(); // Kosongkan body tabel sebelumnya
+    // Kosongkan tbody
+    const tbody = document.querySelector('#rankingBody');
+    tbody.innerHTML = '';
 
-    if (paginatedRankings.length > 0) {
-        paginatedRankings.forEach(ranking => {
-            $('#rankingBody').append(`
-                <tr>
-                    <td>${ranking.rank}</td>
-                    <td>${ranking.name}</td>
-                    <td>${ranking.program}</td>
-                    <td>${ranking.achievements}</td>
-                    <td>${ranking.points}</td>
-                    <td>
-                        <!-- Tombol Detail -->
-                        <button class="btn btn-info btn-sm" onclick="showDetail('${ranking.rank}')">Detail</button> 
-                    </td>
-                </tr>
-            `);
-        });
-    } else {
-        $('#rankingBody').append(`<tr><td colspan="6" class="text-center">Data tidak ditemukan.</td></tr>`);
+    if (paginatedData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center">Tidak ada data ranking yang ditemukan.</td></tr>';
+        return;
     }
 
-    renderPagination(filteredRankings);
+    // Isi data ke tabel
+    paginatedData.forEach((ranking, index) => {
+        // Hitung peringkat sebenarnya berdasarkan indeks halaman
+        const actualRank = index + 1 + startIndex;
+
+        // Tentukan badge untuk peringkat 1-3
+        const rankBadge = actualRank <= 3
+            ? ['🥇', '🥈', '🥉'][actualRank - 1] // Ambil ikon sesuai peringkat
+            : actualRank; // Selain juara 1-3, tampilkan nomor peringkat
+
+        // Tambahkan baris ke tabel
+        const row = `
+            <tr>
+                <td>${rankBadge}</td>
+                <td>${ranking.nama_mahasiswa}</td>
+                <td>${ranking.program_studi}</td>
+                <td>${ranking.jumlah_prestasi}</td>
+                <td>${ranking.total_points}</td>
+                <td>
+                    <button class="btn btn-sm btn-info detailRanking" data-nim="${ranking.nim}">
+                        <i class="bi bi-info-circle"></i> Detail
+                    </button>
+                </td>
+            </tr>
+        `;
+        tbody.insertAdjacentHTML('beforeend', row);
+    });
+
 }
 
-// Fungsi untuk merender tombol pagination
-function renderPagination(filteredRankings) {
-    const totalPages = Math.ceil(filteredRankings.length / rowsPerPage);
-    $('#pagination').empty();
+// Fungsi untuk merender pagination
+function renderPagination(totalItems) {
+    const totalPages = Math.ceil(totalItems / rowsPerPage);
+    const pagination = document.querySelector('#pagination');
+    pagination.innerHTML = '';
 
     // Tombol Previous
-    $('#pagination').append(`<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-                                <a class="page-link" href="#" onclick="changePage(${currentPage - 1})">Prev</a>
-                              </li>`);
+    const prevDisabled = currentPage === 1 ? 'disabled' : '';
+    pagination.insertAdjacentHTML(
+        'beforeend',
+        `<li class="page-item ${prevDisabled}">
+            <a class="page-link" href="#" data-page="${currentPage - 1}">Prev</a>
+        </li>`
+    );
 
     // Tombol nomor halaman
     for (let i = 1; i <= totalPages; i++) {
-        $('#pagination').append(`<li class="page-item ${i === currentPage ? 'active' : ''}">
-                                    <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
-                                  </li>`);
+        const activeClass = i === currentPage ? 'active' : '';
+        pagination.insertAdjacentHTML(
+            'beforeend',
+            `<li class="page-item ${activeClass}">
+                <a class="page-link" href="#" data-page="${i}">${i}</a>
+            </li>`
+        );
     }
 
     // Tombol Next
-    $('#pagination').append(`<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-                                <a class="page-link" href="#" onclick="changePage(${currentPage + 1})">Next</a>
-                              </li>`);
+    const nextDisabled = currentPage === totalPages ? 'disabled' : '';
+    pagination.insertAdjacentHTML(
+        'beforeend',
+        `<li class="page-item ${nextDisabled}">
+            <a class="page-link" href="#" data-page="${currentPage + 1}">Next</a>
+        </li>`
+    );
 }
 
 // Fungsi untuk mengubah halaman
-function changePage(page) {
-    if (page < 1 || page > Math.ceil(rankings.length / rowsPerPage)) return;
-    currentPage = page;
-    renderTable();
-}
+document.addEventListener('click', function (e) {
+    if (e.target.closest('.page-link')) {
+        e.preventDefault();
+        const page = parseInt(e.target.closest('.page-link').dataset.page, 10);
+        const totalPages = Math.ceil(allRankings.length / rowsPerPage);
 
-// Fungsi untuk filter berdasarkan program studi
-function filterByProdi(prodi) {
-    selectedProdi = prodi;
-    currentPage = 1; // Reset ke halaman pertama saat filter berubah
-    renderTable();
-
-    // Tutup dropdown setelah memilih opsi
-    $('.dropdown-menu').removeClass('show');
-    $('.dropdown-image').removeClass('open');
-}
-
-// Fungsi untuk filter berdasarkan pencarian
-$('#searchInput').on('keyup', function () {
-    searchQuery = $(this).val(); // Menyimpan query pencarian
-    currentPage = 1; // Reset ke halaman pertama saat pencarian berubah
-    renderTable();
-});
-
-// Event klik pada tombol dropdown
-$('#dropdownProdiButton').on('click', function (e) {
-    e.stopPropagation(); // Mencegah klik menyebar ke elemen lain
-
-    const dropdownMenu = $(this).next('.dropdown-menu'); // Menemukan elemen dropdown menu
-    const dropdownImage = $(this).children('.dropdown-image'); // Menemukan elemen gambar dropdown
-
-    // Toggle visibilitas dropdown
-    dropdownMenu.toggleClass('show'); // Menambahkan/menyembunyikan kelas .show
-
-    // Toggle rotasi gambar ikon dropdown
-    dropdownImage.toggleClass('open');
-});
-
-// Klik di luar dropdown untuk menutup dropdown
-$(document).on('click', function (e) {
-    if (!$(e.target).closest('.dropdown-container').length) {
-        // Jika klik di luar dropdown, sembunyikan menu
-        $('.dropdown-menu').removeClass('show');
-        $('.dropdown-image').removeClass('open');
+        if (page >= 1 && page <= totalPages) {
+            currentPage = page;
+            renderTable(allRankings);
+            renderPagination(allRankings.length);
+        }
     }
 });
 
-// Render awal tabel
-renderTable();
+// Fitur pencarian
+const searchInput = document.querySelector('#searchInput');
+searchInput.addEventListener('keyup', function () {
+    const value = this.value.toLowerCase();
+    const filteredRankings = allRankings.filter(ranking =>
+        ranking.name.toLowerCase().includes(value) ||
+        ranking.program.toLowerCase().includes(value) ||
+        ranking.nim.toLowerCase().includes(value)
+    );
+
+    currentPage = 1; // Reset ke halaman pertama
+    renderTable(filteredRankings);
+    renderPagination(filteredRankings.length);
+});
+
+// Event delegation untuk tombol Detail
+document.addEventListener('click', function (e) {
+    if (e.target.closest('.detailRanking')) {
+        const nim = e.target.closest('.detailRanking').dataset.nim;
+        if (!nim) {
+            console.error('NIM tidak ditemukan!');
+            return;
+        }
+
+        // Tampilkan detail berdasarkan NIM
+        alert(`Menampilkan detail untuk NIM: ${nim}`);
+    }
+});
+
+// Load data saat halaman dimuat
+document.addEventListener('DOMContentLoaded', function () {
+    renderTable(allRankings);
+    renderPagination(allRankings.length);
+});

@@ -18,40 +18,44 @@ function renderTable(data) {
     }
 
     // Isi data ke tabel
+        // Isi data ke tabel
     paginatedData.forEach(prestasi => {
         let actionButtons = '';
         const trimmedNamaLomba = prestasi.nama_lomba.length > 8
             ? prestasi.nama_lomba.substring(0, 14) + '...'
             : prestasi.nama_lomba;
 
-            if (prestasi.validasi_status === 'Tervalidasi') {
-                actionButtons = `
-                <button class="btn btn-sm btn-primary action-button detailPrestasi" style="font-size: 15px;" data-prestasi-id="${prestasi.PrestasiID}">
+        if (prestasi.validasi_status === 'Tervalidasi') {
+            actionButtons = `
+                <button class="btn btn-sm btn-info action-button detailPrestasi" 
+                    style="font-size: 15px;" data-bs-toggle="modal" data-bs-target="#detailModal" data-prestasi-id="${prestasi.PrestasiID || ''}">
                     <i class="bi bi-eye"></i> Detail
                 </button>
-                `;
-            } else if (prestasi.validasi_status === 'Ditolak') {
-                actionButtons = `
-                <button class="btn btn-sm btn-danger action-button infoDitolak" style="font-size: 15px;" data-prestasi-id="${prestasi.PrestasiID}">
-                    <i class="bi bi-exclamation-circle"></i> Info Ditolak
+        `;
+        } else if (prestasi.validasi_status === 'Ditolak') {
+            actionButtons = `
+            <div class="btn-group w-100" role="group" aria-label="Tombol Aksi">
+                <button class="btn btn-sm btn-info action-button detailPrestasi" 
+                    style="font-size: 15px;" data-bs-toggle="modal" data-bs-target="#detailModal" data-prestasi-id="${prestasi.PrestasiID || ''}">
+                    <i class="bi bi-eye"></i> Detail
                 </button>
-                `;
-            } else if (prestasi.validasi_status === 'Menunggu divalidasi') {
-                actionButtons = `
-                <div class="btn-group w-100" role="group" aria-label="Tombol Aksi">
-                    <button class="btn btn-sm btn-warning action-button d-flex justify-content-center align-items-center" style="font-size: 15px;" data-prestasi-id="${prestasi.PrestasiID}">
-                        <i class="bi bi-pencil"></i>
-                    </button>
-                    <button class="btn btn-sm btn-primary action-button d-flex justify-content-center align-items-center" style="font-size: 15px;" data-prestasi-id="${prestasi.PrestasiID}">
-                        <i class="bi bi-eye"></i>
-                    </button>
-                    <button class="btn btn-sm btn-danger action-button d-flex justify-content-center align-items-center" style="font-size: 15px;" data-prestasi-id="${prestasi.PrestasiID}">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </div>
-                `;
-            }            
+                <button class="btn btn-sm btn-danger action-button infoDitolak" style="font-size: 15px;" data-prestasi-id="${prestasi.PrestasiID}">
+                <i class="bi bi-exclamation-circle"></i> Info
+                </button>
+            </div>
+        `;
+        } else if (prestasi.validasi_status === 'Menunggu divalidasi') {
+            actionButtons = `
+            <div class="btn-group w-100" role="group" aria-label="Tombol Aksi">
+                <button class="btn btn-sm btn-info action-button detailPrestasi" 
+                    style="font-size: 15px;" data-bs-toggle="modal" data-bs-target="#detailModal" data-prestasi-id="${prestasi.PrestasiID || ''}">
+                    <i class="bi bi-eye"></i> Detail
+                </button>
+            </div>
+        `;
+        }
 
+        let statusBadge = '';
         if (prestasi.validasi_status === 'Tervalidasi') {
             statusBadge = '<span class="badge bg-success" style="font-size: 12px; padding: 8px 10px; color: #fff;">Tervalidasi</span>';
         } else if (prestasi.validasi_status === 'Ditolak') {
@@ -62,11 +66,11 @@ function renderTable(data) {
 
         $('#prestasiBody').append(`
             <tr>
-                <td tittle="${prestasi.nama_lomba}">${trimmedNamaLomba}</td>
+                <td title="${prestasi.nama_lomba}">${trimmedNamaLomba}</td>
                 <td>${prestasi.Peringkat}</td>
                 <td>${prestasi.Tingkat}</td>
                 <td>${prestasi.NamaDosen}</td>
-                <td class="text-center">${statusBadge}</td> <!-- Badge status -->
+                <td class="text-center">${statusBadge}</td>
                 <td>
                     ${actionButtons}
                 </td>
@@ -75,6 +79,18 @@ function renderTable(data) {
     });
 }
 
+
+$('#filterStatus').on('change', function () {
+    const status = $(this).val();
+    if (status === 'all') {
+        filteredPrestasi = allPrestasi;
+    } else {
+        filteredPrestasi = allPrestasi.filter(prestasi => prestasi.validasi_status === status);
+    }
+    currentPage = 1;
+    renderTable(filteredPrestasi);
+    renderPagination(filteredPrestasi.length);
+});
 
 // Render paginasi
 function renderPagination(totalItems) {
@@ -130,89 +146,85 @@ $('#searchInput').on('keyup', function () {
     renderPagination(filteredPrestasi.length);
 });
 
-// Event delegation untuk tombol Edit
-$(document).on('click', '.editPrestasi', async function () {
-    const prestasi = $(this).data('mahasiswa-prestasi');
-    if (!prestasi) {
-        console.error('Prestasi tidak ditemukan!');
-        return;
-    }
+$(document).on('click', '.detailPrestasi', function () {
+    const prestasiId = $(this).data('prestasi-id'); // Dapatkan ID dari tombol
 
-    // Buka modal edit pengguna
-    $('#editPrestasiModal').modal('show');
-
-    try {
-        // Ambil data pengguna berdasarkan ID
-        const response = await fetch(`/presma_pbl/public/mahasiswa/prestasi/${nim}`);
-        if (!response.ok) throw new Error('Gagal memuat data Prestasi');
-        const prsData = await response.json();
-
-        // Isi form dengan data pengguna
-        $('#edit-nim').val(prsData.nim);
-        $('#edit-nama').val(prsData.nama);
-        $('#edit-email').val(prsData.email);
-        $('#edit-phone').val(prsData.phone);
-        $('#edit-angkatan').val(prsData.angkatan);
-        $('#edit-kelas').val(prsData.kelas);
-        $('#edit-prodi').val(prsData.prodi);
-
-        // Load prodi
-        const prodiResponse = await fetch('/presma_pbl/public/admin/program-studi');
-        if (!prodiResponse.ok) throw new Error('Gagal memuat Program Studi');
-        const prodi = await prodiResponse.json();
-
-        const prodiSelect = $('#edit-prodi');
-        prodiSelect.empty();
-        prodiSelect.append('<option value="" disabled>Pilih Prodi</option>');
-        prodi.forEach(prodi => {
-            const option = `<option value="${prodi.prodi_id}" ${prodi.prodi_id === mhsData.prodi_id ? 'selected' : ''}>${prodi.nama_prodi}</option>`;
-            prodiSelect.append(option);
-        });
-    } catch (error) {
-        console.error(error);
-        alert('Terjadi kesalahan saat memuat data pengguna.');
-    }
+    // Panggil endpoint untuk mendapatkan data detail
+    $.ajax({
+        url: `/presma_pbl/public/mahasiswa/prestasi/${prestasiId}`,
+        method: 'GET',
+        success: function (response) {
+            if (response) {
+                populateDetailModal(response);
+                $('#detailModal').modal('show'); // Tampilkan modal detail
+            } else {
+                alert('Data tidak ditemukan.');
+            }
+        },
+        error: function () {
+            alert('Terjadi kesalahan saat mengambil data.');
+        }
+    });
 });
 
-// Event delegation untuk tombol Hapus
-$(document).on('click', '.deleteMahasiswa', function () {
-    const nim = $(this).data('mahasiswa-nim');
-    if (!nim) {
-        console.error('NIM tidak ditemukan!');
-        return;
-    }
+function populateDetailModal(prestasi) {
+    $('#modalNamaMahasiswa').text(prestasi.NamaMahasiswa || '-');
+    $('#modalNIMMahasiswa').text(prestasi.NIM || '-');
+    $('#modalNamaDosen').text(prestasi.NamaDosen || '-');
+    $('#modalNamaLomba').text(prestasi.nama_lomba || '-');
+    $('#modalPeringkat').text(prestasi.Peringkat || '-');
+    $('#modalTingkat').text(prestasi.Tingkat || '-');
+    $('#modalWaktuMulaiLomba').text(prestasi.waktu_mulai_lomba || '-');
+    $('#modalWaktuSelesaiLomba').text(prestasi.waktu_selesai_lomba || '-');
+    $('#modalKategoriLomba').text(prestasi.kategori_lomba || '-');
+    $('#modalPenyelenggara').text(prestasi.penyelenggara || '-');
+    $('#modalTotalPoint').text(prestasi.total_point || '-');
+    $('#modalValidasiStatus').text(prestasi.validasi_status || '-');
+    $('#modalInfoValidasi').text(prestasi.info_validasi || 'Tidak ada informasi');
 
-    // Buka modal konfirmasi hapus
-    $('#deleteMahasiswaModal').modal('show');
-    $('#confirmDelete').data('mahasiswa-nim', nim);
-});
+    // File atau gambar
+    $('#modalFotoLomba').attr('src', prestasi.foto_lomba || '#').toggle(!!prestasi.foto_lomba);
+    $('#modalFlyerLomba').attr('src', prestasi.flyer_lomba || '#').toggle(!!prestasi.flyer_lomba);
+    $('#modalSertifikat').attr('src', prestasi.sertifikat || '#').toggle(!!prestasi.sertifikat);
+    $('#modalIdeProposal').attr('href', prestasi.ide_proposal || '#').toggle(!!prestasi.ide_proposal);
+    $('#modalSuratTugas').attr('href', prestasi.surat_tugas || '#').toggle(!!prestasi.surat_tugas);
+}
 
-// Konfirmasi Hapus
-$(document).on('click', '#confirmDelete', async function () {
-    const nim = $(this).data('mahasiswa-nim');
-    if (!nim) {
-        console.error('NIM tidak ditemukan!');
-        return;
-    }
-
-    try {
-        const response = await fetch(`/presma_pbl/public/admin/mahasiswa/${nim}`, {
-            method: 'DELETE'
-        });
-        if (!response.ok) throw new Error('Gagal menghapus mahasiswa');
-        alert('Mahasiswa berhasil dihapus!');
-        location.reload();
-    } catch (error) {
-        console.error(error);
-        alert('Terjadi kesalahan saat menghapus mahasiswa.');
-    }
-});
 
 // Load data dari PHP saat halaman dimuat
 $(document).ready(function () {
-    allPrestasi = window.allPrestasi || []; // Ambil data dari PHP
+    allPrestasi = window.allPrestasi || [];
+    filteredPrestasi = allPrestasi;
+    renderTable(filteredPrestasi);
+    renderPagination(filteredPrestasi.length);
+});
+
+// Fungsi untuk filter berdasarkan tingkat
+function filterByTingkat(tingkat) {
+    let filteredPrestasi = [];
+
+    if (tingkat === 'All') {
+        filteredPrestasi = allPrestasi; // Tampilkan semua data
+    } else {
+        filteredPrestasi = allPrestasi.filter(prestasi => prestasi.Tingkat === tingkat);
+    }
+
+    currentPage = 1; // Reset ke halaman pertama
+    renderTable(filteredPrestasi);
+    renderPagination(filteredPrestasi.length);
+}
+
+// Saat halaman dimuat, inisialisasi data dan render tabel
+$(document).ready(function () {
+    allPrestasi = window.allPrestasi || [];
     renderTable(allPrestasi);
     renderPagination(allPrestasi.length);
+
+    // Event listener untuk filter tingkat
+    $('#filterTingkat').on('change', function () {
+        const tingkat = $(this).val(); // Ambil tingkat yang dipilih
+        filterByTingkat(tingkat); // Terapkan filter
+    });
 });
 
 // Fungsi untuk filter berdasarkan tingkat
