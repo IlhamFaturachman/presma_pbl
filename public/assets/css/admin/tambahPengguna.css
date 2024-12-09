@@ -105,6 +105,21 @@ body {
     text-align: left;
 }
 
+/* Center-align Role column */
+.table td:nth-child(2), .table th:nth-child(2) {
+    text-align: center;
+}
+
+/* Align Actions column to the right */
+.table td:nth-child(3) {
+    text-align: right;
+}
+
+.table th:nth-child(3) {
+    text-align: right;
+    padding-right: 75px;
+}
+
 /* Pagination Styles */
 .pagination {
     display: flex;
