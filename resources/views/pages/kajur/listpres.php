@@ -1,13 +1,13 @@
-<?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+<!-- <?php
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 
-// Ambil informasi pengguna dari sesi
-$userId = $_SESSION['user']['id'];
-$userName = $_SESSION['user']['name'];
-$userRole = $_SESSION['user']['role'];
-?>
+        // Ambil informasi pengguna dari sesi
+        $userId = $_SESSION['user']['id'];
+        $userName = $_SESSION['user']['name'];
+        $userRole = $_SESSION['user']['role'];
+        ?> -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -93,56 +93,55 @@ $userRole = $_SESSION['user']['role'];
 
     <!-- Scripts -->
     <script>
-        // Data Dummy
-        const dataDummy = [
-    {
-        nama: "Gilang Purnomo",
-        programStudi: "Teknik Informatika",
-        namaPrestasi: "Lomba CTF Nasional",
-        tingkatPrestasi: "Nasional",
-        tahunPrestasi: "2023",
-        peringkat: "Juara 1"
-    },
-    {
-        nama: "Najwa Alya Nurizza",
-        programStudi: "Teknik Informatika",
-        namaPrestasi: "PIMNAS XXXVIII",
-        tingkatPrestasi: "Internasional",
-        tahunPrestasi: "2022",
-        peringkat: "1"
-    },
-    {
-        nama: "Sesy Tana Lina Rahmatin",
-        programStudi: "Teknik Informatika",
-        namaPrestasi: "HOLOGI",
-        tingkatPrestasi: "Internasional",
-        tahunPrestasi: "2023",
-        peringkat: "Juara 3"
-    }
-];
+    // Data Dummy
+    const dataDummy = [{
+            nama: "Gilang Purnomo",
+            programStudi: "Teknik Informatika",
+            namaPrestasi: "Lomba CTF Nasional",
+            tingkatPrestasi: "Nasional",
+            tahunPrestasi: "2023",
+            peringkat: "Juara 1"
+        },
+        {
+            nama: "Najwa Alya Nurizza",
+            programStudi: "Teknik Informatika",
+            namaPrestasi: "PIMNAS XXXVIII",
+            tingkatPrestasi: "Internasional",
+            tahunPrestasi: "2022",
+            peringkat: "1"
+        },
+        {
+            nama: "Sesy Tana Lina Rahmatin",
+            programStudi: "Teknik Informatika",
+            namaPrestasi: "HOLOGI",
+            tingkatPrestasi: "Internasional",
+            tahunPrestasi: "2023",
+            peringkat: "Juara 3"
+        }
+    ];
 
 
-        // Event Listener untuk Filter
-        document.getElementById('filter-btn').addEventListener('click', function () {
-            // Ambil nilai filter
-            const programStudi = document.getElementById('program-studi').value;
-            const tahunPrestasi = document.getElementById('tahun-prestasi').value;
-            const tingkatPrestasi = document.getElementById('tingkat').value;
+    // Event Listener untuk Filter
+    document.getElementById('filter-btn').addEventListener('click', function() {
+        // Ambil nilai filter
+        const programStudi = document.getElementById('program-studi').value;
+        const tahunPrestasi = document.getElementById('tahun-prestasi').value;
+        const tingkatPrestasi = document.getElementById('tingkat').value;
 
-            // Filter Data
-            const filteredData = dataDummy.filter(item =>
-                item.programStudi === programStudi &&
-                item.tahunPrestasi === tahunPrestasi &&
-                item.tingkatPrestasi === tingkatPrestasi
-            );
+        // Filter Data
+        const filteredData = dataDummy.filter(item =>
+            item.programStudi === programStudi &&
+            item.tahunPrestasi === tahunPrestasi &&
+            item.tingkatPrestasi === tingkatPrestasi
+        );
 
-            // Render Data ke Tabel
-            const tableBody = document.getElementById('prestasi-tbody');
-            tableBody.innerHTML = ''; // Kosongkan tabel
+        // Render Data ke Tabel
+        const tableBody = document.getElementById('prestasi-tbody');
+        tableBody.innerHTML = ''; // Kosongkan tabel
 
-            if (filteredData.length > 0) {
-                filteredData.forEach((item, index) => {
-                    const row = `
+        if (filteredData.length > 0) {
+            filteredData.forEach((item, index) => {
+                const row = `
                         <tr>
                             <td>${index + 1}</td>
                             <td>${item.nama}</td>
@@ -152,18 +151,19 @@ $userRole = $_SESSION['user']['role'];
                             <td>${item.peringkat}</td>
                         </tr>
                     `;
-                    tableBody.insertAdjacentHTML('beforeend', row);
-                });
-            } else {
-                tableBody.innerHTML = `
+                tableBody.insertAdjacentHTML('beforeend', row);
+            });
+        } else {
+            tableBody.innerHTML = `
                     <tr>
                         <td class="no-data text-center" colspan="6">
                             <em>Data tidak tersedia saat ini.</em>
                         </td>
                     </tr>
                 `;
-            }
-        });
+        }
+    });
     </script>
 </body>
+
 </html>
