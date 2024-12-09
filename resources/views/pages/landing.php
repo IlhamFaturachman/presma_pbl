@@ -30,7 +30,7 @@
         <button id="btnCatatPrestasi">Catat Prestasi Sekarang</button>
     </div>
     <img src="../public/assets/img/Taking notes-amico 1.png" alt="Ilustrasi Prestasi">
-    <img class="circle-pattern" src="../public/assets/img/image 16.png" alt="Pola Lingkaran">
+    <!-- <img class="circle-pattern" src="../public/assets/img/image 16.png" alt="Pola Lingkaran"> -->
 </section>
 
 <!-- Tentang Kami Section -->
@@ -145,9 +145,9 @@
     <div class="quick-links">
         <h3>Quick Links</h3>
         <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Tentang</a></li>
-        <li><a href="#">Alur</a></li>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#tentang kami">Tentang</a></li>
+        <li><a href="#alur">Alur</a></li>
         <li><a href="#">Dashboard</a></li>
         </ul>
     </div>
