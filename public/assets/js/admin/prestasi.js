@@ -1,3 +1,6 @@
+// Variabel untuk menyimpan tingkat yang dipilih
+let selectedTingkat = 'All'; // Default filter adalah "All"
+
 // Konfigurasi paginasi
 const rowsPerPage = 10;
 let currentPage = 1;
@@ -5,9 +8,15 @@ let allPrestasi = [];
 
 // Render tabel
 function renderTable(data) {
+    // Filter data berdasarkan tingkat yang dipilih
+    let filteredData = data;
+    if (selectedTingkat !== 'All') {
+        filteredData = data.filter(prestasi => prestasi.Tingkat === selectedTingkat);
+    }
+
     const startIndex = (currentPage - 1) * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
-    const paginatedData = data.slice(startIndex, endIndex);
+    const paginatedData = filteredData.slice(startIndex, endIndex);
 
     // Kosongkan tbody
     $('#prestasiBody').empty();
@@ -26,21 +35,22 @@ function renderTable(data) {
         let actionButtons = '';
         if (prestasi.validasi_status === 'Tervalidasi') {
             actionButtons = `
-                <button class="btn btn-sm btn-info action-button detailPrestasi" 
-                    style="font-size: 15px;" data-bs-toggle="modal" data-bs-target="#detailModal" data-prestasi-id="${prestasi.PrestasiID || ''}">
+                <button class="btn btn-sm btn-primary action-button detailPrestasi" 
+                    style="font-size: 14px;" data-bs-toggle="modal" data-bs-target="#detailModal" data-prestasi-id="${prestasi.PrestasiID || ''}">
                     <i class="bi bi-eye"></i> Detail
                 </button>
                 `;
         } else if (prestasi.validasi_status === 'Ditolak') {
             actionButtons = `
                 <button class="btn btn-sm btn-danger action-button infoDitolak" 
-                    style="font-size: 15px;" data-prestasi-id="${prestasi.PrestasiID || ''}">
+                    style="font-size: 14px;" data-prestasi-id="${prestasi.PrestasiID || ''}">
                     <i class="bi bi-exclamation-circle"></i> Info Ditolak
-                </button>`;
+                </button>
+                `;
         } else if (prestasi.validasi_status === 'Menunggu divalidasi') {
             actionButtons = `
                 <button class="btn btn-sm btn-info action-button validasiPrestasi" 
-                    style="font-size: 15px;" data-bs-toggle="modal" data-bs-target="#validasiModal" data-prestasi-id="${prestasi.PrestasiID || ''}">
+                    style="font-size: 14px;" data-bs-toggle="modal" data-bs-target="#validasiModal" data-prestasi-id="${prestasi.PrestasiID || ''}">
                     <i class="bi bi-eye"></i> Detail
                 </button>
                 `;
@@ -48,11 +58,11 @@ function renderTable(data) {
 
         let statusBadge = '';
         if (prestasi.validasi_status === 'Tervalidasi') {
-            statusBadge = '<span class="badge bg-success pt-3 pb-3 ps-5 pe-5" style="font-size: 15px;">Tervalidasi</span>';
+            statusBadge = '<span class="badge bg-success" style="font-size: 12px; padding: 8px 10px; color: #fff;">Tervalidasi</span>';
         } else if (prestasi.validasi_status === 'Ditolak') {
-            statusBadge = '<span class="badge bg-danger pt-3 pb-3 ps-5 pe-5" style="font-size: 15px;">Ditolak</span>';
+            statusBadge = '<span class="badge bg-danger" style="font-size: 12px; padding: 8px 10px; color: #fff;">Ditolak</span>';
         } else if (prestasi.validasi_status === 'Menunggu divalidasi') {
-            statusBadge = '<span class="badge bg-warning pt-3 pb-3 ps-5 pe-5" style="font-size: 15px;">Menunggu divalidasi</span>';
+            statusBadge = '<span class="badge bg-warning" style="font-size: 12px; padding: 8px 10px; color: #fff;">Menunggu divalidasi</span>';
         }
 
         // Tambahkan baris ke dalam tabel
@@ -124,6 +134,14 @@ $('#searchInput').on('keyup', function () {
     renderPagination(filteredPrestasi.length);
 });
 
+// Filter by Tingkat
+function filterByTingkat(tingkat) {
+    selectedTingkat = tingkat; // Simpan tingkat yang dipilih
+    currentPage = 1; // Reset ke halaman pertama setelah filter
+    renderTable(allPrestasi); // Render ulang tabel berdasarkan filter
+    renderPagination(allPrestasi.length); // Render ulang paginasi
+}
+
 // Event listener untuk membuka modal detail
 $(document).on('click', '.detailPrestasi', function () {
     const prestasiId = $(this).data('prestasi-id'); // Dapatkan ID dari tombol
@@ -168,7 +186,7 @@ $(document).on('click', '.validasiPrestasi', function () {
     });
 });
 
-
+// Fungsi untuk mengisi data detail di modal
 function populateDetailModal(prestasi) {
     $('#modalNamaMahasiswa').text(prestasi.NamaMahasiswa || '-');
     $('#modalNIMMahasiswa').text(prestasi.NIM || '-');
@@ -192,10 +210,15 @@ function populateDetailModal(prestasi) {
     $('#modalSuratTugas').attr('href', prestasi.surat_tugas || '#').toggle(!!prestasi.surat_tugas);
 }
 
-
-
+// Saat halaman dimuat, inisialisasi data dan render tabel
 $(document).ready(function () {
     allPrestasi = window.allPrestasi || [];
     renderTable(allPrestasi);
     renderPagination(allPrestasi.length);
+
+    // Event listener untuk filter tingkat
+    $('#filterTingkat').on('change', function () {
+        const tingkat = $(this).val(); // Ambil tingkat yang dipilih
+        filterByTingkat(tingkat); // Terapkan filter
+    });
 });
