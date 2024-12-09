@@ -2,10 +2,14 @@
 
 use App\Controllers\AuthController;
 use App\Controllers\DosenController;
+use App\Controllers\JuaraController;
 use App\Controllers\MahasiswaController;
+use App\Controllers\PrestasiController;
 use App\Controllers\ProdiController;
 use App\Controllers\RolesController;
+use App\Controllers\TingkatanController;
 use App\Controllers\UserController;
+use App\Controllers\ValidasiController;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 use App\Middleware\AuthMiddleware;
@@ -279,22 +283,33 @@ $app->group('/admin', function ($admin) {
         return $response->withHeader('Content-Type', 'application/json')->withStatus(405);
     });
 
-    // // Validasi Prestasi
-    // $admin->get('/validasi-prestasi', function (Request $request, Response $response) {
-    //     $prestasiController = new PrestasiController();
-    //     $prestasi = $prestasiController->index($request, $response);
+    // Validasi Prestasi
+    $admin->post('/validasi-prestasi/{prestasi_id}', function (Request $request, Response $response, array $args) {
+        $validasiController = new ValidasiController(); // Controller untuk pengguna
+        return $validasiController->validPrestasi($request, $response, $args); // Kirim seluruh $args
+    });
 
-    //     // Decode hasil JSON dari PrestasiController
-    //     $dataPrestasi = json_decode((string)$prestasi->getBody(), true);
-    //     return renderView($response, 'pages/admin/prestasi.php', ['prestasi' => $dataPrestasi]);
-    // });
+    // Reject Prestasi
+    $admin->post('/reject-prestasi/{prestasi_id}', function (Request $request, Response $response, array $args) {
+        $validasiController = new ValidasiController(); // Controller untuk pengguna
+        return $validasiController->rejectPrestasi($request, $response, $args); // Kirim seluruh $args
+    });
+
+    // get prestasi by id
+    $admin->get('/prestasi/{prestasi_id}', function (Request $request, Response $response, array $args) {
+        $prestasiController = new PrestasiController(); // Controller untuk prestasi
+        return $prestasiController->show($request, $response, $args); // Kirim seluruh $args
+    });
+
+    $admin->get('/prestasi', function (Request $request, Response $response) {
+        $prestasiController = new PrestasiController(); // Controller untuk Prestasi
+        $prestasi = $prestasiController->index($request, $response); // Kirim seluruh $args
+        return renderView($response, 'pages/admin/prestasi.php', ['prestasi' => $prestasi]);
+    });
 
     // Lihat Ranking Mahasiswa
     $admin->get('/ranking', function (Request $request, Response $response) {
         return renderView($response, 'pages/admin/rank.php');
-    });
-    $admin->get('/prestasi', function (Request $request, Response $response) {
-        return renderView($response, 'pages/admin/prestasi.php');
     });
 
     // // Export Prestasi
@@ -323,17 +338,39 @@ $app->group('/mahasiswa', function ($mahasiswa) {
     $mahasiswa->get('/dashboard', function (Request $request, Response $response) {
         return renderView($response, 'pages/mahasiswa/dashboard.php');
     });
+
+    // Prestasi BY NIM
     $mahasiswa->get('/prestasi', function (Request $request, Response $response) {
-        return renderView($response, 'pages/mahasiswa/listPres.php');
+        $prestasiController = new PrestasiController(); // Controller untuk Prestasi
+        $prestasi = $prestasiController->getPrestasiByNIMUser($request, $response); // Kirim seluruh $args
+        return renderView($response, 'pages/mahasiswa/prestasi.php', ['prestasi' => $prestasi]);
+    });
+
+    // untuk Dropdown isi dosen pada prestasi, datanya dari tabel dosen
+    $mahasiswa->get('/dosen', function (Request $request, Response $response) {
+        $mahasiswaController = new UserController(); // Controller untuk pengguna
+        return $mahasiswaController->getForDropdownDosen($request, $response);
+    });
+
+    // untuk Dropdown isi juara pada prestasi, datanya dari tabel juara
+    $mahasiswa->get('/juara', function (Request $request, Response $response) {
+        $juaraController = new JuaraController(); // Controller untuk pengguna
+        return $juaraController->index($request, $response);
+    });
+
+    // untuk Dropdown isi tingkatan pada prestasi, datanya dari tabel tingkatan
+    $mahasiswa->get('/tingkatan', function (Request $request, Response $response) {
+        $tingkatanController = new TingkatanController(); // Controller untuk pengguna
+        return $tingkatanController->index($request, $response);
     });
 
     // Manage Prestasi
-    $mahasiswa->map(['POST', 'DELETE', 'PUT'], '/prestasi[/{nip}]', function (Request $request, Response $response, array $args) {
-        $dosenController = new DosenController();
+    $mahasiswa->map(['POST', 'DELETE', 'PUT'], '/prestasi[/{prestasi_id}]', function (Request $request, Response $response, array $args) {
+        $prestasiController = new PrestasiController();
 
         // Jika metode adalah POST, proses tambah dosen
         if ($request->getMethod() === 'POST') {
-            return $dosenController->store($request, $response);
+            return $prestasiController->store($request, $response);
         }
 
         // Jika metode adalah DELETE, hapus dosen
@@ -341,7 +378,7 @@ $app->group('/mahasiswa', function ($mahasiswa) {
             // Pastikan nip dosen ada dalam args
             if (isset($args['nip'])) {
                 // Mengirimkan args sebagai array ke metode delete
-                return $dosenController->delete($request, $response, $args);
+                return $prestasiController->delete($request, $response, $args);
             } else {
                 // Menggunakan getBody()->write() untuk menulis ke dalam respons
                 $response->getBody()->write('NIP is required for deletion.');
@@ -353,8 +390,8 @@ $app->group('/mahasiswa', function ($mahasiswa) {
         if ($request->getMethod() === 'PUT') {
             // Pastikan nip dosen ada dalam args
             if (isset($args['nip'])) {
-                // Panggil metode update di dosenController
-                return $dosenController->update($request, $response, $args);
+                // Panggil metode update di prestasiController
+                return $prestasiController->update($request, $response, $args);
             } else {
                 // nip dosen diperlukan untuk pembaruan
                 $response->getBody()->write(json_encode([

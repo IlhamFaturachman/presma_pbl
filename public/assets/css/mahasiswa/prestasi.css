@@ -76,6 +76,8 @@ body {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #F4F6F9;
+    vertical-align: middle;
+    /* Menjaga isi sel berada di tengah secara vertikal */
 }
 
 .table th {
@@ -166,4 +168,126 @@ body {
 .table-container h4 {
     font-size: 20px;
     /* Sesuaikan ukuran font yang diinginkan */
+}
+
+.table th:nth-child(5),
+.table td:nth-child(5),
+.table th:nth-child(6),
+.table td:nth-child(6),
+.table th:nth-child(7),
+.table td:nth-child(7) {
+    text-align: center;
+    /* Mengatur peringkat dan kolom lainnya ke tengah */
+}
+
+
+/* Mengatur tampilan tombol dalam grup */
+.btn-group {
+    display: flex;
+    /* Tombol dalam grup ditata secara flexbox */
+    flex-direction: row;
+    /* Tombol berada dalam satu baris */
+    justify-content: center;
+    /* Menyusun tombol di tengah secara horizontal */
+    align-items: center;
+    /* Menyusun tombol di tengah secara vertikal */
+    gap: 10px;
+    /* Memberikan jarak antar tombol */
+    width: 100%;
+    /* Pastikan grup tombol mengambil lebar penuh kontainer */
+}
+
+/* Membuat tombol memiliki panjang yang sama */
+.action-button {
+    width: 100%;
+    /* Tombol mengisi lebar penuh */
+    padding: 10px;
+    /* Memberikan padding yang cukup agar tombol lebih besar */
+    border-radius: 5px;
+    /* Sudut tombol lebih melengkung */
+    font-size: 14px;
+    /* Ukuran font yang seragam untuk tombol */
+    text-align: center;
+    /* Menjaga teks dan ikon tetap di tengah */
+}
+
+.action-button i {
+    margin-right: 5px;
+    /* Jarak antara ikon dan teks */
+}
+
+/* Efek saat tombol dihover */
+.action-button:hover {
+    opacity: 0.9;
+    cursor: pointer;
+}
+
+/* Styling untuk tombol dengan warna berbeda */
+.btn-warning {
+    background-color: #f0ad4e;
+    border-color: #f0ad4e;
+}
+
+.btn-info {
+    background-color: #5bc0de;
+    border-color: #5bc0de;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #d9534f;
+    border-color: #d9534f;
+}
+
+/* Ukuran tombol yang lebih kecil */
+.btn-sm {
+    font-size: 13px;
+}
+
+/* Responsif: Mengurangi ukuran font di perangkat kecil */
+@media (max-width: 768px) {
+    .action-button {
+        font-size: 12px;
+    }
+}
+
+/* Kelas untuk status validasi dengan background berwarna */
+.bg-success {
+    background-color: #15367E;
+    /* Hijau */
+}
+
+.bg-danger {
+    background-color: #dc3545;
+    /* Merah */
+}
+
+.bg-warning {
+    background-color: #ffc107;
+    /* Kuning */
+}
+
+/* Agar teks berada di tengah dengan warna putih di atas background */
+.text-center {
+    text-align: center;
+}
+
+/* Menambahkan rounded corners */
+.rounded-pill {
+    border-radius: 50rem;
+    /* Sudut rounded lebih besar */
+}
+
+/* Membuat teks lebih kontras di atas latar belakang */
+.text-white {
+    color: white;
+}
+
+.badge {
+    padding: 4px 8px;
+    /* Padding vertikal 4px dan horizontal 8px */
+    font-size: 12px;
+    /* Ukuran font lebih kecil */
+    border-radius: 12px;
+    /* Sudut yang lebih melengkung */
 }

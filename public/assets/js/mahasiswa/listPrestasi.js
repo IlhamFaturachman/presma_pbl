@@ -13,37 +13,68 @@ function renderTable(data) {
     $('#prestasiBody').empty();
 
     if (paginatedData.length === 0) {
-        $('#prestasiBody').append('<tr><td colspan="8" class="text-center">Tidak ada prestasi yang ditemukan.</td></tr>');
+        $('#prestasiBody').append('<tr><td colspan="6" class="text-center">Tidak ada prestasi yang ditemukan.</td></tr>');
         return;
     }
 
     // Isi data ke tabel
     paginatedData.forEach(prestasi => {
-        const trimmedEmail = prestasi.email.length > 10
-            ? prestasi.email.substring(0, 17) + '...'
-            : prestasi.email;
+        let actionButtons = '';
+        const trimmedNamaLomba = prestasi.nama_lomba.length > 8
+            ? prestasi.nama_lomba.substring(0, 14) + '...'
+            : prestasi.nama_lomba;
+
+        if (prestasi.validasi_status === 'Tervalidasi') {
+            actionButtons = `
+            <button class="btn btn-sm btn-info action-button detailPrestasi" style="font-size: 15px; data-prestasi-id="${prestasi.PrestasiID}">
+                <i class="bi bi-eye"></i> Detail
+            </button>
+        `;
+        } else if (prestasi.validasi_status === 'Ditolak') {
+            actionButtons = `
+            <button class="btn btn-sm btn-danger action-button infoDitolak" style="font-size: 15px; data-prestasi-id="${prestasi.PrestasiID}">
+                <i class="bi bi-exclamation-circle"></i> Info Ditolak
+            </button>
+        `;
+        } else if (prestasi.validasi_status === 'Menunggu divalidasi') {
+            actionButtons = `
+            <div class="btn-group w-100" role="group" aria-label="Tombol Aksi">
+                <button class="btn btn-sm btn-warning action-button d-flex justify-content-center align-items-center" style="font-size: 15px; data-prestasi-id="${prestasi.PrestasiID}">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-sm btn-info action-button d-flex justify-content-center align-items-center" style="font-size: 15px; data-prestasi-id="${prestasi.PrestasiID}">
+                    <i class="bi bi-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-danger action-button d-flex justify-content-center align-items-center" style="font-size: 15px; data-prestasi-id="${prestasi.PrestasiID}">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+        `;
+        }
+
+        if (prestasi.validasi_status === 'Tervalidasi') {
+            statusBadge = '<span class="badge bg-success pt-3 pb-3 ps-5 pe-5" style="font-size: 15px;">Tervalidasi</span>'; // Hijau untuk Tervalidasi
+        } else if (prestasi.validasi_status === 'Ditolak') {
+            statusBadge = '<span class="badge bg-danger pt-3 pb-3 ps-5 pe-5" style="font-size: 15px;">Ditolak</span>'; // Merah untuk Ditolak
+        } else if (prestasi.validasi_status === 'Menunggu divalidasi') {
+            statusBadge = '<span class="badge bg-warning pt-3 pb-3 ps-5 pe-5" style="font-size: 15px;">Menunggu divalidasi</span>'; // Kuning untuk Menunggu divalidasi
+        }
 
         $('#prestasiBody').append(`
             <tr>
-                <td>${prestasi.nim}</td>
-                <td>${prestasi.nama}</td>
-                <td title="${prestasi.email}">${trimmedEmail}</td>
-                <td>${prestasi.phone}</td>
-                <td>${prestasi.angkatan}</td>
-                <td>${prestasi.kelas}</td>
-                <td>${prestasi.nama_prodi}</td>
+                <td tittle="${prestasi.nama_lomba}">${trimmedNamaLomba}</td>
+                <td>${prestasi.Peringkat}</td>
+                <td>${prestasi.Tingkat}</td>
+                <td>${prestasi.NamaDosen}</td>
+                <td class="text-center">${statusBadge}</td> <!-- Badge status -->
                 <td>
-                    <button class="btn btn-sm btn-warning editMahasiswa" data-mahasiswa-nim="${mahasiswa.nim}">
-                        <i class="bi bi-pencil"></i> Edit
-                    </button>
-                    <button class="btn btn-sm btn-danger deleteMahasiswa" data-mahasiswa-nim="${mahasiswa.nim}">
-                        <i class="bi bi-trash"></i> Hapus
-                    </button>
+                    ${actionButtons}
                 </td>
             </tr>
         `);
     });
 }
+
 
 // Render paginasi
 function renderPagination(totalItems) {
@@ -90,40 +121,40 @@ $(document).on('click', '#pagination .page-link', function (e) {
 // Fitur pencarian
 $('#searchInput').on('keyup', function () {
     const value = $(this).val().toLowerCase();
-    const filteredMahasiswa = allPrestasi.filter(mahasiswa =>
-        mahasiswa.nama.toLowerCase().includes(value)
+    const filteredPrestasi = allPrestasi.filter(prestasi =>
+        prestasi.nama_lomba.toLowerCase().includes(value)
     );
 
     currentPage = 1; // Reset ke halaman pertama
-    renderTable(filteredMahasiswa);
-    renderPagination(filteredMahasiswa.length);
+    renderTable(filteredPrestasi);
+    renderPagination(filteredPrestasi.length);
 });
 
 // Event delegation untuk tombol Edit
-$(document).on('click', '.editMahasiswa', async function () {
-    const nim = $(this).data('mahasiswa-nim');
-    if (!nim) {
-        console.error('NIM tidak ditemukan!');
+$(document).on('click', '.editPrestasi', async function () {
+    const prestasi = $(this).data('mahasiswa-prestasi');
+    if (!prestasi) {
+        console.error('Prestasi tidak ditemukan!');
         return;
     }
 
     // Buka modal edit pengguna
-    $('#editMahasiswaModal').modal('show');
+    $('#editPrestasiModal').modal('show');
 
     try {
         // Ambil data pengguna berdasarkan ID
-        const response = await fetch(`/presma_pbl/public/admin/mahasiswa/${nim}`);
-        if (!response.ok) throw new Error('Gagal memuat data Mahasiswa');
-        const mhsData = await response.json();
+        const response = await fetch(`/presma_pbl/public/mahasiswa/prestasi/${nim}`);
+        if (!response.ok) throw new Error('Gagal memuat data Prestasi');
+        const prsData = await response.json();
 
         // Isi form dengan data pengguna
-        $('#edit-nim').val(mhsData.nim);
-        $('#edit-nama').val(mhsData.nama);
-        $('#edit-email').val(mhsData.email);
-        $('#edit-phone').val(mhsData.phone);
-        $('#edit-angkatan').val(mhsData.angkatan);
-        $('#edit-kelas').val(mhsData.kelas);
-        $('#edit-prodi').val(mhsData.prodi);
+        $('#edit-nim').val(prsData.nim);
+        $('#edit-nama').val(prsData.nama);
+        $('#edit-email').val(prsData.email);
+        $('#edit-phone').val(prsData.phone);
+        $('#edit-angkatan').val(prsData.angkatan);
+        $('#edit-kelas').val(prsData.kelas);
+        $('#edit-prodi').val(prsData.prodi);
 
         // Load prodi
         const prodiResponse = await fetch('/presma_pbl/public/admin/program-studi');

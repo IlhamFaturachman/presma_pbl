@@ -46,12 +46,15 @@ class UserModel extends Model
     }
 
 
-    public function getUserOnlyDosen(string $username): ?array
+    public function getUserOnlyDosen(): ?array
     {
-        $query = "SELECT * FROM {$this->tableName} WHERE username = :username";
-        $params = [':username' => $username];
-        $result = $this->query($query, $params);
-        return $result[0] ?? null;
+        $sql = "
+            SELECT d.nip, d.nama
+            FROM {$this->dosenTableName} AS d
+            JOIN {$this->tableName} AS u ON u.user_id = d.user_id
+            WHERE u.role_id = 2
+        ";
+        return $this->query($sql); // Gunakan metode query() dari superclass
     }
 
 

@@ -3,12 +3,11 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// // Ambil informasi pengguna dari sesi
-// $userId = $_SESSION['user']['id'];
-// $userNameFromTableUsers = $_SESSION['user']['username'];
-// $userName = $_SESSION['user']['name'];
-// $userRole = $_SESSION['user']['role'];
-// 
+// Ambil informasi pengguna dari sesi
+$userId = $_SESSION['user']['id'];
+$userNameFromTableUsers = $_SESSION['user']['username'];
+$userName = $_SESSION['user']['name'];
+$userRole = $_SESSION['user']['role'];
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +23,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/header.css">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/sidebar.css">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/mahasiswa/prestasi.css">
-    <link rel="stylesheet" href="/presma_pbl/public/assets/css/admin/modalDetailPres.css">
+    <link rel="stylesheet" href="/presma_pbl/public/assets/css/component/modalTambahPres.css">
 </head>
 
 <body>
@@ -46,12 +45,15 @@ if (session_status() === PHP_SESSION_NONE) {
                         <div class="search-box d-flex w-50">
                             <input type="text" class="form-control" placeholder="Cari Prestasi" id="searchInput">
                         </div>
+                        <!-- Kolom untuk tombol Tambah Pengguna -->
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#prestasiModal">
+                            <i class="bi bi-plus-lg"></i> Tambah Prestasi
+                        </button>
                     </div>
                 </div>
                 <table class="table table-striped" id="prestasiTable">
                     <thead>
                         <tr>
-                            <th>Nama Mahasiswa</th>
                             <th>Nama Lomba</th>
                             <th>Peringkat</th>
                             <th>Tingkat</th>
@@ -77,18 +79,17 @@ if (session_status() === PHP_SESSION_NONE) {
     </div>
     </div>
 
-    <?php include $_SERVER['DOCUMENT_ROOT'] . '/presma_pbl/resources/views/component/admin/prestasi/modalDetailPrestasi.php'; ?>
-    <?php include $_SERVER['DOCUMENT_ROOT'] . '/presma_pbl/resources/views/component/admin/prestasi/modalValidasiPrestasi.php'; ?>
-
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/presma_pbl/resources/views/component/mahasiswa/modalTambahPres.php'; ?>
     <!-- Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/presma_pbl/public/assets/js/sidebar.js"></script>
     <script>
-        window.allPrestasi =
-            <?php echo json_encode($prestasi, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
+    window.allPrestasi =
+        <?php echo json_encode($prestasi, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
     </script>
-    <script src="/presma_pbl/public/assets/js/admin/prestasi.js"></script>
+    <script src="/presma_pbl/public/assets/js/mahasiswa/listPrestasi.js"></script>
+
 </body>
 
 </html>

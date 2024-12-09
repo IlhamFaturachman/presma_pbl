@@ -58,7 +58,8 @@ $userRole = $_SESSION['user']['role'];
                     <div class="col-md-6">
                         <div class="menu-stat-section p-0">
                             <div class="menu-grid">
-                                <a href="#" class="menu-item menu-item-blue" id="btnTambah">
+                                <a href="#" class="menu-item menu-item-blue" data-bs-toggle="modal"
+                                    data-bs-target="#prestasiModal">
                                     <div class="menu-icon">
                                         <img src="../../public/assets/img/tmb_presMhs.png" alt="Tambah">
                                     </div>
@@ -89,47 +90,46 @@ $userRole = $_SESSION['user']['role'];
                 </div>
                 <?php include $_SERVER['DOCUMENT_ROOT'] . '/presma_pbl/resources/views/component/topThreeRanking.php'; ?>
             </section>
+        </div>
+    </div>
 
+    <!-- Bootstrap JS -->
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/presma_pbl/resources/views/component/mahasiswa/modalTambahPres.php'; ?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).on('click', '#btnPrestasi', function(e) {
+            e.preventDefault();
+            const modalUrl = $(this).data('modal-url');
+            $('#modalContainer').load('/presma_pbl/listPres.php', function() {
+                const modal = new bootstrap.Modal(document.getElementById('addPrestasiModal'));
+                modal.show();
+            });
+        });
 
-            <div id="modalContainer"></div>
-
-            <!-- Bootstrap JS -->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js">
-            </script>
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script>
-            $(document).on('click', '#btnPrestasi', function(e) {
-                e.preventDefault();
-                const modalUrl = $(this).data('modal-url');
-                $('#modalContainer').load('/presma_pbl/listPres.php', function() {
-                    const modal = new bootstrap.Modal(document.getElementById('addPrestasiModal'));
-                    modal.show();
+        // js modal Tambah
+        $(document).on('click', '#btnTambah', function(e) {
+            e.preventDefault();
+            // Memuat modal dari file terpisah
+            $('#modalContainer').load(
+                '/presma_pbl/resources/views/component/mahasiswa/modalTambahPres.php',
+                function() {
+                    $('#prestasiModal').modal('show');
                 });
-            });
+        });
 
-            // js modal Tambah
-            $(document).on('click', '#btnTambah', function(e) {
-                e.preventDefault();
-                // Memuat modal dari file terpisah
-                $('#modalContainer').load(
-                    '/presma_pbl/resources/views/component/mahasiswa/modalTambahPres.php',
-                    function() {
-                        $('#prestasiModal').modal('show');
-                    });
-            });
-
-            // js modal Logout
-            $(document).on('click', '#btnLogout', function(e) {
-                e.preventDefault();
-                // Memuat modal dari file terpisah
-                $('#modalContainer').load('/presma_pbl/resources/views/component/modalValLogout.php',
-                    function() {
-                        $('#logoutModal').modal('show');
-                    });
-            });
-            </script>
-            <script src="/presma_pbl/public/assets/js/sidebar.js"></script>
-            <script src="/presma_pbl/public/assets/js/topThreeRanking.js"></script>
+        // js modal Logout
+        $(document).on('click', '#btnLogout', function(e) {
+            e.preventDefault();
+            // Memuat modal dari file terpisah
+            $('#modalContainer').load('/presma_pbl/resources/views/component/modalValLogout.php',
+                function() {
+                    $('#logoutModal').modal('show');
+                });
+        });
+    </script>
+    <script src="/presma_pbl/public/assets/js/sidebar.js"></script>
+    <script src="/presma_pbl/public/assets/js/topThreeRanking.js"></script>
 </body>
 
 </html>

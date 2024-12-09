@@ -61,6 +61,21 @@ class UserController extends Controller
         return $response->withHeader('Content-Type', 'application/json');
     }
 
+    public function getForDropdownDosen(Request $request, Response $response)
+    {
+        // Ambil daftar dosen untuk input prestasi mahasiswa nanti
+        $dosen = $this->userModel->getUserOnlyDosen();
+
+        // Atur header Content-Type menjadi application/json
+        if (!empty($dosen)) {
+            $response->getBody()->write(json_encode($dosen));
+        } else {
+            $response->getBody()->write(json_encode(["error" => "No Dosen found"]));
+        }
+
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
     // Override show method for fetching user by ID
     public function show(Request $request, Response $response, array $args)
     {

@@ -1,6 +1,7 @@
 body {
     padding-top: 60px;
 }
+
 .status {
     padding: 5px 10px;
     border-radius: 5px;
@@ -9,49 +10,61 @@ body {
     color: #fff;
     display: inline-block;
 }
+
 .status.waiting {
     background-color: #ffc107;
 }
+
 .status.verified {
     background-color: #28a745;
 }
+
 .status.rejected {
     background-color: #dc3545;
 }
+
 .pagination .page-link {
     border-radius: 5px;
 }
+
 .table-container {
     background-color: #F4F6F9;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
+
 table {
     background-color: #fff;
     border-radius: 10px;
     border-collapse: collapse;
     width: 100%;
 }
-th, td {
+
+th,
+td {
     text-align: left;
     vertical-align: middle;
 }
 
-.table th, .table td {
+.table th,
+.table td {
     vertical-align: middle;
 }
 
 /* Menambahkan aturan untuk membuat Nama Mahasiswa rata kiri */
 td:first-child {
-    text-align: left !important; /* Memastikan Nama Mahasiswa rata kiri */
+    text-align: left !important;
+    /* Memastikan Nama Mahasiswa rata kiri */
 }
-  /* Posisi gambar dropdown */
+
+/* Posisi gambar dropdown */
 .dropdown-container {
     position: relative;
     display: inline-block;
     vertical-align: middle;
 }
+
 .dropdown-image {
     background: none;
     border: none;
@@ -59,15 +72,21 @@ td:first-child {
     position: static;
     right: 0;
     top: 0;
-    transform: translateY(-10%); /* Vertikal center */
+    transform: translateY(-10%);
+    /* Vertikal center */
 }
+
 .dropdown-menu {
     left: 0;
     right: auto;
 }
+
 .dropdown-image.open {
-  transform: rotate(180deg); /* Memutar gambar ikon 180 derajat */
+    transform: rotate(180deg);
+    /* Memutar gambar ikon 180 derajat */
 }
+
 .dropdown-menu.show {
-    display: block; /* Menampilkan dropdown jika di-trigger */
+    display: block;
+    /* Menampilkan dropdown jika di-trigger */
 }
