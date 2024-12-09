@@ -12,75 +12,27 @@ class RolesModel extends Model
 
     public function getRoleById(int $roleId): ?array
     {
-        try {
-            $query = "SELECT * FROM {$this->tableName} WHERE {$this->primaryKey} = :role_id";
-            $stmt = $this->getDbConnection()->prepare($query);
-            $stmt->bindValue(':role_id', $roleId, PDO::PARAM_INT);
-            $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
-        } catch (PDOException $e) {
-            $this->handleError($e);
-        }
-        return null;
+        return $this->find($roleId);
     }
 
     public function getAllRoles(): array
     {
-        try {
-            $query = "SELECT * FROM {$this->tableName}";
-            $stmt = $this->getDbConnection()->query($query);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
-        } catch (PDOException $e) {
-            $this->handleError($e);
-        }
-        return [];
+        return $this->findAll();
     }
 
     public function addRole(array $roleData): bool
     {
-        try {
-            $columns = implode(", ", array_keys($roleData));
-            $placeholders = implode(", ", array_map(fn($key) => ":$key", array_keys($roleData)));
-            $query = "INSERT INTO {$this->tableName} ($columns) VALUES ($placeholders)";
-            $stmt = $this->getDbConnection()->prepare($query);
-            foreach ($roleData as $key => $value) {
-                $stmt->bindValue(":$key", $value);
-            }
-            return $stmt->execute();
-        } catch (PDOException $e) {
-            $this->handleError($e);
-        }
-        return false;
+        return $this->insert($roleData);
     }
 
     public function updateRole(int $roleId, array $roleData): bool
     {
-        try {
-            $setClause = implode(", ", array_map(fn($key) => "$key = :$key", array_keys($roleData)));
-            $query = "UPDATE {$this->tableName} SET $setClause WHERE {$this->primaryKey} = :role_id";
-            $stmt = $this->getDbConnection()->prepare($query);
-            $stmt->bindValue(':role_id', $roleId, PDO::PARAM_INT);
-            foreach ($roleData as $key => $value) {
-                $stmt->bindValue(":$key", $value);
-            }
-            return $stmt->execute();
-        } catch (PDOException $e) {
-            $this->handleError($e);
-        }
-        return false;
+        return $this->update($roleId, $roleData);
     }
 
     public function deleteRole(int $roleId): bool
     {
-        try {
-            $query = "DELETE FROM {$this->tableName} WHERE {$this->primaryKey} = :role_id";
-            $stmt = $this->getDbConnection()->prepare($query);
-            $stmt->bindValue(':role_id', $roleId, PDO::PARAM_INT);
-            return $stmt->execute();
-        } catch (PDOException $e) {
-            $this->handleError($e);
-        }
-        return false;
+        return $this->delete($roleId);
     }
 
     private function handleError(PDOException $e): void

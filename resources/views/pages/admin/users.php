@@ -24,7 +24,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <!-- Header -->
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/presma_pbl/resources/views/layouts/header.php'; ?>
 
-    <div class="content-wrapper d-flex">
+    <div class="d-flex">
         <!-- Sidebar -->
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/presma_pbl/resources/views/layouts/sidebar.php'; ?>
 
@@ -78,7 +78,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/presma_pbl/public/assets/js/sidebar.js"></script>
     <script>
-        window.allUsers = <?php echo json_encode($users, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
+    window.allUsers = <?php echo json_encode($users, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
     </script>
     <script src="/presma_pbl/public/assets/js/admin/listUsers.js"></script>
 

@@ -4,13 +4,17 @@ body {
 }
 
 /* Main Content Styles */
-.content {
-    flex-grow: 1;
-    background-color: white;
+#content {
+    margin-top: 60px;
+    /* Hindari overlap dengan header */
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: calc(100vh - 60px);
+    /* Sesuaikan dengan tinggi yang tersedia */
+    overflow-y: auto;
     box-sizing: border-box;
-    margin-top: 45px;
-    overflow: auto;
 }
 
 /* Tabel peringkat prestasi */
@@ -20,6 +24,7 @@ body {
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-top: 15px;
+    /* Memberikan ruang di atas tabel */
 }
 
 .table-container h4 {
@@ -43,48 +48,32 @@ body {
     margin-top: 20px;
 }
 
-.table th, .table td {
+.table th,
+.table td {
     padding: 10px;
     text-align: left;
+    /* Default left align untuk semua kolom */
     border-bottom: 1px solid #F4F6F9;
     font-size: 14px;
-    line-height: 2;
 }
 
 /* Memastikan teks di tengah untuk kolom tertentu */
-.table th:nth-child(1), 
-.table td:nth-child(1), 
-.table th:nth-child(4), 
+.table th:nth-child(1),
+.table td:nth-child(1),
+.table th:nth-child(4),
 .table td:nth-child(4),
-.table th:nth-child(5), 
-.table td:nth-child(5),
-.table th:nth-child(6), 
-.table td:nth-child(6) {
+.table th:nth-child(5),
+.table td:nth-child(5) {
     text-align: center;
+    /* Mengatur peringkat dan kolom lainnya ke tengah */
 }
 
 .table th {
     background-color: #F4F6F9;
+    /* Warna yang sama seperti background tabel */
     color: #212529;
+    /* Warna teks agar kontras */
     font-weight: bold;
-}
-
-/* Styling untuk tombol Detail */
-.table .btn-info {
-    background-color: #007bff;
-    border-color: #007bff;
-    color: white;
-    font-size: 12px;
-    font-weight: bold;
-    padding: 6px 12px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
-
-/* Hover effect untuk tombol Detail */
-.table .btn-info:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
 }
 
 /* Posisi gambar dropdown */
@@ -93,6 +82,7 @@ body {
     display: inline-block;
     vertical-align: middle;
     text-align: center;
+    /* Menjaga dropdown agar terpusat pada header */
 }
 
 .dropdown-image {
@@ -103,12 +93,15 @@ body {
     right: 0;
     top: 0;
     transform: translateY(-10%);
+    /* Vertikal center, sesuaikan jika diperlukan */
     z-index: 10;
+    /* Pastikan tombol berada di atas elemen lain */
 }
 
 /* Menambahkan animasi rotasi pada gambar saat dropdown terbuka */
 .dropdown-image.open {
     transform: rotate(180deg);
+    /* Memutar gambar ikon 180 derajat */
 }
 
 /* Posisi dropdown menu */
@@ -116,26 +109,32 @@ body {
     left: 0;
     right: auto;
     display: none;
+    /* Secara default dropdown tidak ditampilkan */
     z-index: 100;
+    /* Pastikan dropdown berada di atas elemen lain */
 }
 
 /* Menampilkan dropdown jika di-trigger */
 .dropdown-menu.show {
     display: block;
+    /* Menampilkan dropdown jika .show ditambahkan */
 }
 
 /* Rows Styling */
 .table tbody tr {
     background-color: #F4F6F9;
+    /* Warna seragam untuk semua baris */
 }
 
 .table tbody tr:hover {
     background-color: #F4F6F9;
+    /* Tambahkan efek hover jika diinginkan */
 }
 
 /* Styling for ranking cells (Peringkat) */
 .table tbody td:first-child {
     background-color: #F4F6F9;
+    /* Warna abu-abu untuk kolom peringkat */
     font-weight: bold;
     text-align: center;
 }
@@ -153,11 +152,14 @@ body {
 
 .pagination .page-link {
     border: none;
+    /* Menghapus garis border */
     color: #007bff;
+    /* Warna teks tetap biru */
     background-color: white;
     padding: 8px 16px;
     border-radius: 5px;
 }
+
 .pagination .page-item.active .page-link {
     background-color: #007bff;
     color: white;
@@ -171,19 +173,23 @@ body {
 @media (max-width: 768px) {
     .d-flex {
         flex-direction: column;
+        /* Atur sidebar dan konten secara vertikal pada perangkat kecil */
     }
 
     .sidebar {
         width: 100%;
+        /* Sidebar lebar penuh pada perangkat kecil */
         height: auto;
     }
 
     .content {
         margin-left: 0;
+        /* Konten tidak perlu margin */
     }
 
     .search-box input {
         max-width: 100%;
+        /* Form pencarian lebar penuh pada perangkat kecil */
     }
 
     .table-container {

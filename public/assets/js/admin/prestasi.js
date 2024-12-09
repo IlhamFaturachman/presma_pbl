@@ -1,169 +1,201 @@
-// Variabel untuk menyimpan data prestasi
-const prestasiData = [
-    { name: "Gilang Purnomo", prodi: "Teknik Informatika", achievement: "Juara 1 Lomba Pemrograman", tingkat: "Internasional", status: "waiting" },
-    { name: "Gwido Putra Wijaya", prodi: "Sistem Informasi Bisnis", achievement: "Juara 2 Lomba Data Science", tingkat: "Nasional", status: "verified" },
-    { name: "Ilham Faturachman", prodi: "Teknik Mesin", achievement: "Juara 1 Hackathon Nasional", tingkat: "Nasional", status: "rejected" },
-    { name: "Dina Ayu", prodi: "Desain Grafis", achievement: "Juara 3 Lomba Desain Grafis", tingkat: "Lokal", status: "waiting" },
-    { name: "Budi Santoso", prodi: "Teknik Elektronika", achievement: "Juara 2 Lomba Elektronika", tingkat: "Internasional", status: "verified" },
-    { name: "Rina Alfianti", prodi: "Sistem Informasi Bisnis", achievement: "Juara 1 Lomba Bisnis Digital", tingkat: "Nasional", status: "waiting" },
-    { name: "Andi Pratama", prodi: "Teknik Informatika", achievement: "Juara 3 Lomba Pengembangan Aplikasi", tingkat: "Nasional", status: "verified" },
-    { name: "Mira Cahyani", prodi: "Teknik Mesin", achievement: "Juara 2 Lomba Desain Otomotif", tingkat: "Lokal", status: "rejected" },
-    { name: "Fahmi Rizki", prodi: "Teknik Informatika", achievement: "Juara 1 Lomba Cyber Security", tingkat: "Internasional", status: "verified" },
-    { name: "Siti Fadilah", prodi: "Desain Grafis", achievement: "Juara 2 Lomba Animasi", tingkat: "Nasional", status: "waiting" },
-    { name: "Ario Cahyadi", prodi: "Teknik Informatika", achievement: "Juara 1 Lomba Artificial Intelligence", tingkat: "Nasional", status: "verified" },
-    { name: "Aulia Rahmawati", prodi: "Sistem Informasi Bisnis", achievement: "Juara 2 Lomba Analisis Big Data", tingkat: "Internasional", status: "waiting" },
-    { name: "Ravi Putra", prodi: "Teknik Informatika", achievement: "Juara 2 Lomba Cloud Computing", tingkat: "Nasional", status: "verified" },
-    { name: "Alma Dwi", prodi: "Sistem Informasi Bisnis", achievement: "Juara 3 Lomba Startup Digital", tingkat: "Lokal", status: "waiting" },
-    { name: "Zakiya Fitria", prodi: "Teknik Elektronika", achievement: "Juara 1 Lomba Teknologi Robotic", tingkat: "Nasional", status: "verified" },
-    { name: "Iman Setiawan", prodi: "Teknik Informatika", achievement: "Juara 2 Lomba Pengembangan Mobile Apps", tingkat: "Internasional", status: "rejected" },
-    { name: "Fiona Hidayat", prodi: "Sistem Informasi Bisnis", achievement: "Juara 1 Lomba Sistem Informasi Bisnis", tingkat: "Nasional", status: "verified" },
-    { name: "Edo Subrata", prodi: "Teknik Informatika", achievement: "Juara 3 Lomba Data Engineering", tingkat: "Nasional", status: "waiting" },
-    { name: "Dinda Nabila", prodi: "Desain Grafis", achievement: "Juara 1 Lomba Desain UI/UX", tingkat: "Internasional", status: "verified" },
-    { name: "Naufal Aditama", prodi: "Sistem Informasi Bisnis", achievement: "Juara 1 Lomba Big Data Analysis", tingkat: "Internasional", status: "waiting" },
-    { name: "Benedictus Rian", prodi: "Teknik Informatika", achievement: "Juara 3 Lomba Pemrograman Java", tingkat: "Nasional", status: "verified" }
-];
-
-// Variabel lainnya
-let filteredData = prestasiData;
-const rowsPerPage = 5;
+// Konfigurasi paginasi
+const rowsPerPage = 10;
 let currentPage = 1;
-let selectedProdi = 'All'; // Default filter
-let selectedTingkat = 'All'; // Default filter for tingkat
-let searchQuery = ''; // Store search query
+let allPrestasi = [];
 
-// Fungsi untuk merender tabel
-function renderTable(page) {
-    const startIndex = (page - 1) * rowsPerPage;
+// Render tabel
+function renderTable(data) {
+    const startIndex = (currentPage - 1) * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
-    const currentData = filteredData.slice(startIndex, endIndex);
-    const tbody = document.getElementById('prestasiBody');
-    tbody.innerHTML = '';
+    const paginatedData = data.slice(startIndex, endIndex);
 
-    // Pengecekan jika tidak ada data yang valid setelah filter/pencarian
-    if (filteredData.length === 0 || currentData.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" class="text-center">Tidak ada prestasi yang ditemukan.</td></tr>';
+    // Kosongkan tbody
+    $('#prestasiBody').empty();
+
+    if (paginatedData.length === 0) {
+        $('#prestasiBody').append('<tr><td colspan="6" class="text-center">Tidak ada prestasi yang ditemukan.</td></tr>');
         return;
     }
 
-    // Jika ada data valid, tampilkan data dalam tabel
-    currentData.forEach((data, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${data.name}</td>
-            <td>${data.prodi}</td>
-            <td>${data.achievement}</td>
-            <td>${data.tingkat}</td>
-            <td><span class="status ${data.status}">${data.status.charAt(0).toUpperCase() + data.status.slice(1)}</span></td>
-            <td>
-                <button class="btn btn-primary btn-sm" onclick="showDetails(${startIndex + index})">Detail</button>
-            </td>
-        `;
-        tbody.appendChild(row);
-    });
+    // Isi data ke tabel
+    paginatedData.forEach(prestasi => {
+        const trimmedNamaLomba = (prestasi.nama_lomba || "").length > 8
+            ? prestasi.nama_lomba.substring(0, 10) + '...'
+            : prestasi.nama_lomba;
 
-    renderPagination();
+        let actionButtons = '';
+        if (prestasi.validasi_status === 'Tervalidasi') {
+            actionButtons = `
+                <button class="btn btn-sm btn-info action-button detailPrestasi" 
+                    style="font-size: 15px;" data-bs-toggle="modal" data-bs-target="#detailModal" data-prestasi-id="${prestasi.PrestasiID || ''}">
+                    <i class="bi bi-eye"></i> Detail
+                </button>
+                `;
+        } else if (prestasi.validasi_status === 'Ditolak') {
+            actionButtons = `
+                <button class="btn btn-sm btn-danger action-button infoDitolak" 
+                    style="font-size: 15px;" data-prestasi-id="${prestasi.PrestasiID || ''}">
+                    <i class="bi bi-exclamation-circle"></i> Info Ditolak
+                </button>`;
+        } else if (prestasi.validasi_status === 'Menunggu divalidasi') {
+            actionButtons = `
+                <button class="btn btn-sm btn-info action-button validasiPrestasi" 
+                    style="font-size: 15px;" data-bs-toggle="modal" data-bs-target="#validasiModal" data-prestasi-id="${prestasi.PrestasiID || ''}">
+                    <i class="bi bi-eye"></i> Detail
+                </button>
+                `;
+        }
+
+        let statusBadge = '';
+        if (prestasi.validasi_status === 'Tervalidasi') {
+            statusBadge = '<span class="badge bg-success pt-3 pb-3 ps-5 pe-5" style="font-size: 15px;">Tervalidasi</span>';
+        } else if (prestasi.validasi_status === 'Ditolak') {
+            statusBadge = '<span class="badge bg-danger pt-3 pb-3 ps-5 pe-5" style="font-size: 15px;">Ditolak</span>';
+        } else if (prestasi.validasi_status === 'Menunggu divalidasi') {
+            statusBadge = '<span class="badge bg-warning pt-3 pb-3 ps-5 pe-5" style="font-size: 15px;">Menunggu divalidasi</span>';
+        }
+
+        // Tambahkan baris ke dalam tabel
+        $('#prestasiBody').append(`
+            <tr>
+                <td>${prestasi.NamaMahasiswa || '-'}</td>
+                <td title="${prestasi.nama_lomba || '-'}">${trimmedNamaLomba}</td>
+                <td>${prestasi.Peringkat || '-'}</td>
+                <td>${prestasi.Tingkat || '-'}</td>
+                <td>${prestasi.NamaDosen || '-'}</td>
+                <td class="text-center">${statusBadge}</td>
+                <td>${actionButtons}</td>
+            </tr>
+        `);
+    });
 }
 
-// Fungsi untuk merender tombol pagination
-function renderPagination() {
-    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-    const pagination = document.getElementById('pagination');
-    pagination.innerHTML = '';
+// Render paginasi
+function renderPagination(totalItems) {
+    const totalPages = Math.ceil(totalItems / rowsPerPage);
+    $('#pagination').empty();
 
     // Tombol Previous
-    const prevButton = document.createElement('li');
-    prevButton.classList.add('page-item', currentPage === 1 ? 'disabled' : '');
-    prevButton.innerHTML = `
-        <a class="page-link" href="#" onclick="changePage(${currentPage - 1})">Prev</a>
-    `;
-    pagination.appendChild(prevButton);
+    $('#pagination').append(`
+        <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+            <a class="page-link" href="#" data-page="${currentPage - 1}">Prev</a>
+        </li>
+    `);
 
-    // Menampilkan nomor halaman
-    const pageNumbers = [];
-    const range = 2; // Menampilkan 2 halaman sebelumnya dan setelahnya
+    // Tombol nomor halaman
     for (let i = 1; i <= totalPages; i++) {
-        if (i === 1 || i === totalPages || (i >= currentPage - range && i <= currentPage + range)) {
-            pageNumbers.push(i);
-        }
+        $('#pagination').append(`
+            <li class="page-item ${i === currentPage ? 'active' : ''}">
+                <a class="page-link" href="#" data-page="${i}">${i}</a>
+            </li>
+        `);
     }
-
-    // Menambahkan tanda "..." jika perlu
-    if (pageNumbers[0] > 1) pageNumbers.unshift('...');
-    if (pageNumbers[pageNumbers.length - 1] < totalPages) pageNumbers.push('...');
-
-    pageNumbers.forEach(page => {
-        const pageItem = document.createElement('li');
-        pageItem.classList.add('page-item', page === currentPage ? 'active' : '');
-        pageItem.innerHTML = `
-            <a class="page-link" href="#" onclick="changePage(${page})">${page}</a>
-        `;
-        pagination.appendChild(pageItem);
-    });
 
     // Tombol Next
-    const nextButton = document.createElement('li');
-    nextButton.classList.add('page-item', currentPage === totalPages || totalPages === 0 ? 'disabled' : '');
-    nextButton.innerHTML = `
-        <a class="page-link" href="#" onclick="changePage(${currentPage + 1})">Next</a>
-    `;
-    pagination.appendChild(nextButton);
+    $('#pagination').append(`
+        <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+            <a class="page-link" href="#" data-page="${currentPage + 1}">Next</a>
+        </li>
+    `);
 }
 
-// Fungsi untuk mengubah halaman
-function changePage(page) {
-    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-    if (page < 1 || page > totalPages) return; // Pastikan halaman valid
-    currentPage = page;
-    renderTable(currentPage);
-}
+// Ubah halaman
+$(document).on('click', '#pagination .page-link', function (e) {
+    e.preventDefault();
+    const page = parseInt($(this).data('page'));
+    const totalPages = Math.ceil(allPrestasi.length / rowsPerPage);
 
-// Fungsi untuk filter berdasarkan program studi
-function filterByProdi(prodi) {
-    selectedProdi = prodi;
-    if (prodi === 'All') {
-        filteredData = prestasiData;
-    } else {
-        filteredData = prestasiData.filter(data => data.prodi === prodi);
+    if (page >= 1 && page <= totalPages) {
+        currentPage = page;
+        renderTable(allPrestasi);
+        renderPagination(allPrestasi.length);
     }
-    currentPage = 1; // Reset to first page after filter
-    renderTable(currentPage);
-}
+});
 
-// Fungsi untuk filter berdasarkan tingkat
-function filterByTingkat(tingkat) {
-    selectedTingkat = tingkat;
-    if (tingkat === 'All') {
-        filteredData = prestasiData;
-    } else {
-        filteredData = prestasiData.filter(data => data.tingkat === tingkat);
-    }
-    currentPage = 1; // Reset to first page after filter
-    renderTable(currentPage);
-}
-
-// Fungsi untuk filter berdasarkan pencarian
-function searchTable() {
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    filteredData = prestasiData.filter(data =>
-        data.name.toLowerCase().includes(searchTerm) ||
-        data.prodi.toLowerCase().includes(searchTerm) ||
-        data.achievement.toLowerCase().includes(searchTerm) ||
-        data.tingkat.toLowerCase().includes(searchTerm)
+// Fitur pencarian
+$('#searchInput').on('keyup', function () {
+    const value = $(this).val().toLowerCase();
+    const filteredPrestasi = allPrestasi.filter(prestasi =>
+        prestasi.nama_lomba.toLowerCase().includes(value)
     );
-    currentPage = 1; // Reset to first page after search
-    renderTable(currentPage);
+
+    currentPage = 1;
+    renderTable(filteredPrestasi);
+    renderPagination(filteredPrestasi.length);
+});
+
+// Event listener untuk membuka modal detail
+$(document).on('click', '.detailPrestasi', function () {
+    const prestasiId = $(this).data('prestasi-id'); // Dapatkan ID dari tombol
+
+    // Panggil endpoint untuk mendapatkan data detail
+    $.ajax({
+        url: `/presma_pbl/public/admin/prestasi/${prestasiId}`, // Endpoint untuk mendapatkan detail prestasi
+        method: 'GET',
+        success: function (response) {
+            if (response) {
+                populateDetailModal(response);
+                $('#detailModal').modal('show'); // Tampilkan modal detail
+            } else {
+                alert('Data tidak ditemukan.');
+            }
+        },
+        error: function () {
+            alert('Terjadi kesalahan saat mengambil data.');
+        }
+    });
+});
+
+// Event listener untuk membuka modal Validasi
+$(document).on('click', '.validasiPrestasi', function () {
+    const prestasiId = $(this).data('prestasi-id'); // Dapatkan ID dari tombol
+
+    // Panggil endpoint untuk mendapatkan data detail
+    $.ajax({
+        url: `/presma_pbl/public/admin/prestasi/${prestasiId}`, // Endpoint untuk mendapatkan detail prestasi
+        method: 'GET',
+        success: function (response) {
+            if (response) {
+                populateDetailModal(response);
+                $('#validasiModal').modal('show'); // Tampilkan modal detail
+            } else {
+                alert('Data tidak ditemukan.');
+            }
+        },
+        error: function () {
+            alert('Terjadi kesalahan saat mengambil data.');
+        }
+    });
+});
+
+
+function populateDetailModal(prestasi) {
+    $('#modalNamaMahasiswa').text(prestasi.NamaMahasiswa || '-');
+    $('#modalNIMMahasiswa').text(prestasi.NIM || '-');
+    $('#modalNamaDosen').text(prestasi.NamaDosen || '-');
+    $('#modalNamaLomba').text(prestasi.nama_lomba || '-');
+    $('#modalPeringkat').text(prestasi.Peringkat || '-');
+    $('#modalTingkat').text(prestasi.Tingkat || '-');
+    $('#modalWaktuMulaiLomba').text(prestasi.waktu_mulai_lomba || '-');
+    $('#modalWaktuSelesaiLomba').text(prestasi.waktu_selesai_lomba || '-');
+    $('#modalKategoriLomba').text(prestasi.kategori_lomba || '-');
+    $('#modalPenyelenggara').text(prestasi.penyelenggara || '-');
+    $('#modalTotalPoint').text(prestasi.total_point || '-');
+    $('#modalValidasiStatus').text(prestasi.validasi_status || '-');
+    $('#modalInfoValidasi').text(prestasi.info_validasi || 'Tidak ada informasi');
+
+    // File atau gambar
+    $('#modalFotoLomba').attr('src', prestasi.foto_lomba || '#').toggle(!!prestasi.foto_lomba);
+    $('#modalFlyerLomba').attr('src', prestasi.flyer_lomba || '#').toggle(!!prestasi.flyer_lomba);
+    $('#modalSertifikat').attr('src', prestasi.sertifikat || '#').toggle(!!prestasi.sertifikat);
+    $('#modalIdeProposal').attr('href', prestasi.ide_proposal || '#').toggle(!!prestasi.ide_proposal);
+    $('#modalSuratTugas').attr('href', prestasi.surat_tugas || '#').toggle(!!prestasi.surat_tugas);
 }
 
-// Initial rendering of the table
-renderTable(currentPage);
 
-// Fungsi untuk menyimpan data di localStorage dan membuka modal
-function showDetails(index) {
-    const prestasi = filteredData[index]; // Ambil data prestasi dari tabel
-    
-    // Menyimpan data prestasi ke localStorage
-    localStorage.setItem('selectedPrestasi', JSON.stringify(prestasi));
-    
-    // Arahkan ke halaman modal (modal.html)
-    window.location.href = '/presma_pbl/resources/views/component/admin/modalDetailPres.php'; 
-}
+
+$(document).ready(function () {
+    allPrestasi = window.allPrestasi || [];
+    renderTable(allPrestasi);
+    renderPagination(allPrestasi.length);
+});

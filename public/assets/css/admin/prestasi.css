@@ -6,11 +6,14 @@ body {
 /* Main Content Styles */
 .content {
     flex-grow: 1;
-    background-color: white; /* Warna latar belakang terang */
+    background-color: white;
+    /* Warna latar belakang terang */
     padding: 20px;
     box-sizing: border-box;
-    margin-top: 45px; /* Menambahkan ruang di atas konten agar tidak tertutup header */
-    overflow: auto; /* Membuat konten bisa digulir jika melebihi ruang */
+    margin-top: 45px;
+    /* Menambahkan ruang di atas konten agar tidak tertutup header */
+    overflow: auto;
+    /* Membuat konten bisa digulir jika melebihi ruang */
 }
 
 /* Tabel peringkat prestasi */
@@ -19,7 +22,8 @@ body {
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 15px; /* Memberikan ruang di atas tabel */
+    margin-top: 15px;
+    /* Memberikan ruang di atas tabel */
 }
 
 .table-container h4 {
@@ -44,61 +48,76 @@ body {
 }
 
 /* Table Styles */
-.table th, .table td {
-    padding: 6px 10px;  /* Mengurangi padding */
+.table th,
+.table td {
+    padding: 6px 10px;
+    /* Mengurangi padding */
     border-bottom: 1px solid #F4F6F9;
-    font-size: 14px;  /* Mengurangi ukuran font */
-    line-height: 2;  /* Menyesuaikan tinggi baris */
+    font-size: 14px;
+    /* Mengurangi ukuran font */
+    line-height: 2;
+    /* Menyesuaikan tinggi baris */
 }
 
 /* Menyelaraskan kolom Nama Mahasiswa (kolom pertama atau kedua) ke kiri */
-.table th:nth-child(1), 
+.table th:nth-child(1),
 .table td:nth-child(1),
-.table th:nth-child(2), 
+.table th:nth-child(2),
 .table td:nth-child(2) {
-    text-align: left !important; /* Menggunakan !important untuk memastikan aturan ini diutamakan */
+    text-align: left !important;
+    /* Menggunakan !important untuk memastikan aturan ini diutamakan */
 }
 
 /* Memastikan teks di tengah untuk kolom tertentu */
-.table th:nth-child(5), 
+.table th:nth-child(5),
 .table td:nth-child(5) {
-    text-align: center; /* Mengatur kolom lainnya ke tengah */
+    text-align: center;
+    /* Mengatur kolom lainnya ke tengah */
 }
 
 /* Styling untuk header tabel */
 .table th {
-    background-color: #F4F6F9; /* Warna yang sama seperti background tabel */
-    color: #212529; /* Warna teks agar kontras */
+    background-color: #F4F6F9;
+    /* Warna yang sama seperti background tabel */
+    color: #212529;
+    /* Warna teks agar kontras */
     font-weight: bold;
-    font-size: 14px; /* Ukuran font header lebih kecil */
+    font-size: 14px;
+    /* Ukuran font header lebih kecil */
     text-align: left;
-    padding: 6px 10px; /* Mengurangi jarak pada teks header */
+    padding: 6px 10px;
+    /* Mengurangi jarak pada teks header */
 }
 
 /* Untuk kolom header yang terletak di tengah (seperti Peringkat) */
 .table th:nth-child(5) {
-    text-align: center; /* Menyelaraskan teks di header kolom tertentu ke tengah */
+    text-align: center;
+    /* Menyelaraskan teks di header kolom tertentu ke tengah */
 }
 
 /* Penyesuaian pada header cell peringkat */
 .table tbody td:first-child {
     font-weight: bold;
     text-align: center;
-    background-color: #F4F6F9; /* Sama dengan header */
+    background-color: #F4F6F9;
+    /* Sama dengan header */
 }
 
 /* Rows Styling */
 .table tbody tr {
-    background-color: #F4F6F9; /* Warna seragam untuk semua baris */
+    background-color: #F4F6F9;
+    /* Warna seragam untuk semua baris */
 }
 
 .table tbody tr:hover {
-    background-color: #F4F6F9; /* Tambahkan efek hover jika diinginkan */
+    background-color: #F4F6F9;
+    /* Tambahkan efek hover jika diinginkan */
 }
 
 /* Styling for ranking cells (Peringkat) */
 .table tbody td:first-child {
-    background-color: #F4F6F9; /* Warna abu-abu untuk kolom peringkat */
+    background-color: #F4F6F9;
+    /* Warna abu-abu untuk kolom peringkat */
     font-weight: bold;
     text-align: center;
 }
@@ -115,8 +134,10 @@ body {
 }
 
 .pagination .page-link {
-    border: none; /* Menghapus garis border */
-    color: #007bff; /* Warna teks tetap biru */
+    border: none;
+    /* Menghapus garis border */
+    color: #007bff;
+    /* Warna teks tetap biru */
     background-color: white;
     padding: 8px 16px;
     border-radius: 5px;
@@ -164,6 +185,10 @@ body {
     border: none;
     cursor: pointer;
     position: static;
+    right: 0;
+    top: 0;
+    transform: translateY(-10%);
+    /* Vertikal center */
     transform: translateY(-10%);
 }
 
@@ -176,6 +201,7 @@ body {
 
 .dropdown-image.open {
     transform: rotate(180deg);
+    /* Memutar gambar ikon 180 derajat */
 }
 
 .dropdown-menu.show {
@@ -194,12 +220,15 @@ body {
 }
 
 .pagination .page-link {
-    border: none; /* Menghapus garis border */
-    color: #007bff; /* Warna teks tetap biru */
+    border: none;
+    /* Menghapus garis border */
+    color: #007bff;
+    /* Warna teks tetap biru */
     background-color: white;
     padding: 8px 16px;
     border-radius: 5px;
 }
+
 .pagination .page-item.active .page-link {
     background-color: #007bff;
     color: white;
@@ -208,6 +237,7 @@ body {
 .pagination .page-item.disabled .page-link {
     color: #ccc;
 }
+
 /* Efek hover tombol */
 .pagination .page-link:hover {
     background-color: #e2e6ea;
@@ -216,20 +246,24 @@ body {
 /* Responsive Layout */
 @media (max-width: 768px) {
     .d-flex {
-        flex-direction: column; /* Atur sidebar dan konten secara vertikal pada perangkat kecil */
+        flex-direction: column;
+        /* Atur sidebar dan konten secara vertikal pada perangkat kecil */
     }
 
     .sidebar {
-        width: 100%; /* Sidebar lebar penuh pada perangkat kecil */
+        width: 100%;
+        /* Sidebar lebar penuh pada perangkat kecil */
         height: auto;
     }
 
     .content {
-        margin-left: 0; /* Konten tidak perlu margin */
+        margin-left: 0;
+        /* Konten tidak perlu margin */
     }
 
     .search-box input {
-        max-width: 100%; /* Form pencarian lebar penuh pada perangkat kecil */
+        max-width: 100%;
+        /* Form pencarian lebar penuh pada perangkat kecil */
     }
 
     .table-container {

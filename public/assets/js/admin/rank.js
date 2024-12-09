@@ -28,7 +28,7 @@ function renderTable() {
     const filteredRankings = rankings.filter(ranking => {
         const matchesProdi = selectedProdi === 'All' || ranking.program === selectedProdi;
         const matchesSearch = ranking.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                              ranking.program.toLowerCase().includes(searchQuery.toLowerCase());
+            ranking.program.toLowerCase().includes(searchQuery.toLowerCase());
         return matchesProdi && matchesSearch;
     });
 
@@ -103,16 +103,16 @@ function filterByProdi(prodi) {
 }
 
 // Fungsi untuk filter berdasarkan pencarian
-$('#searchInput').on('keyup', function() {
+$('#searchInput').on('keyup', function () {
     searchQuery = $(this).val(); // Menyimpan query pencarian
     currentPage = 1; // Reset ke halaman pertama saat pencarian berubah
     renderTable();
 });
 
 // Event klik pada tombol dropdown
-$('#dropdownProdiButton').on('click', function(e) {
+$('#dropdownProdiButton').on('click', function (e) {
     e.stopPropagation(); // Mencegah klik menyebar ke elemen lain
-    
+
     const dropdownMenu = $(this).next('.dropdown-menu'); // Menemukan elemen dropdown menu
     const dropdownImage = $(this).children('.dropdown-image'); // Menemukan elemen gambar dropdown
 
@@ -124,7 +124,7 @@ $('#dropdownProdiButton').on('click', function(e) {
 });
 
 // Klik di luar dropdown untuk menutup dropdown
-$(document).on('click', function(e) {
+$(document).on('click', function (e) {
     if (!$(e.target).closest('.dropdown-container').length) {
         // Jika klik di luar dropdown, sembunyikan menu
         $('.dropdown-menu').removeClass('show');

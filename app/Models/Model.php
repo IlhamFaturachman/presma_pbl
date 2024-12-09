@@ -126,6 +126,38 @@ abstract class Model
         return []; // Return default value jika terjadi error
     }
 
+    public function queryOne(string $sql, array $params = []): ?array
+    {
+        try {
+            // Menyiapkan statement
+            $stmt = $this->db->prepare($sql);
+
+            // Bind parameters secara dinamis
+            foreach ($params as $key => $value) {
+                // Jika nilai adalah integer, kita bind dengan tipe PARAM_INT
+                if (is_int($value)) {
+                    $stmt->bindValue($key, $value, PDO::PARAM_INT);
+                } else {
+                    // Untuk parameter lainnya, kita bind dengan tipe default (string)
+                    $stmt->bindValue($key, $value, PDO::PARAM_STR);
+                }
+            }
+
+            // Menjalankan query
+            $stmt->execute();
+
+            // Mengambil hasil sebagai array asosiatif
+            return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        } catch (PDOException $e) {
+            // Menangani error jika terjadi
+            $this->handleError($e);
+        }
+
+        // Return null jika terjadi error atau query tidak menghasilkan data
+        return null;
+    }
+
+
     // Fungsi untuk menangani error
     private function handleError(PDOException $e): void
     {

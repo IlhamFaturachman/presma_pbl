@@ -40,13 +40,20 @@
                                 Program Studi
                                 <!-- Dropdown untuk Prodi -->
                                 <div class="dropdown-container">
-                                    <button class="dropdown-image" type="button" id="dropdownProdiButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <img src="/presma_pbl/public/assets/img/dropdown.png" alt="Program Studi" class="img-fluid" width="20">
+                                    <button class="dropdown-image" type="button" id="dropdownProdiButton"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="/presma_pbl/public/assets/img/dropdown.png" alt="Program Studi"
+                                            class="img-fluid" width="20">
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownProdiButton">
-                                        <li><a class="dropdown-item" href="#" onclick="filterByProdi('All')">All</a></li>
-                                        <li><a class="dropdown-item" href="#" onclick="filterByProdi('Teknik Informatika')">Teknik Informatika</a></li>
-                                        <li><a class="dropdown-item" href="#" onclick="filterByProdi('Sistem Informasi Bisnis')">Sistem Informasi Bisnis</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="filterByProdi('All')">All</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="#"
+                                                onclick="filterByProdi('Teknik Informatika')">Teknik Informatika</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="#"
+                                                onclick="filterByProdi('Sistem Informasi Bisnis')">Sistem Informasi
+                                                Bisnis</a></li>
                                     </ul>
                                 </div>
                             </th>
