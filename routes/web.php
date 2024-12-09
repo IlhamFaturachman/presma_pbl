@@ -345,6 +345,10 @@ $app->group('/mahasiswa', function ($mahasiswa) {
         $prestasi = $prestasiController->getPrestasiByNIMUser($request, $response); // Kirim seluruh $args
         return renderView($response, 'pages/mahasiswa/prestasi.php', ['prestasi' => $prestasi]);
     });
+    $mahasiswa->get('/prestasi/{prestasi_id}', function (Request $request, Response $response, array $args) {
+        $prestasiController = new PrestasiController(); // Controller untuk prestasi
+        return $prestasiController->show($request, $response, $args); // Kirim seluruh $args
+    });
 
     // untuk Dropdown isi dosen pada prestasi, datanya dari tabel dosen
     $mahasiswa->get('/dosen', function (Request $request, Response $response) {

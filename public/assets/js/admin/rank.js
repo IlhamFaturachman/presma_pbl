@@ -1,8 +1,8 @@
 // Variabel untuk menyimpan data ranking
 const rankings = [
-    { rank: '🥇', name: 'Gilang Purnomo', program: 'Teknik Informatika', achievements: 20, points: 750 },
-    { rank: '🥈', name: 'Gwido Putra Wijaya', program: 'Sistem Informasi Bisnis', achievements: 17, points: 520 },
-    { rank: '🥉', name: 'Ilham Faturachman', program: 'Sistem Informasi Bisnis', achievements: 15, points: 505 },
+    { rank: '🥇', nim: '24412492141241', name: 'Gilang Purnomo', program: 'Teknik Informatika', achievements: 20, points: 750 },
+    { rank: '🥈', nim: '12481028412048', name: 'Gwido Putra Wijaya', program: 'Sistem Informasi Bisnis', achievements: 17, points: 520 },
+    { rank: '🥉', nim: '51392157021380', name: 'Ilham Faturachman', program: 'Sistem Informasi Bisnis', achievements: 15, points: 505 },
     { rank: '4', name: 'Najwa Alya Nurizah', program: 'Teknik Informatika', achievements: 10, points: 500 },
     { rank: '5', name: 'Sesy Tana Lina R', program: 'Teknik Informatika', achievements: 10, points: 500 },
     { rank: '6', name: 'Dika Arie Arifky', program: 'Teknik Informatika', achievements: 8, points: 480 },

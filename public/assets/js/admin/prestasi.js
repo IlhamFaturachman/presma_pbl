@@ -80,6 +80,18 @@ function renderTable(data) {
     });
 }
 
+$('#filterStatus').on('change', function () {
+    const status = $(this).val();
+    if (status === 'all') {
+        filteredPrestasi = allPrestasi;
+    } else {
+        filteredPrestasi = allPrestasi.filter(prestasi => prestasi.validasi_status === status);
+    }
+    currentPage = 1;
+    renderTable(filteredPrestasi);
+    renderPagination(filteredPrestasi.length);
+});
+
 // Render paginasi
 function renderPagination(totalItems) {
     const totalPages = Math.ceil(totalItems / rowsPerPage);
@@ -209,7 +221,6 @@ function populateDetailModal(prestasi) {
     $('#modalIdeProposal').attr('href', prestasi.ide_proposal || '#').toggle(!!prestasi.ide_proposal);
     $('#modalSuratTugas').attr('href', prestasi.surat_tugas || '#').toggle(!!prestasi.surat_tugas);
 }
-
 // Saat halaman dimuat, inisialisasi data dan render tabel
 $(document).ready(function () {
     allPrestasi = window.allPrestasi || [];
