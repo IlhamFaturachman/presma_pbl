@@ -22,7 +22,7 @@ $userRole = $_SESSION['user']['role'];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/header.css">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/sidebar.css">
-    <link rel="stylesheet" href="/presma_pbl/public/assets/css/mahasiswa/prestasi.css">
+    <link rel="stylesheet" href="/presma_pbl/public/assets/css/admin/prestasi.css">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/component/modalTambahPres.css">
 </head>
 
@@ -46,7 +46,7 @@ $userRole = $_SESSION['user']['role'];
                             <input type="text" class="form-control" placeholder="Cari Prestasi" id="searchInput">
                         </div>
                         <!-- Kolom untuk tombol Tambah Pengguna -->
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#prestasiModal">
+                        <button class="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#prestasiModal">
                             <i class="bi bi-plus-lg"></i> Tambah Prestasi
                         </button>
                     </div>
@@ -56,7 +56,21 @@ $userRole = $_SESSION['user']['role'];
                         <tr>
                             <th>Nama Lomba</th>
                             <th>Peringkat</th>
-                            <th>Tingkat</th>
+                            <th>
+                                Tingkat
+                                <!-- Dropdown untuk Tingkat -->
+                                <div class="dropdown-container">
+                                    <button class="dropdown-image" type="button" id="dropdownTingkatButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="/presma_pbl/public/assets/img/dropdown.png" alt="Tingkat" class="img-fluid" width="20">
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownTingkatButton">
+                                        <li><a class="dropdown-item" href="#" onclick="filterByTingkat('All')">All</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="filterByTingkat('Internasional')">Internasional</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="filterByTingkat('Nasional')">Nasional</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="filterByTingkat('Lokal')">Lokal</a></li>
+                                    </ul>
+                                </div>
+                            </th>
                             <th>Dosen Pembimbing</th>
                             <th>Status</th>
                             <th>Opsi</th>
