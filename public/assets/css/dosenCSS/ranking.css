@@ -25,7 +25,7 @@ body {
 .table-container h4 {
     font-weight: 600;
     margin-bottom: 20px;
-  }
+}
 
 .search-box {
     display: flex;
@@ -45,15 +45,62 @@ body {
 
 .table th, .table td {
     padding: 10px;
-    text-align: left;
+    text-align: left; /* Default left align untuk semua kolom */
     border-bottom: 1px solid #F4F6F9;
     font-size: 14px;
+}
+
+/* Memastikan teks di tengah untuk kolom tertentu */
+.table th:nth-child(1), 
+.table td:nth-child(1), 
+.table th:nth-child(4), 
+.table td:nth-child(4),
+.table th:nth-child(5), 
+.table td:nth-child(5) {
+    text-align: center; /* Mengatur peringkat dan kolom lainnya ke tengah */
 }
 
 .table th {
     background-color: #F4F6F9; /* Warna yang sama seperti background tabel */
     color: #212529; /* Warna teks agar kontras */
     font-weight: bold;
+}
+
+/* Posisi gambar dropdown */
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center; /* Menjaga dropdown agar terpusat pada header */
+}
+
+.dropdown-image {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: static;
+    right: 0;
+    top: 0;
+    transform: translateY(-10%); /* Vertikal center, sesuaikan jika diperlukan */
+    z-index: 10; /* Pastikan tombol berada di atas elemen lain */
+}
+
+/* Menambahkan animasi rotasi pada gambar saat dropdown terbuka */
+.dropdown-image.open {
+    transform: rotate(180deg); /* Memutar gambar ikon 180 derajat */
+}
+
+/* Posisi dropdown menu */
+.dropdown-menu {
+    left: 0;
+    right: auto;
+    display: none; /* Secara default dropdown tidak ditampilkan */
+    z-index: 100; /* Pastikan dropdown berada di atas elemen lain */
+}
+
+/* Menampilkan dropdown jika di-trigger */
+.dropdown-menu.show {
+    display: block; /* Menampilkan dropdown jika .show ditambahkan */
 }
 
 /* Rows Styling */
@@ -121,15 +168,4 @@ body {
     .table-container {
         padding: 10px;
     }
-}
-
-.table tbody td:first-child {
-    background-color: #F4F6F9; /* Warna abu-abu untuk kolom peringkat */
-    font-weight: bold;
-    text-align: center;
-    font-size: 12px;
-}
-
-.table-container h4 {
-    font-size: 20px; /* Sesuaikan ukuran font yang diinginkan */
 }

@@ -67,7 +67,7 @@ $app->group('/auth', function ($auth) {
     });
 
     $auth->get('/test', function (Request $request, Response $response) {
-        return renderView($response, 'pages/admin/prestasi.php');
+        return renderView($response, 'pages/admin/rank.php');
     });
 
     // Login API Route

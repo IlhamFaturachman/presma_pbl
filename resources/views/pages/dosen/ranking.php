@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/header.css">
     <link rel="stylesheet" href="/presma_pbl/public/assets/css/sidebar.css">
-    <link rel="stylesheet" href="/presma_pbl/public/assets/css/dosenCSS/ranking.css">
+    <link rel="stylesheet" href="/presma_pbl/public/assets/css/dosen/ranking.css">
 </head>
 
 <body>
@@ -36,7 +36,20 @@
                         <tr>
                             <th>Peringkat</th>
                             <th>Nama Mahasiswa</th>
-                            <th>Program Studi</th>
+                            <th>
+                                Program Studi
+                                <!-- Dropdown untuk Prodi -->
+                                <div class="dropdown-container">
+                                    <button class="dropdown-image" type="button" id="dropdownProdiButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="/presma_pbl/public/assets/img/dropdown.png" alt="Program Studi" class="img-fluid" width="20">
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownProdiButton">
+                                        <li><a class="dropdown-item" href="#" onclick="filterByProdi('All')">All</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="filterByProdi('Teknik Informatika')">Teknik Informatika</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="filterByProdi('Sistem Informasi Bisnis')">Sistem Informasi Bisnis</a></li>
+                                    </ul>
+                                </div>
+                            </th>
                             <th>Jumlah Prestasi</th>
                             <th>Poin Total</th>
                         </tr>

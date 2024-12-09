@@ -40,18 +40,26 @@
                                 Program Studi
                                 <!-- Dropdown untuk Prodi -->
                                 <div class="dropdown-container">
-                                    <button class="dropdown-image" type="button" id="dropdownProdiButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <img src="/presma_pbl/public/assets/img/dropdown.png" alt="Program Studi" class="img-fluid" width="20">
+                                    <button class="dropdown-image" type="button" id="dropdownProdiButton"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="/presma_pbl/public/assets/img/dropdown.png" alt="Program Studi"
+                                            class="img-fluid" width="20">
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownProdiButton">
-                                        <li><a class="dropdown-item" href="#" onclick="filterByProdi('All')">All</a></li>
-                                        <li><a class="dropdown-item" href="#" onclick="filterByProdi('Teknik Informatika')">Teknik Informatika</a></li>
-                                        <li><a class="dropdown-item" href="#" onclick="filterByProdi('Sistem Informasi Bisnis')">Sistem Informasi Bisnis</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="filterByProdi('All')">All</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="#"
+                                                onclick="filterByProdi('Teknik Informatika')">Teknik Informatika</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="#"
+                                                onclick="filterByProdi('Sistem Informasi Bisnis')">Sistem Informasi
+                                                Bisnis</a></li>
                                     </ul>
                                 </div>
                             </th>
                             <th>Jumlah Prestasi</th>
                             <th>Poin Total</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="rankingBody">
@@ -67,6 +75,9 @@
         </div>
     </div>
 
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/presma_pbl/resources/views/component/admin/modalDetail_rank.php'; ?>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/presma_pbl/public/assets/js/admin/rank.js"></script>
     <script src="/presma_pbl/public/assets/js/sidebar.js"></script>

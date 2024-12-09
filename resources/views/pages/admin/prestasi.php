@@ -85,8 +85,8 @@ if (session_status() === PHP_SESSION_NONE) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/presma_pbl/public/assets/js/sidebar.js"></script>
     <script>
-        window.allPrestasi =
-            <?php echo json_encode($prestasi, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
+    window.allPrestasi =
+        <?php echo json_encode($prestasi, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
     </script>
     <script src="/presma_pbl/public/assets/js/admin/prestasi.js"></script>
 </body>
