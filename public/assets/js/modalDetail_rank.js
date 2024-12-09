@@ -2,11 +2,11 @@
 function showDetail(rank) {
     // Cari data ranking berdasarkan rank
     const ranking = rankings.find(item => item.rank === rank);
-    
+
     if (ranking) {
         // Menampilkan data mahasiswa di dalam modal
         $('#modal-name').text(ranking.name);
-        $('#modal-nim').text(ranking.rank); // Anda bisa ganti jika ada data NIM
+        $('#modal-nim').text(ranking.nim); // Anda bisa ganti jika ada data NIM
         $('#modal-program').text(ranking.program);
         $('#modal-prestasi').text(ranking.achievements);
         $('#modal-poin').text(ranking.points);
@@ -32,7 +32,7 @@ function showDetail(rank) {
         });
 
         $('#achievements-tbody').html(achievementsHtml);
-        
+
         // Menampilkan modal
         $('#detailModal').modal('show');
     }
@@ -100,8 +100,8 @@ function exportToExcel() {
 }
 
 // Event listener untuk tombol Export
-$(document).ready(function() {
-    $('#exportButton').on('click', function() {
+$(document).ready(function () {
+    $('#exportButton').on('click', function () {
         exportToExcel();
     });
 });

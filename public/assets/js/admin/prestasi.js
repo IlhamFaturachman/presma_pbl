@@ -70,6 +70,18 @@ function renderTable(data) {
     });
 }
 
+$('#filterStatus').on('change', function () {
+    const status = $(this).val();
+    if (status === 'all') {
+        filteredPrestasi = allPrestasi;
+    } else {
+        filteredPrestasi = allPrestasi.filter(prestasi => prestasi.validasi_status === status);
+    }
+    currentPage = 1;
+    renderTable(filteredPrestasi);
+    renderPagination(filteredPrestasi.length);
+});
+
 // Render paginasi
 function renderPagination(totalItems) {
     const totalPages = Math.ceil(totalItems / rowsPerPage);
@@ -194,8 +206,10 @@ function populateDetailModal(prestasi) {
 
 
 
+// Load data dari PHP saat halaman dimuat
 $(document).ready(function () {
     allPrestasi = window.allPrestasi || [];
-    renderTable(allPrestasi);
-    renderPagination(allPrestasi.length);
+    filteredPrestasi = allPrestasi;
+    renderTable(filteredPrestasi);
+    renderPagination(filteredPrestasi.length);
 });

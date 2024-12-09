@@ -40,12 +40,25 @@ if (session_status() === PHP_SESSION_NONE) {
         <div id="content" class="content flex-grow-1 p-4">
             <section class="table-container">
                 <h4>Daftar Prestasi</h4>
-                <div class="row mb-3">
-                    <div class="col-md-6 offset-md-6 d-flex justify-content-end">
+                <div class="row mb-3 align-items-center">
+                    <div class="col-auto">
+                        <!-- Dropdown filter status -->
+                        <select id="filterStatus" class="form-select">
+                            <option value="all">Semua Status</option>
+                            <option value="Tervalidasi">Tervalidasi</option>
+                            <option value="Menunggu divalidasi">Menunggu Validasi</option>
+                            <option value="Ditolak">Ditolak</option>
+                        </select>
+                    </div>
+                    <div class="col d-flex justify-content-end align-items-center">
                         <!-- Kolom untuk form pencarian -->
-                        <div class="search-box d-flex w-50">
+                        <div class="search-box me-3">
                             <input type="text" class="form-control" placeholder="Cari Prestasi" id="searchInput">
                         </div>
+                        <!-- Kolom untuk tombol Tambah Pengguna -->
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#prestasiModal">
+                            <i class="bi bi-plus-lg"></i> Tambah Prestasi
+                        </button>
                     </div>
                 </div>
                 <table class="table table-striped" id="prestasiTable">
