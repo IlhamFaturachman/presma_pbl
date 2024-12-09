@@ -30,7 +30,7 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><a class="dropdown-item" href="/auth/profile.php">Profile</a></li>
-                    <li><a class="dropdown-item" href="/auth/logout.php">Logout</a></li>
+                    <li><a class="dropdown-item" href="/component/modalValLogout.php">Logout</a></li>
                 </ul>
             </div>
         </div>

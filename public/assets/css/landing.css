@@ -214,67 +214,111 @@ display: none;
 
 /* Kartu Alur */
 .alur-card {
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-align-items: center;
-background-color: #ffffff;
-border-radius: 10px;
-box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-padding: 20px;
-text-align: center;
-flex: 0 0 auto;
-width: 250px;
-scroll-snap-align: start;
-color: #333333;
-position: relative;
-overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    flex: 0 0 auto;
+    width: 250px;
+    scroll-snap-align: start;
+    color: #333333;
+    position: relative;
+    overflow: hidden;
+    margin: 0 5px; /* Jarak antar kartu */
 }
 
+/* Judul Kartu */
 .alur-card h3 {
-font-size: 18px;
-margin-top: 15px;
-margin-bottom: 20px;
-color: #15367E;
+    font-size: 18px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    color: #15367E;
 }
 
+/* Deskripsi Kartu */
 .alur-card p {
-display: flex;
-justify-content: center;
-align-items: center;
-flex-grow: 0;
-flex-shrink: 0;
-text-align: justify;
-font-size: 14px;
-line-height: 1.6;
-color: #FFFFFF;
-padding: 10px;
-border-radius: 10px;
-margin-top: auto;
-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 0;
+    flex-shrink: 0;
+    text-align: justify;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #FFFFFF;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: auto;
+    width: 100%;
 }
 
 /* Warna per kartu */
 .alur-card:nth-child(1) p {
-background: #15367E;
+    background: #15367E;
 }
 
 .alur-card:nth-child(2) p {
-background: #376EE6;
+    background: #376EE6;
 }
 
 .alur-card:nth-child(3) p {
-background: #15367E;
+    background: #15367E;
 }
 
 .alur-card:nth-child(4) p {
-background: #376EE6;
+    background: #376EE6;
 }
 
+/* Ikon pada kartu */
 .alur-card img.alur-icon {
-width: 60px;
-height: 60px;
+    width: 60px;
+    height: 60px;
 }
+
+/* Media Queries untuk layar di bawah 1024px */
+@media (max-width: 1024px) {
+    .alur-cards {
+        gap: 30px;
+        flex-wrap: wrap; /* Menyusun ulang kartu menjadi baris baru saat layar lebih kecil */
+        justify-content: center;
+    }
+
+    .alur-card {
+        width: 45%; /* Menurunkan lebar kartu untuk layar lebih kecil */
+        margin: 10px; /* Menambahkan jarak antar kartu */
+    }
+}
+
+/* Media Queries untuk layar di bawah 768px */
+@media (max-width: 768px) {
+    .alur-card {
+        width: 80%; /* Lebar kartu lebih besar pada layar lebih kecil */
+        margin: 10px 0; /* Mengurangi jarak horizontal antar kartu */
+    }
+}
+
+/* Media Queries untuk layar di bawah 480px */
+@media (max-width: 480px) {
+    .alur-card {
+        width: 90%; /* Lebar kartu hampir memenuhi layar */
+        margin: 10px 0; /* Jarak antar kartu lebih kecil */
+    }
+
+    .alur-card h3 {
+        font-size: 16px; /* Ukuran font judul lebih kecil */
+    }
+
+    .alur-card p {
+        font-size: 12px; /* Ukuran font deskripsi lebih kecil */
+        padding: 8px; /* Mengurangi padding untuk ruang lebih efisien */
+    }
+}
+
 
 /* Rangking Section */
 .ranking-section {
@@ -559,4 +603,205 @@ width: 80%;
 
 .footer p {
     margin: 5px 0;
+}
+
+/* Header - Animasi Masuk dari Atas */
+header {
+    opacity: 0;
+    transform: translateY(-50px); /* Mulai dari atas */
+    animation: headerSlideIn 1s ease-out forwards;
+}
+
+@keyframes headerSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px); /* Mulai dari atas */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* Masuk ke posisi semula */
+    }
+}
+
+/* Hero Content - Animasi Masuk dari Kiri */
+.hero-content {
+    opacity: 0;
+    transform: translateX(-50px); /* Mulai dari kiri */
+    animation: heroContentSlideIn 1.5s ease-out 0.5s forwards; /* Delay 0.5s */
+}
+
+@keyframes heroContentSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-50px); /* Mulai dari kiri */
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0); /* Masuk ke posisi semula */
+    }
+}
+
+/* Gambar Hero - Animasi Masuk dari Kanan dan Gerakan Naik Turun */
+.hero img {
+    opacity: 0;
+    transform: translateX(50px); /* Mulai dari kanan */
+    animation: heroImageSlideIn 1.5s ease-out forwards, slideUp 4s ease-in-out 1.5s infinite alternate;
+    z-index: 2;
+}
+
+@keyframes heroImageSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateX(50px); /* Mulai dari kanan */
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0); /* Masuk ke posisi semula */
+    }
+}
+
+/* Keyframes untuk animasi gambar naik turun */
+@keyframes slideUp {
+    0% {
+        transform: translateY(-20px); /* Mulai sedikit di atas */
+    }
+    100% {
+        transform: translateY(20px); /* Bergerak sedikit ke bawah */
+    }
+}
+
+/* Bubble Animasi */
+.bubble {
+    position: absolute;
+    bottom: -50px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.6);
+    animation: bubble-animation 8s infinite ease-in-out;
+    opacity: 0.8;
+}
+
+@keyframes bubble-animation {
+    0% {
+        transform: scale(0.5) translateY(0) translateX(0);
+        opacity: 0.8;
+    }
+    25% {
+        transform: scale(1) translateY(-300px) translateX(50px);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1.2) translateY(-500px) translateX(-100px);
+        opacity: 0.6;
+    }
+    75% {
+        transform: scale(0.8) translateY(-400px) translateX(150px);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(0.5) translateY(-300px) translateX(0);
+        opacity: 0.8;
+    }
+}
+
+/* Animasi Fade-In dan Slide-In untuk Card di Alur */
+.alur-card {
+    opacity: 0; /* Tidak terlihat saat awal */
+    transform: translateY(50px); /* Posisi lebih bawah */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Ketika card terlihat di layar */
+.alur-card.animate {
+    opacity: 1; /* Muncul */
+    transform: translateY(0); /* Bergerak ke posisi semula */
+}
+
+/* Hover Effect untuk Card */
+.alur-card:hover {
+    transform: scale(1.05); /* Membesar sedikit */
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2); /* Bayangan lebih besar */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+/* Gelembung dengan variasi ukuran dan posisi */
+.bubble:nth-child(1) {
+    width: 60px;
+    height: 60px;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.bubble:nth-child(2) {
+    width: 50px;
+    height: 50px;
+    left: 20%;
+    animation-delay: 1s;
+}
+
+.bubble:nth-child(3) {
+    width: 70px;
+    height: 70px;
+    left: 30%;
+    animation-delay: 2s;
+}
+
+.bubble:nth-child(4) {
+    width: 40px;
+    height: 40px;
+    left: 40%;
+    animation-delay: 3s;
+}
+
+.bubble:nth-child(5) {
+    width: 50px;
+    height: 50px;
+    left: 50%;
+    animation-delay: 4s;
+}
+
+.bubble:nth-child(6) {
+    width: 55px;
+    height: 55px;
+    left: 60%;
+    animation-delay: 5s;
+}
+
+.bubble:nth-child(7) {
+    width: 45px;
+    height: 45px;
+    left: 70%;
+    animation-delay: 6s;
+}
+
+.bubble:nth-child(8) {
+    width: 60px;
+    height: 60px;
+    left: 80%;
+    animation-delay: 7s;
+}
+
+.bubble:nth-child(9) {
+    width: 50px;
+    height: 50px;
+    left: 90%;
+    animation-delay: 8s;
+}
+
+.bubble:nth-child(10) {
+    width: 40px;
+    height: 40px;
+    left: 30%;
+    animation-delay: 9s;
+}
+
+/* Untuk Kontainer dan Elemen lainnya */
+.contact-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.container {
+    position: relative;
+    z-index: 2;
 }
