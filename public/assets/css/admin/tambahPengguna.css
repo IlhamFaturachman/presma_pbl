@@ -120,6 +120,17 @@ body {
     padding-right: 75px;
 }
 
+.badge {
+    font-size: 14px;
+    padding: 5px 10px;
+    height: 30px;
+    line-height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+}
+
 /* Pagination Styles */
 .pagination {
     display: flex;

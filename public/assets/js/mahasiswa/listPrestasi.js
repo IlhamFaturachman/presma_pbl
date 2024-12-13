@@ -27,28 +27,25 @@ function renderTable(data) {
 
         if (prestasi.validasi_status === 'Tervalidasi') {
             actionButtons = `
-                <button class="btn btn-sm btn-info action-button detailPrestasi" 
-                    style="font-size: 15px;" data-bs-toggle="modal" data-bs-target="#detailModal" data-prestasi-id="${prestasi.PrestasiID || ''}">
+                <button class="btn btn-sm btn-primary action-button detailPrestasi" 
+                    style="font-size: 14px;" data-bs-toggle="modal" data-bs-target="#detailModal" data-prestasi-id="${prestasi.PrestasiID || ''}">
                     <i class="bi bi-eye"></i> Detail
                 </button>
         `;
         } else if (prestasi.validasi_status === 'Ditolak') {
             actionButtons = `
-            <div class="btn-group w-100" role="group" aria-label="Tombol Aksi">
-                <button class="btn btn-sm btn-info action-button detailPrestasi" 
-                    style="font-size: 15px;" data-bs-toggle="modal" data-bs-target="#detailModal" data-prestasi-id="${prestasi.PrestasiID || ''}">
-                    <i class="bi bi-eye"></i> Detail
-                </button>
-                <button class="btn btn-sm btn-danger action-button infoDitolak" style="font-size: 15px;" data-prestasi-id="${prestasi.PrestasiID}">
-                <i class="bi bi-exclamation-circle"></i> Info
+            <div class="btn-group w-90" role="group" aria-label="Tombol Aksi">
+                <button class="btn btn-sm btn-danger action-button infoDitolak" 
+                    style="font-size: 14px;" data-prestasi-id="${prestasi.PrestasiID || ''}">
+                    <i class="bi bi-exclamation-circle"></i> Info Ditolak
                 </button>
             </div>
         `;
         } else if (prestasi.validasi_status === 'Menunggu divalidasi') {
             actionButtons = `
-            <div class="btn-group w-100" role="group" aria-label="Tombol Aksi">
-                <button class="btn btn-sm btn-info action-button detailPrestasi" 
-                    style="font-size: 15px;" data-bs-toggle="modal" data-bs-target="#detailModal" data-prestasi-id="${prestasi.PrestasiID || ''}">
+            <div class="btn-group w-90" role="group" aria-label="Tombol Aksi">
+                <button class="btn btn-sm btn-primary action-button validasiPrestasi" 
+                    style="font-size: 14px;" data-bs-toggle="modal" data-bs-target="#validasiModal" data-prestasi-id="${prestasi.PrestasiID || ''}">
                     <i class="bi bi-eye"></i> Detail
                 </button>
             </div>
