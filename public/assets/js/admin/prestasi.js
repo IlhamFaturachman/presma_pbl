@@ -49,7 +49,7 @@ function renderTable(data) {
                 `;
         } else if (prestasi.validasi_status === 'Menunggu divalidasi') {
             actionButtons = `
-                <button class="btn btn-sm btn-info action-button validasiPrestasi" 
+                <button class="btn btn-sm btn-primary action-button validasiPrestasi" 
                     style="font-size: 14px;" data-bs-toggle="modal" data-bs-target="#validasiModal" data-prestasi-id="${prestasi.PrestasiID || ''}">
                     <i class="bi bi-eye"></i> Detail
                 </button>

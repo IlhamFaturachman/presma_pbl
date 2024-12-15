@@ -56,9 +56,9 @@ if (session_status() === PHP_SESSION_NONE) {
                             <input type="text" class="form-control" placeholder="Cari Prestasi" id="searchInput">
                         </div>
                         <!-- Kolom untuk tombol Tambah Pengguna -->
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#prestasiModal">
+                        <!-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#prestasiModal">
                             <i class="bi bi-plus-lg"></i> Tambah Prestasi
-                        </button>
+                        </button> -->
                     </div>
                 </div>
                 <table class="table table-striped" id="prestasiTable">
