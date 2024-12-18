@@ -14,6 +14,8 @@ class RankModel extends Model
     //     return $this->findAll();
     // }
 
+    // get all data rank
+
     public function getAllRank(): array
     {
         $sql = "
