@@ -14,6 +14,8 @@ class RankController extends Controller
     {
         $this->rankModel = new RankModel();
     }
+
+    // get all data rank
     public function index(Request $request, Response $response)
     {
         return $rank = $this->rankModel->getAllRank();
